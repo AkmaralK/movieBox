@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="L4B-zo-ujK">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="L4B-zo-ujK">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -25,7 +23,7 @@
                                         <subviews>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="nXY-Eb-gyL" customClass="MoviesList" customModule="MovieBox" customModuleProvider="target">
                                                 <rect key="frame" x="16" y="67" width="382" height="250"/>
-                                                <color key="backgroundColor" systemColor="systemRedColor"/>
+                                                <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="250" id="yLc-bs-Tui"/>
                                                 </constraints>
@@ -67,7 +65,7 @@
                                             </label>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="DRU-QU-rSy" customClass="MoviesList" customModule="MovieBox" customModuleProvider="target">
                                                 <rect key="frame" x="16" y="715" width="382" height="250"/>
-                                                <color key="backgroundColor" systemColor="systemRedColor"/>
+                                                <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="250" id="CQM-kG-mjc"/>
                                                 </constraints>
@@ -81,7 +79,7 @@
                                             </collectionView>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="dYo-Ch-bJc" customClass="MoviesList" customModule="MovieBox" customModuleProvider="target">
                                                 <rect key="frame" x="16" y="391" width="382" height="250"/>
-                                                <color key="backgroundColor" systemColor="systemRedColor"/>
+                                                <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="250" id="S7i-6r-azw"/>
                                                 </constraints>
@@ -129,14 +127,14 @@
                                 <viewLayoutGuide key="frameLayoutGuide" id="xkW-iG-1qL"/>
                             </scrollView>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="AmK-QR-pWJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="0l6-My-ZSO"/>
                             <constraint firstItem="AmK-QR-pWJ" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="SNz-1G-c3K"/>
                             <constraint firstAttribute="bottom" secondItem="AmK-QR-pWJ" secondAttribute="bottom" id="gEQ-tk-Mc1"/>
                             <constraint firstItem="AmK-QR-pWJ" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="kfB-1Y-IBa"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Фильмы" id="q8u-NZ-kHV">
                         <barButtonItem key="rightBarButtonItem" image="magnifyingglass" catalog="system" style="plain" id="YwV-BW-2Pg">
@@ -158,7 +156,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-470" y="-918"/>
+            <point key="canvasLocation" x="-732" y="-918"/>
         </scene>
         <!--Movie View Controller-->
         <scene sceneID="8td-OT-BWB">
@@ -194,9 +192,9 @@
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ASe-Ra-wYW">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ASe-Ra-wYW">
                                                         <rect key="frame" x="107" y="559" width="200" height="44"/>
-                                                        <color key="backgroundColor" systemColor="systemRedColor"/>
+                                                        <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="200" id="0lN-mp-bKU"/>
                                                             <constraint firstAttribute="height" constant="44" id="IjM-kA-Jog"/>
@@ -213,7 +211,7 @@
                                                             <constraint firstAttribute="width" constant="44" id="1Me-QI-kHV"/>
                                                             <constraint firstAttribute="height" constant="44" id="der-x9-mKH"/>
                                                         </constraints>
-                                                        <color key="tintColor" systemColor="systemRedColor"/>
+                                                        <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <state key="normal" image="link" catalog="system"/>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HLr-4g-rG3">
@@ -223,11 +221,11 @@
                                                             <constraint firstAttribute="width" constant="44" id="gkL-ua-8R5"/>
                                                             <constraint firstAttribute="height" constant="44" id="vdk-Ce-nVv"/>
                                                         </constraints>
-                                                        <color key="tintColor" systemColor="systemRedColor"/>
+                                                        <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <state key="normal" image="heart.fill" catalog="system"/>
                                                     </button>
                                                 </subviews>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                 <constraints>
                                                     <constraint firstItem="OIY-4V-m0C" firstAttribute="top" secondItem="wQI-01-Bzx" secondAttribute="bottom" constant="8" id="5Ir-5Z-Aq3"/>
                                                     <constraint firstItem="ASe-Ra-wYW" firstAttribute="top" secondItem="OIY-4V-m0C" secondAttribute="bottom" constant="4" id="5Ue-gA-nAC"/>
@@ -248,7 +246,7 @@
                                                 </constraints>
                                             </view>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="xcZ-77-Ay5" secondAttribute="trailing" id="9uO-48-nB4"/>
                                             <constraint firstItem="xcZ-77-Ay5" firstAttribute="top" secondItem="44B-Zh-UvH" secondAttribute="top" id="Gr6-Nr-q1X"/>
@@ -269,14 +267,14 @@
                                 <viewLayoutGuide key="frameLayoutGuide" id="NxN-nJ-zMh"/>
                             </scrollView>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="4h6-1m-L4o"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="0LV-JF-dOc" firstAttribute="top" secondItem="1g5-2X-vbc" secondAttribute="top" id="2Lf-kw-XtC"/>
                             <constraint firstItem="0LV-JF-dOc" firstAttribute="trailing" secondItem="4h6-1m-L4o" secondAttribute="trailing" id="bZh-bC-GFN"/>
                             <constraint firstItem="0LV-JF-dOc" firstAttribute="leading" secondItem="4h6-1m-L4o" secondAttribute="leading" id="cmd-TC-aza"/>
                             <constraint firstAttribute="bottom" secondItem="0LV-JF-dOc" secondAttribute="bottom" id="p2m-hD-u7C"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="4h6-1m-L4o"/>
                     </view>
                     <connections>
                         <outlet property="movieImageView" destination="BCh-u2-s68" id="awf-Ug-iDc"/>
@@ -284,7 +282,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ovc-r8-PZN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="568" y="-918"/>
+            <point key="canvasLocation" x="-10" y="-918"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="gKn-Vm-4Ik">
@@ -293,14 +291,14 @@
                     <view key="view" contentMode="scaleToFill" id="JEV-ZJ-cby">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="B6D-ya-odO"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="Xbt-g5-SN8"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SLt-TV-EBi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-503" y="1383"/>
+            <point key="canvasLocation" x="-1036" y="1383"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="F8f-zs-Eql">
@@ -309,14 +307,14 @@
                     <view key="view" contentMode="scaleToFill" id="RLP-NZ-VsD">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="IMh-6G-fgn"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="feF-wM-ee7"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nTz-OT-htf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-471" y="-173"/>
+            <point key="canvasLocation" x="-681" y="-173"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="v8T-n3-Tdr">
@@ -342,7 +340,7 @@
         <scene sceneID="Ixx-ei-48g">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="aG5-C6-XiP" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Home" image="homekit" catalog="system" id="GK6-HU-iV3"/>
+                    <tabBarItem key="tabBarItem" title="Home" id="GK6-HU-iV3"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="lxI-uA-ruY">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -387,14 +385,14 @@
                     <view key="view" contentMode="scaleToFill" id="3n9-Iv-xZK">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="ELt-2D-eVy"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="oNb-oL-ris"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JLr-gj-LK9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-504" y="532"/>
+            <point key="canvasLocation" x="-680" y="532"/>
         </scene>
         <!--Profile-->
         <scene sceneID="HQE-9S-cWt">
@@ -413,7 +411,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="N2g-0a-1kd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1413" y="1383"/>
+            <point key="canvasLocation" x="-1919" y="1383"/>
         </scene>
         <!--Favorites-->
         <scene sceneID="eez-s7-4OZ">
@@ -436,18 +434,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="heart.fill" catalog="system" width="128" height="109"/>
-        <image name="homekit" catalog="system" width="128" height="106"/>
-        <image name="link" catalog="system" width="128" height="122"/>
-        <image name="magnifyingglass" catalog="system" width="128" height="115"/>
+        <image name="heart.fill" catalog="system" width="64" height="54"/>
+        <image name="link" catalog="system" width="64" height="58"/>
+        <image name="magnifyingglass" catalog="system" width="64" height="56"/>
         <image name="movieImg" width="382" height="566"/>
-        <image name="person" catalog="system" width="128" height="117"/>
-        <image name="star" catalog="system" width="128" height="116"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
+        <image name="person" catalog="system" width="64" height="58"/>
+        <image name="star" catalog="system" width="64" height="58"/>
     </resources>
 </document>
