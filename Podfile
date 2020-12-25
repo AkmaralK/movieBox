@@ -7,5 +7,6 @@ target 'MovieBox' do
 
   # Pods for MovieBox
   pod "MBCircularProgressBar"
+  pod 'SnapKit'
 
 end

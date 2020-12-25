@@ -14,8 +14,6 @@ class MovieCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.backgroundColor = .red
-        imageView.layer.cornerRadius = 8
-        imageView.layer.masksToBounds = true
         return imageView
     }()
     
@@ -45,6 +43,11 @@ class MovieCell: UICollectionViewCell {
     }
     
     private func setUpViews () {
+        self.contentView.backgroundColor = UIColor.rgb(25, 25, 25)
+        self.contentView.layer.cornerRadius = 8
+        
+        self.addShadow()
+        
         for view in [movieImage, movieTitleLbl, movieDescriptionLbl] {
             self.contentView.addSubview(view)
             view.translatesAutoresizingMaskIntoConstraints = false
@@ -53,19 +56,28 @@ class MovieCell: UICollectionViewCell {
         addUIConstraints()
     }
     
+    private func addShadow () {
+        let layer = self.contentView.layer
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowRadius = 10
+        layer.shadowOpacity = 0.8
+    }
+    
     private func addUIConstraints () {
-        movieImage.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        movieImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-        movieImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
-        movieImage.heightAnchor.constraint(equalToConstant: 175).isActive = true
+        movieImage.snp.makeConstraints { (make) in
+            make.top.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(175)
+        }
         
-        movieTitleLbl.topAnchor.constraint(equalTo: movieImage.bottomAnchor, constant: 8).isActive = true
-        movieTitleLbl.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-        movieTitleLbl.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+        movieTitleLbl.snp.makeConstraints { (make) in
+            make.top.equalTo(movieImage.snp.bottom).offset(8)
+            make.leading.trailing.equalToSuperview().inset(8)
+        }
         
-        movieDescriptionLbl.topAnchor.constraint(equalTo: movieTitleLbl.bottomAnchor, constant: 0).isActive = true
-        movieDescriptionLbl.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-        movieDescriptionLbl.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
-        movieDescriptionLbl.heightAnchor.constraint(equalToConstant: 16).isActive = true
+        movieDescriptionLbl.snp.makeConstraints { (make) in
+            make.leading.trailing.equalToSuperview().inset(8)
+            make.top.equalTo(movieTitleLbl.snp.bottom)
+        }
     }
 }
