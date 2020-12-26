@@ -16,6 +16,7 @@ final class MovieViewController: UIViewController {
     @IBOutlet weak var genresStackView: UIStackView!
     @IBOutlet weak var aboutSectionView: SectionView!
     @IBOutlet weak var castSectionView: SectionView!
+    @IBOutlet weak var otherMovies: SectionView!
     
     lazy var aboutLbl: UILabel = {
         let lbl = UILabel()
@@ -35,6 +36,14 @@ final class MovieViewController: UIViewController {
         return collectionView
     }()
     
+    lazy var otherMoviesCollectionView: MoviesList = {
+        let collectionView = MoviesList()
+        collectionView.setUp()
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        return collectionView
+    }()
+    
     // MARK: - Props
     
     private let movie = Movie.getFakeMovies()[0]
@@ -48,6 +57,7 @@ final class MovieViewController: UIViewController {
         self.view.backgroundColor = UIColor.darkColor
         aboutSectionView.setUp()
         castSectionView.setUp()
+        otherMovies.setUp()
         
         aboutSectionView.titleLabel.text = "Подробнее"
         aboutSectionView.subtitleLabel.text = "Обзор"
@@ -62,6 +72,14 @@ final class MovieViewController: UIViewController {
         castCollectionView.snp.makeConstraints { (make) in
             make.leading.trailing.top.bottom.equalToSuperview()
             make.height.equalTo(250)
+        }
+        
+        otherMovies.titleLabel.text = "Похоже фильмы"
+        otherMovies.subtitleLabel.text = "Смотрите вместе с нами"
+        otherMovies.contentView.addSubview(otherMoviesCollectionView)
+        otherMoviesCollectionView.snp.makeConstraints { (make) in
+            make.leading.trailing.top.bottom.equalToSuperview()
+            make.height.equalTo(300)
         }
         
         setUpMovieBackground()
@@ -95,15 +113,25 @@ final class MovieViewController: UIViewController {
 
 extension MovieViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return Person.getFake().count
+        return collectionView is PersonList ? Person.getFake().count : Movie.getFakeMovies().count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "personCell", for: indexPath) as! PersonCell
-        let personData = Person.getFake()[indexPath.row]
+        
+        if (collectionView is PersonList) {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "personCell", for: indexPath) as! PersonCell
+            let personData = Person.getFake()[indexPath.row]
 
-        cell.personNameLbl.text = personData.name
-        cell.personDescriptionLbl.text = personData.characterName
-        return cell
+            cell.personNameLbl.text = personData.name
+            cell.personDescriptionLbl.text = personData.characterName
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "movieCell", for: indexPath) as! MovieCell
+            let movie = Movie.getFakeMovies()[indexPath.row]
+
+            cell.movieTitleLbl.text = movie.name
+            cell.movieDescriptionLbl.text = movie.date
+            return cell
+        }
     }
 }

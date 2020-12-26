@@ -19,7 +19,7 @@ class MovieCell: UICollectionViewCell {
     
     lazy var movieTitleLbl: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 16)
+        label.font = .systemFont(ofSize: 14)
         label.textColor = .white
         label.numberOfLines = 2
         return label
@@ -27,10 +27,21 @@ class MovieCell: UICollectionViewCell {
     
     lazy var movieDescriptionLbl: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 14)
+        label.font = .systemFont(ofSize: 12)
         label.textColor = .gray
         label.numberOfLines = 1
         return label
+    }()
+    
+    lazy var favoriteBtn: UIButton = {
+        let btn = UIButton()
+        btn.setTitle("В избранные", for: .normal)
+        btn.setTitleColor(UIColor.gray, for: .normal)
+        btn.layer.borderWidth = 1
+        btn.layer.borderColor = UIColor.rgb(200, 200, 200).cgColor
+        btn.layer.cornerRadius = 4
+        btn.titleLabel?.font = .systemFont(ofSize: 13)
+        return btn
     }()
     
     override init(frame: CGRect) {
@@ -48,7 +59,7 @@ class MovieCell: UICollectionViewCell {
         
         self.addShadow()
         
-        for view in [movieImage, movieTitleLbl, movieDescriptionLbl] {
+        for view in [movieImage, movieTitleLbl, movieDescriptionLbl, favoriteBtn] {
             self.contentView.addSubview(view)
             view.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -71,13 +82,22 @@ class MovieCell: UICollectionViewCell {
         }
         
         movieTitleLbl.snp.makeConstraints { (make) in
-            make.top.equalTo(movieImage.snp.bottom).offset(8)
+            make.top.equalTo(movieImage.snp.bottom).offset(12)
             make.leading.trailing.equalToSuperview().inset(8)
+            make.height.equalTo(36)
         }
         
         movieDescriptionLbl.snp.makeConstraints { (make) in
             make.leading.trailing.equalToSuperview().inset(8)
             make.top.equalTo(movieTitleLbl.snp.bottom)
+            make.height.equalTo(16)
+        }
+        
+        favoriteBtn.snp.makeConstraints { (make) in
+            make.leading.trailing.equalToSuperview().inset(8)
+            make.height.equalTo(20)
+            make.bottom.equalToSuperview().offset(-12)
+            make.top.equalTo(movieDescriptionLbl.snp.bottom).offset(4)
         }
     }
 }

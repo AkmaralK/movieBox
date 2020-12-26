@@ -28,6 +28,7 @@
 		FBCC3C842594B05500B13416 /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCC3C832594B05500B13416 /* MovieCell.swift */; };
 		FBCC3C8D2594CB7C00B13416 /* MoviesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCC3C8C2594CB7C00B13416 /* MoviesList.swift */; };
 		FBCC3C8F2594DC7000B13416 /* MovieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCC3C8E2594DC7000B13416 /* MovieViewController.swift */; };
+		FBCE898C259653B800868DFE /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCE898B259653B800868DFE /* MainTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		FBCC3C832594B05500B13416 /* MovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
 		FBCC3C8C2594CB7C00B13416 /* MoviesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesList.swift; sourceTree = "<group>"; };
 		FBCC3C8E2594DC7000B13416 /* MovieViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewController.swift; sourceTree = "<group>"; };
+		FBCE898B259653B800868DFE /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +134,7 @@
 				FB2E051B2595EA520097770E /* PersonList.swift */,
 				FBAAD237259628F0004B572D /* SearchMovieCell.swift */,
 				4AE116EA25963AEF00117337 /* ProfileCell.swift */,
+				FBCE898B259653B800868DFE /* MainTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -306,6 +309,7 @@
 				FBAAD238259628F0004B572D /* SearchMovieCell.swift in Sources */,
 				FBCC3C8F2594DC7000B13416 /* MovieViewController.swift in Sources */,
 				FBCC3C842594B05500B13416 /* MovieCell.swift in Sources */,
+				FBCE898C259653B800868DFE /* MainTableViewCell.swift in Sources */,
 				FB2E051A2595E9E70097770E /* PersonCell.swift in Sources */,
 				FB6D84F02595CF8B006541A4 /* ChipView.swift in Sources */,
 				FB03678C2593A14D00CF2389 /* AppDelegate.swift in Sources */,

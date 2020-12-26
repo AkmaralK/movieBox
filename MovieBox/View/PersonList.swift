@@ -23,7 +23,7 @@ class PersonList: UICollectionView {
         
         if let layout = self.collectionViewLayout as? UICollectionViewFlowLayout {
             layout.minimumInteritemSpacing = 24
-            layout.itemSize = CGSize(width: 120, height: 250)
+            layout.itemSize = CGSize(width: 120, height: 280)
         }
     }
     

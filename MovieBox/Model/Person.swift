@@ -16,10 +16,10 @@ struct Person {
     
     static func getFake() -> [Person] {
         return [
-            Person(name: "Messi Lionel", characterName: "Developer", avatarURL: ""),
-            Person(name: "Messi Lionel", characterName: "Developer", avatarURL: ""),
-            Person(name: "Messi Lionel", characterName: "Developer", avatarURL: ""),
-            Person(name: "Messi Lionel", characterName: "Developer", avatarURL: "")
+            Person(name: "Messi Lionel Andreas", characterName: "Developer", avatarURL: ""),
+            Person(name: "Messi Lionel Andreas", characterName: "Developer", avatarURL: ""),
+            Person(name: "Messi Lionel Andreas", characterName: "Developer", avatarURL: ""),
+            Person(name: "Messi Lionel Andreas", characterName: "Developer", avatarURL: "")
         ]
     }
 }

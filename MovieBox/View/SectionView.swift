@@ -72,7 +72,7 @@ class SectionView: UIView {
         
         subtitleLabel.snp.makeConstraints { (make) in
             make.leading.equalTo(horizontalLine)
-            make.top.equalTo(titleLabel.snp.bottom).offset(0)
+            make.top.equalTo(titleLabel.snp.bottom).offset(4)
             make.trailing.equalTo(titleLabel)
         }
         

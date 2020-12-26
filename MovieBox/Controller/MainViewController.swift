@@ -10,32 +10,63 @@ import UIKit
 
 class MainViewController: UIViewController {
 
+    struct MoviesSection {
+        let name: String
+        let movies: [Movie]
+    }
+    
     // MARK: - Outlets
     
-    @IBOutlet weak var popularMoviesCollectionView: MoviesList!
-    @IBOutlet weak var bestMoviesCollectionView: MoviesList!
-    @IBOutlet weak var popularShowsCollectionView: MoviesList!
+    @IBOutlet weak var tableView: UITableView!
     
     // MARK: - Init
     
+    private let fakeMoviesSections = ["Best movies", "Popular movies", "Best shows"].map {
+        return MoviesSection(name: $0, movies: Movie.getFakeMovies())
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpCollectionViews()
+        setUpTableView()
         setUpUI()
     }
     
     // MARK: - Private methods
     
-    private func setUpCollectionViews () {
-        for collectionView in [bestMoviesCollectionView, popularMoviesCollectionView, popularShowsCollectionView] {
-            collectionView?.setUp()
-            collectionView?.delegate = self
-            collectionView?.dataSource = self
-        }
+    private func setUpTableView () {
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.showsVerticalScrollIndicator = false
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = UITableView.automaticDimension
     }
+    
+//    private func setUpCollectionViews () {
+//        for collectionView in [bestMoviesCollectionView, popularMoviesCollectionView, popularShowsCollectionView] {
+//            collectionView?.setUp()
+//            collectionView?.delegate = self
+//            collectionView?.dataSource = self
+//        }
+//    }
     
     private func setUpUI () {
         self.view.backgroundColor = UIColor.darkColor
+    }
+}
+
+
+extension MainViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return fakeMoviesSections.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "mainCell") as! MainTableViewCell
+        cell.sectionView.titleLabel.text = fakeMoviesSections[indexPath.row].name
+        cell.sectionView.subtitleLabel.text = "\(fakeMoviesSections[indexPath.row].movies.count) видео"
+        cell.moviesCollectionView.delegate = self
+        cell.moviesCollectionView.dataSource = self
+        return cell
     }
 }
 
