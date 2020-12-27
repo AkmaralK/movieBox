@@ -90,7 +90,7 @@
         <!--Movie View Controller-->
         <scene sceneID="8td-OT-BWB">
             <objects>
-                <viewController id="R8f-wx-z3T" customClass="MovieViewController" customModule="MovieBox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MovieViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="R8f-wx-z3T" customClass="MovieViewController" customModule="MovieBox" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1g5-2X-vbc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -227,6 +227,10 @@
                                                 <rect key="frame" x="0.0" y="936" width="375" height="128"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </view>
+                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vwB-6m-RoR" customClass="SectionView" customModule="MovieBox" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="1136" width="375" height="128"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </view>
                                         </subviews>
                                         <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
                                         <constraints>
@@ -234,6 +238,7 @@
                                             <constraint firstItem="Czh-ja-e7s" firstAttribute="top" secondItem="Ma1-sd-IO5" secondAttribute="bottom" constant="20" id="4Qa-u5-AZ3"/>
                                             <constraint firstItem="Ma1-sd-IO5" firstAttribute="top" secondItem="RGw-xU-vwG" secondAttribute="bottom" constant="20" id="4cH-zb-UJg"/>
                                             <constraint firstItem="iAd-Jh-low" firstAttribute="top" secondItem="8jb-dV-1T8" secondAttribute="bottom" constant="24" id="7AN-rU-KPG"/>
+                                            <constraint firstItem="vwB-6m-RoR" firstAttribute="top" secondItem="iAd-Jh-low" secondAttribute="bottom" constant="24" id="7vC-dB-g98"/>
                                             <constraint firstItem="9lP-vh-QF9" firstAttribute="leading" secondItem="oXX-gH-Jw1" secondAttribute="leading" id="8P8-EN-NKm"/>
                                             <constraint firstItem="8jb-dV-1T8" firstAttribute="leading" secondItem="oXX-gH-Jw1" secondAttribute="leading" id="9aU-ia-UW0"/>
                                             <constraint firstItem="ent-BS-ln8" firstAttribute="top" secondItem="9lP-vh-QF9" secondAttribute="top" id="BkM-B5-CqQ"/>
@@ -257,6 +262,8 @@
                                             <constraint firstAttribute="trailing" secondItem="Czh-ja-e7s" secondAttribute="trailing" id="uwt-Ny-IDI"/>
                                             <constraint firstItem="RGw-xU-vwG" firstAttribute="top" secondItem="aTj-QP-wZN" secondAttribute="bottom" constant="16" id="vyn-ST-cFB"/>
                                             <constraint firstAttribute="trailing" secondItem="Ma1-sd-IO5" secondAttribute="trailing" constant="24" id="yWd-TT-HGI"/>
+                                            <constraint firstAttribute="trailing" secondItem="vwB-6m-RoR" secondAttribute="trailing" id="yn8-m1-TzW"/>
+                                            <constraint firstItem="vwB-6m-RoR" firstAttribute="leading" secondItem="oXX-gH-Jw1" secondAttribute="leading" id="z9P-qA-P6B"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -284,6 +291,7 @@
                     <connections>
                         <outlet property="aboutSectionView" destination="Czh-ja-e7s" id="ji6-ei-G1p"/>
                         <outlet property="castSectionView" destination="8jb-dV-1T8" id="rAB-Je-RLJ"/>
+                        <outlet property="factsSectionView" destination="vwB-6m-RoR" id="NCt-hW-3cT"/>
                         <outlet property="genresStackView" destination="RGw-xU-vwG" id="pQf-pV-sZW"/>
                         <outlet property="movieImageView" destination="MzK-sx-c9S" id="cyB-89-3Hg"/>
                         <outlet property="otherMovies" destination="iAd-Jh-low" id="qE1-tB-MVl"/>
@@ -291,7 +299,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ovc-r8-PZN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="169" y="-951"/>
+            <point key="canvasLocation" x="158" y="-1005"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="gKn-Vm-4Ik">
@@ -403,9 +411,10 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="lxI-uA-ruY">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="barTintColor" red="0.13491115763015052" green="0.13653659326424872" blue="0.13653659326424872" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="textColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>

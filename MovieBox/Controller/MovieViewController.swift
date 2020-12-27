@@ -17,6 +17,7 @@ final class MovieViewController: UIViewController {
     @IBOutlet weak var aboutSectionView: SectionView!
     @IBOutlet weak var castSectionView: SectionView!
     @IBOutlet weak var otherMovies: SectionView!
+    @IBOutlet weak var factsSectionView: SectionView!
     
     lazy var aboutLbl: UILabel = {
         let lbl = UILabel()
@@ -44,9 +45,32 @@ final class MovieViewController: UIViewController {
         return collectionView
     }()
     
+    lazy var factItemsView: ItemsStackView = {
+        let itemsStackView = ItemsStackView(itemViews: factsData.map({ (fact) -> ItemView in
+            let itemView = ItemView()
+            itemView.titleLbl.text = fact.1
+            itemView.subtitleLbl.text = fact.0
+            return itemView
+        }))
+        
+        return itemsStackView
+    }()
+    
     // MARK: - Props
     
     private let movie = Movie.getFakeMovies()[0]
+    
+    private let recommendedMovies = Movie.getFakeMovies()
+    
+    private var factsData: [(String, String)] {
+        return [
+            ("Исходное название",  movie.name),
+            ("Исходное название",  movie.name),
+            ("Исходное название",  movie.name),
+        ]
+    }
+    
+    // MARK: - UI
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,37 +79,45 @@ final class MovieViewController: UIViewController {
     
     private func setUpUI () {
         self.view.backgroundColor = UIColor.darkColor
-        aboutSectionView.setUp()
-        castSectionView.setUp()
-        otherMovies.setUp()
+        setUpSectionView(sectionView: aboutSectionView, title: "Подробнее", subtitle: "Обзор", subview: aboutLbl)
+        setUpSectionView(sectionView: castSectionView, title: "Актерский состав", subtitle: "TOP BILLED CAST", subview: castCollectionView)
+        setUpSectionView(sectionView: otherMovies, title: "Похоже фильмы", subtitle: "мотрите вместе с нами", subview: (otherMoviesCollectionView))
+        setUpSectionView(sectionView: factsSectionView, title: "Факты", subtitle: "Могут быть интересными", subview: factItemsView)
         
-        aboutSectionView.titleLabel.text = "Подробнее"
-        aboutSectionView.subtitleLabel.text = "Обзор"
-        aboutSectionView.contentView.addSubview(aboutLbl)
         aboutLbl.snp.makeConstraints { (make) in
-            make.leading.trailing.top.bottom.equalToSuperview()
+            make.bottom.top.leading.trailing.equalToSuperview()
         }
         
-        castSectionView.titleLabel.text = "Актерский состав"
-        castSectionView.subtitleLabel.text = "TOP BILLED CAST"
-        castSectionView.contentView.addSubview(castCollectionView)
         castCollectionView.snp.makeConstraints { (make) in
-            make.leading.trailing.top.bottom.equalToSuperview()
+            make.bottom.top.leading.trailing.equalToSuperview()
             make.height.equalTo(250)
         }
-        
-        otherMovies.titleLabel.text = "Похоже фильмы"
-        otherMovies.subtitleLabel.text = "Смотрите вместе с нами"
-        otherMovies.contentView.addSubview(otherMoviesCollectionView)
+
         otherMoviesCollectionView.snp.makeConstraints { (make) in
-            make.leading.trailing.top.bottom.equalToSuperview()
+            make.bottom.top.leading.trailing.equalToSuperview()
             make.height.equalTo(300)
+        }
+        
+        factItemsView.snp.makeConstraints { (make) in
+            make.bottom.top.leading.trailing.equalToSuperview()
         }
         
         setUpMovieBackground()
         generateGenreChips()
     }
     
+    
+    private func setUpSectionView (
+        sectionView: SectionView,
+        title: String,
+        subtitle: String,
+        subview: UIView
+    ) {
+        sectionView.setUp()
+        sectionView.titleLabel.text = title
+        sectionView.subtitleLabel.text = subtitle
+        sectionView.contentView.addSubview(subview)
+    }
     
     private func generateGenreChips () {
         genresStackView.alignment = .leading
@@ -113,7 +145,7 @@ final class MovieViewController: UIViewController {
 
 extension MovieViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return collectionView is PersonList ? Person.getFake().count : Movie.getFakeMovies().count
+        return collectionView is PersonList ? Person.getFake().count : recommendedMovies.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -127,11 +159,20 @@ extension MovieViewController: UICollectionViewDelegate, UICollectionViewDataSou
             return cell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "movieCell", for: indexPath) as! MovieCell
-            let movie = Movie.getFakeMovies()[indexPath.row]
+            let movie = recommendedMovies[indexPath.row]
 
             cell.movieTitleLbl.text = movie.name
             cell.movieDescriptionLbl.text = movie.date
             return cell
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if (collectionView is MoviesList) {
+            let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+            if let movieVC = storyboard.instantiateViewController(withIdentifier: "MovieViewController") as? MovieViewController {
+                self.navigationController?.pushViewController(movieVC, animated: true)
+            }
         }
     }
 }

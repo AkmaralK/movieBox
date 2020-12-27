@@ -86,6 +86,9 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "movieDetails", sender: nil)
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        if let movieVC = storyboard.instantiateViewController(withIdentifier: "MovieViewController") as? MovieViewController {
+            self.navigationController?.pushViewController(movieVC, animated: true)
+        }
     }
 }
