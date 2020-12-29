@@ -20,6 +20,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         movieCollectionView.dataSource = self
         movieCollectionView.delegate = self
         searchBar.sizeToFit()
+        searchBar.backgroundColor = UIColor.darkColor
         navigationItem.titleView = searchBar
         searchBar.placeholder = "Search MovieBox"
        // self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
