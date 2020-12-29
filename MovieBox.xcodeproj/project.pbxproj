@@ -23,6 +23,10 @@
 		FB2E051A2595E9E70097770E /* PersonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2E05192595E9E70097770E /* PersonCell.swift */; };
 		FB2E051C2595EA520097770E /* PersonList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2E051B2595EA520097770E /* PersonList.swift */; };
 		FB2E051E2595EB7C0097770E /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2E051D2595EB7C0097770E /* Person.swift */; };
+		FB4CEF74259B91E20096E538 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4CEF73259B91E20096E538 /* APIService.swift */; };
+		FB61FA29259A117D00171182 /* APIBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB61FA28259A117D00171182 /* APIBase.swift */; };
+		FB61FA2B259A124E00171182 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB61FA2A259A124E00171182 /* Endpoint.swift */; };
+		FB61FA2D259A12DC00171182 /* RequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB61FA2C259A12DC00171182 /* RequestError.swift */; };
 		FB6D84F02595CF8B006541A4 /* ChipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6D84EF2595CF8B006541A4 /* ChipView.swift */; };
 		FBA1D46D2598BA4A00DBD348 /* ItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA1D46C2598BA4A00DBD348 /* ItemView.swift */; };
 		FBA1D46F2598BC3C00DBD348 /* ItemsStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA1D46E2598BC3C00DBD348 /* ItemsStackView.swift */; };
@@ -54,6 +58,10 @@
 		FB2E05192595E9E70097770E /* PersonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonCell.swift; sourceTree = "<group>"; };
 		FB2E051B2595EA520097770E /* PersonList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonList.swift; sourceTree = "<group>"; };
 		FB2E051D2595EB7C0097770E /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
+		FB4CEF73259B91E20096E538 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		FB61FA28259A117D00171182 /* APIBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIBase.swift; sourceTree = "<group>"; };
+		FB61FA2A259A124E00171182 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
+		FB61FA2C259A12DC00171182 /* RequestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestError.swift; sourceTree = "<group>"; };
 		FB6D84EF2595CF8B006541A4 /* ChipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipView.swift; sourceTree = "<group>"; };
 		FBA1D46C2598BA4A00DBD348 /* ItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemView.swift; sourceTree = "<group>"; };
 		FBA1D46E2598BC3C00DBD348 /* ItemsStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsStackView.swift; sourceTree = "<group>"; };
@@ -168,6 +176,7 @@
 		FB0367A22593A18200CF2389 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				FB61FA27259A116F00171182 /* Networking */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -188,6 +197,17 @@
 				FB0367A52593A39E00CF2389 /* UIColor+Ext.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		FB61FA27259A116F00171182 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				FB61FA28259A117D00171182 /* APIBase.swift */,
+				FB61FA2A259A124E00171182 /* Endpoint.swift */,
+				FB61FA2C259A12DC00171182 /* RequestError.swift */,
+				FB4CEF73259B91E20096E538 /* APIService.swift */,
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -315,15 +335,19 @@
 				FB2E051E2595EB7C0097770E /* Person.swift in Sources */,
 				FBAAD238259628F0004B572D /* SearchMovieCell.swift in Sources */,
 				FBCC3C8F2594DC7000B13416 /* MovieViewController.swift in Sources */,
+				FB61FA2B259A124E00171182 /* Endpoint.swift in Sources */,
 				FBCC3C842594B05500B13416 /* MovieCell.swift in Sources */,
+				FB61FA29259A117D00171182 /* APIBase.swift in Sources */,
 				FBCE898C259653B800868DFE /* MainTableViewCell.swift in Sources */,
 				FB2E051A2595E9E70097770E /* PersonCell.swift in Sources */,
 				FB6D84F02595CF8B006541A4 /* ChipView.swift in Sources */,
 				FB03678C2593A14D00CF2389 /* AppDelegate.swift in Sources */,
 				FB2E051C2595EA520097770E /* PersonList.swift in Sources */,
+				FB61FA2D259A12DC00171182 /* RequestError.swift in Sources */,
 				FB03678E2593A14D00CF2389 /* SceneDelegate.swift in Sources */,
 				FB0367A82593A8DD00CF2389 /* Movie.swift in Sources */,
 				FBA1D46F2598BC3C00DBD348 /* ItemsStackView.swift in Sources */,
+				FB4CEF74259B91E20096E538 /* APIService.swift in Sources */,
 				FB2E05162595DF830097770E /* Genre.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

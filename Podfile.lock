@@ -1,20 +1,24 @@
 PODS:
   - MBCircularProgressBar (0.3.5)
   - SnapKit (5.0.1)
+  - SVProgressHUD (2.2.5)
 
 DEPENDENCIES:
   - MBCircularProgressBar
   - SnapKit
+  - SVProgressHUD
 
 SPEC REPOS:
   trunk:
     - MBCircularProgressBar
     - SnapKit
+    - SVProgressHUD
 
 SPEC CHECKSUMS:
   MBCircularProgressBar: 0b795b722a5eb5b0923822f90474e2576a1a7855
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 
-PODFILE CHECKSUM: b18ab1502a7fd53fbd540baaa7d2f33850746c57
+PODFILE CHECKSUM: e97cbb943e6058bb8664f253ac125d72140abd9a
 
 COCOAPODS: 1.10.0
