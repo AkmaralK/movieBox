@@ -34,13 +34,13 @@ enum Endpoint {
             case .getTopRated(apiKey: let key, language: let language, let page):
                 return [
                     URLQueryItem(name: "apiKey", value: key),
-                    URLQueryItem(name: "q", value: quoteStr),
+                    URLQueryItem(name: "language", value: language),
                     URLQueryItem(name: "page", value: "\(page)")
                 ]
             case .getUpcoming(apiKey: let key, language: let language, let page):
                 return [
                     URLQueryItem(name: "apiKey", value: key),
-                    URLQueryItem(name: "q", value: quoteStr),
+                    URLQueryItem(name: "language", value: language),
                     URLQueryItem(name: "page", value: "\(page)")
                 ]
         }
