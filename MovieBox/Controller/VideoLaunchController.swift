@@ -57,6 +57,7 @@ class VideoLaunchController: UIViewController {
 
             if time == avAssets.duration {
                 let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainViewController") as! UITabBarController  //MainViewController
+                vc.modalPresentationStyle = .fullScreen
                // self?.navigationController?.pushViewController(vc, animated: true)
                 self?.present(vc, animated: true, completion: nil)
             }
