@@ -12,6 +12,35 @@ import AVFoundation
 
 class VideoLaunchController: UIViewController {
 
+    var audioPlayer = AVAudioPlayer()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        playSound(file: "launchscreen", ext: "wav")
+    }
+
+    //------------------------------------------------------------------------------
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.setupAVPlayer()  // Call method to setup AVPlayer & AVPlayerLayer to play video
+    }
+    
+    
+    
+    
+    func playSound(file:String, ext:String) -> Void {
+        do {
+            let url = URL.init(fileURLWithPath: Bundle.main.path(forResource: file, ofType: ext)!)
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            audioPlayer.prepareToPlay()
+            audioPlayer.play()
+        } catch let error {
+            NSLog(error.localizedDescription)
+        }
+    }
+    
+    
     func setupAVPlayer() {
 
         let videoURL = Bundle.main.url(forResource: "launchscreen", withExtension: "mp4") // Get video url
@@ -34,17 +63,4 @@ class VideoLaunchController: UIViewController {
         }
     }
 
-    //------------------------------------------------------------------------------
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-
-    //------------------------------------------------------------------------------
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        self.setupAVPlayer()  // Call method to setup AVPlayer & AVPlayerLayer to play video
-    }
-    
 }

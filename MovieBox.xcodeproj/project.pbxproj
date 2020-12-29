@@ -13,6 +13,7 @@
 		540C0AEF2598FF1900B44E5D /* MovieCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540C0AEE2598FF1900B44E5D /* MovieCollectionViewCell.swift */; };
 		A29DBBC2259A42500020F066 /* VideoLaunchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29DBBC1259A42500020F066 /* VideoLaunchController.swift */; };
 		A29DBBC5259A42BB0020F066 /* launchscreen.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = A29DBBC4259A42BB0020F066 /* launchscreen.mp4 */; };
+		A29DBBC8259AF2BC0020F066 /* launchscreen.wav in Resources */ = {isa = PBXBuildFile; fileRef = A29DBBC7259AF2BC0020F066 /* launchscreen.wav */; };
 		FB03678C2593A14D00CF2389 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB03678B2593A14D00CF2389 /* AppDelegate.swift */; };
 		FB03678E2593A14D00CF2389 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB03678D2593A14D00CF2389 /* SceneDelegate.swift */; };
 		FB0367902593A14D00CF2389 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB03678F2593A14D00CF2389 /* MainViewController.swift */; };
@@ -45,6 +46,7 @@
 		540C0AEE2598FF1900B44E5D /* MovieCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCollectionViewCell.swift; sourceTree = "<group>"; };
 		A29DBBC1259A42500020F066 /* VideoLaunchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoLaunchController.swift; sourceTree = "<group>"; };
 		A29DBBC4259A42BB0020F066 /* launchscreen.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = launchscreen.mp4; path = ../../../../Downloads/launchscreen.mp4; sourceTree = "<group>"; };
+		A29DBBC7259AF2BC0020F066 /* launchscreen.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = launchscreen.wav; sourceTree = "<group>"; };
 		B67312F6D2B7E99D9E744FA5 /* Pods_MovieBox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MovieBox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB0367882593A14D00CF2389 /* MovieBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB03678B2593A14D00CF2389 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -167,6 +169,7 @@
 		FB0367A12593A16600CF2389 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				A29DBBC7259AF2BC0020F066 /* launchscreen.wav */,
 				A29DBBC4259A42BB0020F066 /* launchscreen.mp4 */,
 				FB03678F2593A14D00CF2389 /* MainViewController.swift */,
 				FBCC3C8E2594DC7000B13416 /* MovieViewController.swift */,
@@ -266,6 +269,7 @@
 				FB0367952593A14F00CF2389 /* Assets.xcassets in Resources */,
 				A29DBBC5259A42BB0020F066 /* launchscreen.mp4 in Resources */,
 				FB0367932593A14D00CF2389 /* Main.storyboard in Resources */,
+				A29DBBC8259AF2BC0020F066 /* launchscreen.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
