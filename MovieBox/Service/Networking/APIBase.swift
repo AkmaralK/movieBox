@@ -31,7 +31,8 @@ extension URLSession {
                     let decoder = JSONDecoder()
                     let jsonResponse = try decoder.decode(T.self, from: jsonData)
                     completion(.success(jsonResponse))
-                } catch {
+                } catch let e {
+                    print(e)
                     if let data = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? NSDictionary {
                         completion(.failure(.withDic(data: data)))
                     } else {
@@ -47,9 +48,10 @@ extension URLSession {
     func createRequest (from endpoint: Endpoint) -> URLRequest {
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
-        urlComponents.host = endpoint.baseURL
+        urlComponents.host = Endpoint.baseURL
         urlComponents.path = endpoint.path
         urlComponents.queryItems = endpoint.queryItems
-        return URLRequest(url: urlComponents.url!)
+        let request = URLRequest(url: urlComponents.url!)
+        return request
     }
 }

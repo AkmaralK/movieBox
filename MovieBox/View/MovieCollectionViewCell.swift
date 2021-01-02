@@ -14,6 +14,6 @@ class MovieCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     func setup(with movie: Movie) {
         movieImageView.image = UIImage(named: "movieImg")
-        nameLabel.text = movie.name
+        nameLabel.text = movie.title
     }
 }

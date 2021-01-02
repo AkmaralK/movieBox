@@ -1,24 +1,34 @@
 PODS:
   - MBCircularProgressBar (0.3.5)
+  - SDWebImage (5.10.0):
+    - SDWebImage/Core (= 5.10.0)
+  - SDWebImage/Core (5.10.0)
+  - SkeletonView (1.11.0)
   - SnapKit (5.0.1)
   - SVProgressHUD (2.2.5)
 
 DEPENDENCIES:
   - MBCircularProgressBar
+  - SDWebImage
+  - SkeletonView
   - SnapKit
   - SVProgressHUD
 
 SPEC REPOS:
   trunk:
     - MBCircularProgressBar
+    - SDWebImage
+    - SkeletonView
     - SnapKit
     - SVProgressHUD
 
 SPEC CHECKSUMS:
   MBCircularProgressBar: 0b795b722a5eb5b0923822f90474e2576a1a7855
+  SDWebImage: 9169792e9eec3e45bba2a0c02f74bf8bd922d1ee
+  SkeletonView: cc84ce90a804dd0dd7198dd802833411c8a64eaf
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 
-PODFILE CHECKSUM: e97cbb943e6058bb8664f253ac125d72140abd9a
+PODFILE CHECKSUM: 683f5afd8111727ba953ed6b67136f14d544c6c2
 
 COCOAPODS: 1.10.0

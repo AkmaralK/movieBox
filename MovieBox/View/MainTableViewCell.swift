@@ -8,9 +8,11 @@
 
 import UIKit
 
-class MainTableViewCell: UITableViewCell {
+class MainTableViewCell: UITableViewCell, UniqueIdHelper {
     
     @IBOutlet weak var sectionView: SectionView!
+    
+    static var uniqueID: String = "mainCell"
     
     lazy var moviesCollectionView: MoviesList = {
         let collectionView = MoviesList()

@@ -7,17 +7,21 @@
 //
 
 import UIKit
+import MBCircularProgressBar
 
-final class MovieViewController: UIViewController {
+final class MovieViewController: UIViewController, UniqueIdHelper, Alertable {
     
     // MARK: - Oulets
     
     @IBOutlet weak var movieImageView: UIImageView!
+    @IBOutlet weak var movieTitleLbl: UILabel!
+    @IBOutlet weak var movieDesLbl: UILabel!
     @IBOutlet weak var genresStackView: UIStackView!
     @IBOutlet weak var aboutSectionView: SectionView!
     @IBOutlet weak var castSectionView: SectionView!
     @IBOutlet weak var otherMovies: SectionView!
     @IBOutlet weak var factsSectionView: SectionView!
+    @IBOutlet weak var progressView: MBCircularProgressBarView!
     
     lazy var aboutLbl: UILabel = {
         let lbl = UILabel()
@@ -25,7 +29,6 @@ final class MovieViewController: UIViewController {
         lbl.font = .systemFont(ofSize: 14)
         lbl.numberOfLines = 0
         lbl.alpha = 0.6
-        lbl.text = "Отец Вергара, бывший боксёр с криминальным прошлым, прослывший экзорцистом, сослан на службу в отдалённый испанский городок. Вергара стремится забыть тёмные моменты прошлого и начать новую жизнь, но в городке начинают твориться необъяснимые вещи. Священнослужитель, с помощью мэра и местного любознательного ветеринара пытающийся найти объяснение странностям, натыкается на древнюю монету. Некоторые реликвии прокляты, и, оказавшись не в тех руках, могут разрушить устоявшийся мировой порядок."
         return lbl
     }()
     
@@ -58,23 +61,45 @@ final class MovieViewController: UIViewController {
     
     // MARK: - Props
     
-    private let movie = Movie.getFakeMovies()[0]
+    var media: MediaData!
     
-    private let recommendedMovies = Movie.getFakeMovies()
+    static var uniqueID: String = "MovieViewController"
+    
+    private var recommendedMovies: DataSection<MediaData> = DataSection(
+        data: [],
+        page: 1,
+        isLoading: true,
+        isFinished: false
+    )
+    
+    private var castActors: DataSection<Person> = DataSection(
+        data: [],
+        page: 1,
+        isLoading: true,
+        isFinished: false
+    )
+    
+    private var mediaType: MediaType {
+        return media is Movie ? MediaType.movie : MediaType.tv
+    }
     
     private var factsData: [(String, String)] {
         return [
-            ("Исходное название",  movie.name),
-            ("Исходное название",  movie.name),
-            ("Исходное название",  movie.name),
+            ("Исходное название",  media.title),
+            ("Исходное название",  media.title),
+            ("Исходное название",  media.title),
         ]
     }
     
     // MARK: - UI
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setUpUI()
+        self.updateUI()
+        self.loadRecommended()
+        self.loadPeople()
     }
     
     private func setUpUI () {
@@ -106,6 +131,13 @@ final class MovieViewController: UIViewController {
         generateGenreChips()
     }
     
+    private func updateUI () {
+        self.movieImageView.sd_setImage(with: URL(string: media.bigImageUrl ?? ""))
+        self.movieTitleLbl.text = media.title
+        self.movieDesLbl.text = media.date
+        self.progressView.value = CGFloat(10 * media.voteAverage)
+        self.aboutLbl.text = media.overview 
+    }
     
     private func setUpSectionView (
         sectionView: SectionView,
@@ -123,7 +155,7 @@ final class MovieViewController: UIViewController {
         genresStackView.alignment = .leading
         genresStackView.distribution = .fillEqually
         
-        movie.genres.forEach { (genre) in
+        media.genres.forEach { (genre) in
             let genreChipView = createGenreChip (genre: genre)
             genresStackView.addArrangedSubview(genreChipView)
         }
@@ -143,26 +175,97 @@ final class MovieViewController: UIViewController {
     }
 }
 
+// MARK: - Networking
+
+extension MovieViewController {
+    private func loadRecommended () {
+        ApiService.movieLoader.loadRecommendationsMovie(mediaType: mediaType, id: media.id, complitionHandler: { (movieResponse) in
+            self.recommendedMovies.isLoading = false
+            self.recommendedMovies.next(totalPages: movieResponse.total_pages)
+            self.recommendedMovies.data = movieResponse.results
+            self.otherMoviesCollectionView.reloadData()
+        }) { (msg) in
+            self.showAlert("Error", msg)
+        }
+    }
+    
+    private func paginatieRecommended () {
+        recommendedMovies.isLoading = true
+        self.otherMoviesCollectionView.reloadData()
+
+        ApiService.movieLoader.loadRecommendationsMovie(mediaType: mediaType, id: media.id, page: recommendedMovies.page, complitionHandler: { (movieResponse) in
+            self.recommendedMovies.isLoading = false
+            self.recommendedMovies.next(totalPages: movieResponse.total_pages)
+            self.recommendedMovies.data.append(contentsOf: movieResponse.results)
+            self.otherMoviesCollectionView.reloadData()
+        }) { (msg) in
+            self.showAlert("Error", msg)
+        }
+    }
+    
+    private func loadPeople () {
+        ApiService.shared.loadCastPeople(mediaType: mediaType, movieID: media.id, complitionHandler: { (personsResponse) in
+            self.castActors.data = personsResponse.cast
+            self.castActors.isFinished = true
+            self.castActors.isLoading = false
+            self.castCollectionView.reloadData()
+        }) { (msg) in
+            self.showAlert("Error", msg)
+        }
+    }
+}
+
+
+// MARK: - Collection View
+
 extension MovieViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return collectionView is PersonList ? Person.getFake().count : recommendedMovies.count
+        if (collectionView is PersonList) {
+            if (castActors.isLoading) {
+                return castActors.data.count + 3
+            } else {
+                return castActors.data.count
+            }
+        } else if (collectionView is MoviesList) {
+            if (recommendedMovies.isLoading) {
+                return recommendedMovies.data.count + 3
+            } else {
+                return recommendedMovies.data.count
+            }
+        } else {
+            return 0
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if (collectionView is PersonList) {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "personCell", for: indexPath) as! PersonCell
-            let personData = Person.getFake()[indexPath.row]
-
-            cell.personNameLbl.text = personData.name
-            cell.personDescriptionLbl.text = personData.characterName
+            
+            if (castActors.isLoading && indexPath.row >= castActors.data.count) {
+                cell.showCellSkeleton()
+            } else {
+                let personData = castActors.data[indexPath.row]
+                cell.hideCellSkeleton()
+                cell.avatarImage.sd_setImage(with: URL(string: personData.avatarURL))
+                cell.personNameLbl.text = personData.name
+                cell.personDescriptionLbl.text = personData.characterName
+            }
+            
             return cell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "movieCell", for: indexPath) as! MovieCell
-            let movie = recommendedMovies[indexPath.row]
-
-            cell.movieTitleLbl.text = movie.name
-            cell.movieDescriptionLbl.text = movie.date
+            
+            if (recommendedMovies.isLoading && indexPath.row >= recommendedMovies.data.count) {
+                cell.showCellSkeleton()
+            } else {
+                let movie = recommendedMovies.data[indexPath.row]
+                cell.hideCellSkeleton()
+                cell.movieTitleLbl.text = movie.title
+                cell.movieDescriptionLbl.text = movie.date
+                cell.movieImage.sd_setImage(with: URL(string: movie.imageUrl ?? ""))
+            }
+            
             return cell
         }
     }
@@ -170,8 +273,22 @@ extension MovieViewController: UICollectionViewDelegate, UICollectionViewDataSou
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if (collectionView is MoviesList) {
             let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-            if let movieVC = storyboard.instantiateViewController(withIdentifier: "MovieViewController") as? MovieViewController {
+            if let movieVC = storyboard.instantiateViewController(withIdentifier: MovieViewController.uniqueID) as? MovieViewController {
+                movieVC.media = recommendedMovies.data[indexPath.row]
                 self.navigationController?.pushViewController(movieVC, animated: true)
+            }
+        }
+    }
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        if (scrollView == otherMoviesCollectionView) {
+            let offsetX = scrollView.contentOffset.x
+            let contentWidth = scrollView.contentSize.width
+            
+            if contentWidth < offsetX + scrollView.frame.size.width + 200 {
+                if (!recommendedMovies.isFinished) {
+                    paginatieRecommended()
+                }
             }
         }
     }

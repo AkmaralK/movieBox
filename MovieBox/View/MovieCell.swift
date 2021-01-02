@@ -7,13 +7,17 @@
 //
 
 import UIKit
+import SkeletonView
 
-class MovieCell: UICollectionViewCell {
+class MovieCell: UICollectionViewCell, UniqueIdHelper {
+    
+    static var uniqueID: String = "movieCell"
     
     lazy var movieImage: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.backgroundColor = .red
+        imageView.isSkeletonable = true
         return imageView
     }()
     
@@ -22,6 +26,7 @@ class MovieCell: UICollectionViewCell {
         label.font = .systemFont(ofSize: 14)
         label.textColor = .white
         label.numberOfLines = 2
+        label.isSkeletonable = true
         return label
     }()
     
@@ -30,6 +35,7 @@ class MovieCell: UICollectionViewCell {
         label.font = .systemFont(ofSize: 12)
         label.textColor = .gray
         label.numberOfLines = 1
+        label.isSkeletonable = true
         return label
     }()
     
@@ -41,11 +47,13 @@ class MovieCell: UICollectionViewCell {
         btn.layer.borderColor = UIColor.rgb(200, 200, 200).cgColor
         btn.layer.cornerRadius = 4
         btn.titleLabel?.font = .systemFont(ofSize: 13)
+        btn.isSkeletonable = true
         return btn
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.isSkeletonable = true
         self.setUpViews()
     }
     
@@ -66,6 +74,25 @@ class MovieCell: UICollectionViewCell {
         
         addUIConstraints()
     }
+    
+    func showCellSkeleton () {
+        let gradient = SkeletonGradient(baseColor: UIColor.wetAsphalt)
+        
+        let animation = SkeletonAnimationBuilder().makeSlidingAnimation(withDirection: .leftRight)
+        movieImage.showAnimatedGradientSkeleton(usingGradient: gradient, animation: animation)
+        
+        movieTitleLbl.showAnimatedGradientSkeleton(usingGradient: gradient, animation: animation)
+        movieDescriptionLbl.showAnimatedGradientSkeleton(usingGradient: gradient, animation: animation)
+        favoriteBtn.showAnimatedGradientSkeleton(usingGradient: gradient, animation: animation)
+    }
+    
+    func hideCellSkeleton () {
+        movieImage.hideSkeleton()
+        movieTitleLbl.hideSkeleton()
+        movieDescriptionLbl.hideSkeleton()
+        favoriteBtn.hideSkeleton()
+    }
+    
     
     private func addShadow () {
         let layer = self.contentView.layer

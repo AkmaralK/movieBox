@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SkeletonView
 
 class PersonCell: UICollectionViewCell {
     lazy var avatarImage: UIImageView = {
@@ -45,6 +46,23 @@ class PersonCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func showCellSkeleton () {
+        let gradient = SkeletonGradient(baseColor: UIColor.wetAsphalt)
+        
+        let animation = SkeletonAnimationBuilder().makeSlidingAnimation(withDirection: .leftRight)
+        avatarImage.showAnimatedGradientSkeleton(usingGradient: gradient, animation: animation)
+        
+        personNameLbl.showAnimatedGradientSkeleton(usingGradient: gradient, animation: animation)
+        personDescriptionLbl.showAnimatedGradientSkeleton(usingGradient: gradient, animation: animation)
+    }
+    
+    func hideCellSkeleton () {
+        avatarImage.hideSkeleton()
+        personNameLbl.hideSkeleton()
+        personDescriptionLbl.hideSkeleton()
+    }
+    
     
     private func setUpViews () {
         self.contentView.backgroundColor = UIColor.rgb(25, 25, 25)

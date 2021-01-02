@@ -9,5 +9,7 @@ target 'MovieBox' do
   pod "MBCircularProgressBar"
   pod 'SnapKit'
   pod 'SVProgressHUD'
+  pod 'SDWebImage'
+  pod 'SkeletonView'
 
 end

@@ -56,12 +56,10 @@ class VideoLaunchController: UIViewController {
         avPlayer.addPeriodicTimeObserver(forInterval: CMTime(seconds: 1, preferredTimescale: 1) , queue: .main) { [weak self] time in
 
             if time == avAssets.duration {
-                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainViewController") as! UITabBarController  //MainViewController
+                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: LoadingViewController.uniqueID) as! LoadingViewController
                 vc.modalPresentationStyle = .fullScreen
-               // self?.navigationController?.pushViewController(vc, animated: true)
                 self?.present(vc, animated: true, completion: nil)
             }
         }
     }
-
 }
