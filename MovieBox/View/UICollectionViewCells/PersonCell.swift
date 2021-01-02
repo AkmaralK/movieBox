@@ -9,7 +9,10 @@
 import UIKit
 import SkeletonView
 
-class PersonCell: UICollectionViewCell {
+class PersonCell: UICollectionViewCell, UniqueIdHelper {
+    
+    static var uniqueID: String = "personCell"
+    
     lazy var avatarImage: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill

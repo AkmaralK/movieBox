@@ -39,11 +39,28 @@ final class ApiService {
         movieID: Int,
         complitionHandler: @escaping ((PersonResponse) -> Void),
         complitionHandlerError: @escaping ((String) -> Void)) {
-        let endpoint = Endpoint.getMovieCast(apiKey: apiKey, movieID: movieID, language: "en", mediaType: mediaType)
-        URLSession.shared.request(for: PersonResponse.self, endpoint) { (result) in
+            let endpoint = Endpoint.getMovieCast(apiKey: apiKey, movieID: movieID, language: "en", mediaType: mediaType)
+            URLSession.shared.request(for: PersonResponse.self, endpoint) { (result) in
+                switch (result) {
+                case .success(let personResponse):
+                    complitionHandler(personResponse)
+                case .failure(let err):
+                    complitionHandlerError(err.errorMsg)
+                }
+            }
+    }
+    
+    func loadImages (
+        movieID: Int,
+        mediaType: MediaType,
+        completionHandler: @escaping (([MovieImage]) -> Void),
+        complitionHandlerError: @escaping ((String) -> Void)) {
+        let endpoint = Endpoint.getImages(apiKey: apiKey, id: movieID, language: "", mediaType: mediaType)
+        
+        URLSession.shared.request(for: MovieImages.self, endpoint) { (result) in
             switch (result) {
-            case .success(let personResponse):
-                complitionHandler(personResponse)
+            case .success(let imagesResponse):
+                completionHandler(imagesResponse.backdrops)
             case .failure(let err):
                 complitionHandlerError(err.errorMsg)
             }

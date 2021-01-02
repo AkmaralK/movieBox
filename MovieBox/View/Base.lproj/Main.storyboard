@@ -102,12 +102,12 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="2000"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="movieImg" translatesAutoresizingMaskIntoConstraints="NO" id="9lP-vh-QF9">
-                                                <rect key="frame" x="0.0" y="565.5" width="414" height="1434.5"/>
+                                                <rect key="frame" x="0.0" y="565.5" width="414" height="566"/>
                                             </imageView>
                                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ent-BS-ln8">
-                                                <rect key="frame" x="0.0" y="565.5" width="414" height="1434.5"/>
+                                                <rect key="frame" x="0.0" y="565.5" width="414" height="566"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="1M6-0c-t2I">
-                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="1434.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="566"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 </view>
                                                 <blurEffect style="dark"/>
@@ -234,13 +234,19 @@
                                                 <rect key="frame" x="0.0" y="1136" width="414" height="128"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </view>
+                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YHo-2n-GjG" customClass="SectionView" customModule="MovieBox" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="1496" width="414" height="140"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                            </view>
                                         </subviews>
                                         <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="8jb-dV-1T8" secondAttribute="trailing" id="0Lb-61-Lci"/>
                                             <constraint firstItem="Czh-ja-e7s" firstAttribute="top" secondItem="Ma1-sd-IO5" secondAttribute="bottom" constant="20" id="4Qa-u5-AZ3"/>
                                             <constraint firstItem="Ma1-sd-IO5" firstAttribute="top" secondItem="RGw-xU-vwG" secondAttribute="bottom" constant="20" id="4cH-zb-UJg"/>
+                                            <constraint firstItem="9lP-vh-QF9" firstAttribute="bottom" secondItem="YHo-2n-GjG" secondAttribute="bottom" id="5qm-ZG-w7X"/>
                                             <constraint firstItem="iAd-Jh-low" firstAttribute="top" secondItem="8jb-dV-1T8" secondAttribute="bottom" constant="24" id="7AN-rU-KPG"/>
+                                            <constraint firstItem="YHo-2n-GjG" firstAttribute="top" secondItem="vwB-6m-RoR" secondAttribute="bottom" constant="24" id="7Ay-Eg-37q"/>
                                             <constraint firstItem="vwB-6m-RoR" firstAttribute="top" secondItem="iAd-Jh-low" secondAttribute="bottom" constant="24" id="7vC-dB-g98"/>
                                             <constraint firstItem="9lP-vh-QF9" firstAttribute="leading" secondItem="oXX-gH-Jw1" secondAttribute="leading" id="8P8-EN-NKm"/>
                                             <constraint firstItem="8jb-dV-1T8" firstAttribute="leading" secondItem="oXX-gH-Jw1" secondAttribute="leading" id="9aU-ia-UW0"/>
@@ -249,7 +255,6 @@
                                             <constraint firstItem="9lP-vh-QF9" firstAttribute="top" secondItem="aTj-QP-wZN" secondAttribute="bottom" id="Idk-Zy-1iE"/>
                                             <constraint firstItem="Ma1-sd-IO5" firstAttribute="leading" secondItem="oXX-gH-Jw1" secondAttribute="leading" constant="24" id="Img-Yk-wU0"/>
                                             <constraint firstItem="iAd-Jh-low" firstAttribute="leading" secondItem="oXX-gH-Jw1" secondAttribute="leading" id="Mgc-CU-KLU"/>
-                                            <constraint firstAttribute="bottom" secondItem="9lP-vh-QF9" secondAttribute="bottom" id="Uf9-L9-7qf"/>
                                             <constraint firstAttribute="trailing" secondItem="9lP-vh-QF9" secondAttribute="trailing" id="Yjg-Xf-1hE"/>
                                             <constraint firstAttribute="trailing" secondItem="aTj-QP-wZN" secondAttribute="trailing" id="Zt9-zr-lKs"/>
                                             <constraint firstItem="aTj-QP-wZN" firstAttribute="top" secondItem="oXX-gH-Jw1" secondAttribute="top" id="d17-wh-zLE"/>
@@ -257,7 +262,9 @@
                                             <constraint firstItem="aTj-QP-wZN" firstAttribute="leading" secondItem="oXX-gH-Jw1" secondAttribute="leading" id="ff1-1j-Y93"/>
                                             <constraint firstItem="8jb-dV-1T8" firstAttribute="top" secondItem="Czh-ja-e7s" secondAttribute="bottom" constant="24" id="gBd-2h-gIG"/>
                                             <constraint firstItem="Czh-ja-e7s" firstAttribute="leading" secondItem="oXX-gH-Jw1" secondAttribute="leading" id="glZ-dh-Dz0"/>
+                                            <constraint firstItem="YHo-2n-GjG" firstAttribute="leading" secondItem="oXX-gH-Jw1" secondAttribute="leading" id="kB6-T8-0Pw"/>
                                             <constraint firstAttribute="trailing" secondItem="RGw-xU-vwG" secondAttribute="trailing" constant="24" id="khB-Ck-AJy"/>
+                                            <constraint firstAttribute="trailing" secondItem="YHo-2n-GjG" secondAttribute="trailing" id="nHH-UQ-lUV"/>
                                             <constraint firstAttribute="height" constant="2000" id="pyO-pA-e0v"/>
                                             <constraint firstItem="ent-BS-ln8" firstAttribute="leading" secondItem="9lP-vh-QF9" secondAttribute="leading" id="qzG-UZ-Nzc"/>
                                             <constraint firstItem="ent-BS-ln8" firstAttribute="width" secondItem="9lP-vh-QF9" secondAttribute="width" id="rl3-pX-xyF"/>
@@ -296,16 +303,19 @@
                         <outlet property="castSectionView" destination="8jb-dV-1T8" id="rAB-Je-RLJ"/>
                         <outlet property="factsSectionView" destination="vwB-6m-RoR" id="NCt-hW-3cT"/>
                         <outlet property="genresStackView" destination="RGw-xU-vwG" id="pQf-pV-sZW"/>
+                        <outlet property="imagesSectionView" destination="YHo-2n-GjG" id="DKH-2Z-Yas"/>
                         <outlet property="movieDesLbl" destination="BDj-h8-7vU" id="qZa-U6-5sY"/>
                         <outlet property="movieImageView" destination="MzK-sx-c9S" id="cyB-89-3Hg"/>
                         <outlet property="movieTitleLbl" destination="8TA-4u-nTc" id="1lZ-ry-5nB"/>
                         <outlet property="otherMovies" destination="iAd-Jh-low" id="qE1-tB-MVl"/>
                         <outlet property="progressView" destination="8DO-2V-mFs" id="30O-3b-9pF"/>
+                        <outlet property="scrollView" destination="0LV-JF-dOc" id="hAG-4a-dG4"/>
+                        <outlet property="wallpaperImageView" destination="9lP-vh-QF9" id="cUg-E1-VYE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ovc-r8-PZN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="158" y="-1005"/>
+            <point key="canvasLocation" x="3" y="-1006"/>
         </scene>
         <!--Profile Cell-->
         <scene sceneID="gKn-Vm-4Ik">

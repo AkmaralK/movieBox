@@ -49,4 +49,22 @@ class MediaDataLoader <T: MediaData>: MediaDataLoaderService {
             }
         }
     }
+    
+    func getDetail(
+        mediaType: MediaType,
+        id: Int,
+        completionHandler: @escaping ((MediaData) -> Void),
+        complitionHandlerError: @escaping ((String) -> Void)
+    ) {
+        let endpoint = Endpoint.getDetails(apiKey: apiKey, id: id, language: "en", mediaType: mediaType)
+        
+        URLSession.shared.request(for: T.self, endpoint) { (result) in
+            switch (result) {
+            case .success(let mediaDataRespnse):
+                completionHandler(mediaDataRespnse)
+            case .failure(let err):
+                complitionHandlerError(err.errorMsg)
+            }
+        }
+    }
 }

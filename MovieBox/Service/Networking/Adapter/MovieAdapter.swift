@@ -26,6 +26,13 @@ protocol MediaDataLoaderService {
         complitionHandler: @escaping ((MediaDataResponse)-> Void),
         complitionHandlerError: @escaping ((String) -> Void)
     )
+    
+    func getDetail (
+        mediaType: MediaType,
+        id: Int,
+        completionHandler: @escaping ((MediaData) -> Void),
+        complitionHandlerError: @escaping ((String) -> Void)
+    )
 }
 
 final class MovieDataAdapter {
@@ -55,6 +62,18 @@ final class MovieDataAdapter {
         var mediaLoader: MediaDataLoaderService = isMovie ? MediaDataLoader<Movie>() : MediaDataLoader<TvShow>()
         mediaLoader.apiKey = apiKey
         mediaLoader.loadRecommendationsMovie(mediaType: mediaType, id: id, page: page, complitionHandler: complitionHandler, complitionHandlerError: complitionHandlerError)
+    }
+    
+    func getDetails (
+        mediaType: MediaType,
+        id: Int,
+        completionHandler: @escaping ((MediaData) -> Void),
+        complitionHandlerError: @escaping ((String) -> Void)
+    ) {
+        let isMovie = mediaType == .movie
+        var mediaLoader: MediaDataLoaderService = isMovie ? MediaDataLoader<Movie>() : MediaDataLoader<TvShow>()
+        mediaLoader.apiKey = apiKey
+        mediaLoader.getDetail(mediaType: mediaType, id: id, completionHandler: completionHandler, complitionHandlerError: complitionHandlerError)
     }
     
     init (apiKey: String) {

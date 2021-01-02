@@ -26,7 +26,7 @@ struct DataSection<T> {
 }
 
 enum MoviesSectionTypes: CaseIterable {
-    case topRated, upcoming, topRatedTv
+    case topRated, upcoming, topRatedTv, popular, popularTv
     
     var title: String {
         switch self {
@@ -36,14 +36,18 @@ enum MoviesSectionTypes: CaseIterable {
             return "Upcoming"
         case .topRatedTv:
             return "Top Rated TV"
+        case .popular:
+            return "Popular"
+        case .popularTv:
+            return "Popular TV"
         }
     }
     
     var mediaType: MediaType {
         switch self {
-        case .topRatedTv:
+        case .topRatedTv, .popularTv:
             return .tv
-        case .upcoming, .topRated:
+        case .upcoming, .topRated, .popular:
             return .movie
         }
     }
@@ -54,12 +58,12 @@ enum MoviesSectionTypes: CaseIterable {
     
     func getEndpoint (apiKey: String, language: String, page: Int) -> Endpoint {
         switch self {
-        case .topRated:
+        case .topRated, .topRatedTv:
             return Endpoint.getTopRated(apiKey: apiKey, language: language, page: page, mediaType: mediaType)
         case .upcoming:
-            return Endpoint.getUpcomingMovies(apiKey: apiKey, language: "en", page: page, mediaType: mediaType)
-        case .topRatedTv:
-            return Endpoint.getTopRated(apiKey: apiKey, language: "en", page: page, mediaType: mediaType)
+            return Endpoint.getUpcomingMovies(apiKey: apiKey, language: language, page: page, mediaType: mediaType)
+        case .popular, .popularTv:
+            return Endpoint.getPopular(apiKey: apiKey, language: language, page: page, mediaType: mediaType)
         }
     }
 }

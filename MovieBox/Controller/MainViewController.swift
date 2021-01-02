@@ -25,7 +25,7 @@ class MainViewController: UIViewController, UniqueIdHelper, Alertable {
     }
     
     // MARK: - Init
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTableView()

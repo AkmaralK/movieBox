@@ -15,27 +15,25 @@ struct Person: Decodable {
     var avatarURL: String
     
     enum CodingKeys: CodingKey {
-        case profile_path, id, original_name, character
+        case profile_path, id, original_name, character, job
     }
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try values.decode(Int.self, forKey: .id)
         self.name = try values.decode(String.self, forKey: .original_name)
-        self.characterName = try values.decode(String.self, forKey: .character)
         self.avatarURL = ImageSize.poster.getURL(imagePath: (try? values.decode(String.self, forKey: .profile_path)) ?? "")
+        
+        self.characterName = (try? values.decode(String.self, forKey: .character)) ?? (try? values.decode(String.self, forKey: .job)) ?? ""
     }
     
     static func getFake() -> [Person] {
         return [
-//            Person(name: "Messi Lionel Andreas", characterName: "Developer", avatarURL: ""),
-//            Person(name: "Messi Lionel Andreas", characterName: "Developer", avatarURL: ""),
-//            Person(name: "Messi Lionel Andreas", characterName: "Developer", avatarURL: ""),
-//            Person(name: "Messi Lionel Andreas", characterName: "Developer", avatarURL: "")
         ]
     }
 }
 
 struct PersonResponse: Decodable {
     let cast: [Person]
+    let crew: [Person]
 }

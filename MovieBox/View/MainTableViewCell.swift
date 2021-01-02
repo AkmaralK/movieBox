@@ -19,6 +19,7 @@ class MainTableViewCell: UITableViewCell, UniqueIdHelper {
         collectionView.setUp()
         return collectionView
     }()
+
     
     override func didMoveToSuperview() {
         if (superview != nil) {

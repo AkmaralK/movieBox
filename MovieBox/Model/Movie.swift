@@ -58,13 +58,13 @@ struct Movie: MediaData, Decodable {
     var genres: [Genre] = []
     var status: String? = "Выпущено"
     var initialLanguage: String? = "Казахский"
-    var budget: String? = "230 тг"
     var sbory: String? = "$359,900,000.00"
     var overview: String
     var voteAverage: Double
+    var originalCountries: [Country]?
     
     enum CodingKeys: CodingKey {
-        case backdrop_path, budget, genre_ids, id, original_language, poster_path, release_date, revenue, status, title, overview, vote_average
+        case backdrop_path, genre_ids, id, original_language, poster_path, release_date, revenue, status, title, overview, vote_average, production_countries
     }
     
     init(from decoder: Decoder) throws {
@@ -72,7 +72,6 @@ struct Movie: MediaData, Decodable {
         self.id = try values.decode(Int.self, forKey: .id)
         self.title = (try? values.decode(String.self, forKey: .title)) ?? ""
         self.date = try? values.decode(String.self, forKey: .release_date)
-        self.budget = try? values.decode(String.self, forKey: .budget)
         self.sbory = try? values.decode(String.self, forKey: .revenue)
         self.initialLanguage = try? values.decode(String.self, forKey: .original_language)
         self.overview = (try? values.decode(String.self, forKey: .overview)) ?? ""
@@ -82,6 +81,7 @@ struct Movie: MediaData, Decodable {
             AppStore.shared.getGenre(from: $0)
         }
         self.voteAverage = try values.decode(Double.self, forKey: .vote_average)
+        self.originalCountries = try? values.decode([Country].self, forKey: .production_countries)
     }
     
     static func getFakeMovies () -> [Movie] {
@@ -99,12 +99,17 @@ struct TvShow: MediaData, Decodable {
     var status: String?
     var initialLanguage: String?
     var overview: String
-    var numberOfEpisodes: Int
-    var numberOfSeasons: Int
+    var numberOfEpisodes: Int?
+    var numberOfSeasons: Int?
     var voteAverage: Double
+    var originalCoutries: [String]?
     
     enum CodingKeys: CodingKey {
-        case backdrop_path, genre_ids, id, original_language, poster_path, first_air_date,  status, name, overview, number_of_episodes, number_of_seasons, vote_average
+        case backdrop_path, genre_ids, id, original_language, poster_path, first_air_date,  status, name, overview, number_of_episodes, number_of_seasons, vote_average, origin_country
+    }
+    
+    var hasFacts: Bool {
+        return numberOfEpisodes != nil && numberOfSeasons != nil && originalCoutries != nil
     }
     
     init(from decoder: Decoder) throws {
@@ -114,8 +119,8 @@ struct TvShow: MediaData, Decodable {
         self.date = try? values.decode(String.self, forKey: .first_air_date)
         self.initialLanguage = try? values.decode(String.self, forKey: .original_language)
         self.overview = (try? values.decode(String.self, forKey: .overview)) ?? ""
-        self.numberOfSeasons = (try? values.decode(Int.self, forKey: .number_of_seasons)) ?? 0
-        self.numberOfEpisodes = (try? values.decode(Int.self, forKey: .number_of_episodes)) ?? 0
+        self.numberOfSeasons = try? values.decode(Int.self, forKey: .number_of_seasons)
+        self.numberOfEpisodes = try? values.decode(Int.self, forKey: .number_of_episodes)
         
         self.imageUrl = ImageSize.poster.getURL(imagePath: (try? values.decode(String.self, forKey: .poster_path)) ?? "")
         self.bigImageUrl = ImageSize.wallpaper.getURL(imagePath: (try? values.decode(String.self, forKey: .backdrop_path)) ?? "")
@@ -123,5 +128,6 @@ struct TvShow: MediaData, Decodable {
             AppStore.shared.getGenre(from: $0)
         }
         self.voteAverage = try values.decode(Double.self, forKey: .vote_average)
+        self.originalCoutries = try? values.decode([String].self, forKey: .origin_country)
     }
 }

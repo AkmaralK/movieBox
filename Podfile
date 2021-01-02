@@ -11,5 +11,6 @@ target 'MovieBox' do
   pod 'SVProgressHUD'
   pod 'SDWebImage'
   pod 'SkeletonView'
+  pod 'AXPhotoViewer/SDWebImage'
 
 end
