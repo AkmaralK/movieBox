@@ -1,4 +1,9 @@
 ${PODS_ROOT}/Target Support Files/Pods-MovieBox/Pods-MovieBox-frameworks.sh
+${BUILT_PRODUCTS_DIR}/AXPhotoViewer/AXPhotoViewer.framework
+${BUILT_PRODUCTS_DIR}/AXStateButton/AXStateButton.framework
+${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework
 ${BUILT_PRODUCTS_DIR}/MBCircularProgressBar/MBCircularProgressBar.framework
+${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework
 ${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework
+${BUILT_PRODUCTS_DIR}/SkeletonView/SkeletonView.framework
 ${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework

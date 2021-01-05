@@ -10,12 +10,7 @@ import UIKit
 import SnapKit
 
 class SectionView: UIView {
-    lazy var titleLabel: UILabel = {
-        let lbl = UILabel()
-        lbl.textColor = .white
-        lbl.font = .systemFont(ofSize: 20, weight: .bold)
-        return lbl
-    }()
+    lazy var headerView = HeaderView()
     
     lazy var subtitleLabel: UILabel = {
         let lbl = UILabel()
@@ -23,18 +18,6 @@ class SectionView: UIView {
         lbl.alpha = 0.6
         lbl.font = .systemFont(ofSize: 14, weight: .regular)
         return lbl
-    }()
-    
-    lazy var horizontalLine: UIView = {
-        let view = UIView()
-        view.backgroundColor = .red
-        view.layer.cornerRadius = 2.5
-        
-        view.snp.makeConstraints { (make) in
-            make.height.equalTo(20)
-            make.width.equalTo(5)
-        }
-        return view
     }()
     
     lazy var contentView: UIView = {
@@ -52,28 +35,20 @@ class SectionView: UIView {
     }
     
     private func setUpViews () {
-        self.addSubview(titleLabel)
+        self.addSubview(headerView)
         self.addSubview(subtitleLabel)
-        self.addSubview(horizontalLine)
         self.addSubview(contentView)
     }
     
     private func setUpConstraints () {
-        horizontalLine.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(16)
-            make.leading.equalToSuperview().offset(24)
-        }
-        
-        titleLabel.snp.makeConstraints { (make) in
-            make.centerY.equalTo(horizontalLine)
-            make.leading.equalTo(horizontalLine.snp.trailing).offset(8)
-            make.trailing.equalToSuperview().offset(-8)
+        headerView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
         }
         
         subtitleLabel.snp.makeConstraints { (make) in
-            make.leading.equalTo(horizontalLine)
-            make.top.equalTo(titleLabel.snp.bottom).offset(4)
-            make.trailing.equalTo(titleLabel)
+            make.leading.equalToSuperview().inset(37)
+            make.top.equalTo(headerView.snp.bottom).offset(-2)
+            make.trailing.equalToSuperview()
         }
         
         contentView.snp.makeConstraints { (make) in

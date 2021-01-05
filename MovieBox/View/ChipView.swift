@@ -31,15 +31,18 @@ class ChipView: UIView {
     
     private func setUpViews () {
         self.addSubview(titleLbl)
-        self.backgroundColor = .clear
+        self.backgroundColor = .darkColor
         self.layer.borderWidth = 1
-        self.layer.borderColor = UIColor.rgb(200, 200, 200).cgColor
-        self.layer.cornerRadius = 4
+        self.layer.cornerRadius = 8
         
         
         titleLbl.snp.makeConstraints { (make) in
-            make.leading.trailing.equalToSuperview().inset(4)
+            make.leading.trailing.equalToSuperview().inset(8)
             make.top.bottom.equalToSuperview().inset(3)
+        }
+        
+        self.snp.makeConstraints { (make) in
+            make.height.equalTo(44)
         }
     }
 }

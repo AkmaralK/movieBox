@@ -16,7 +16,10 @@ class ItemsStackView: UIStackView {
         self.alignment = .fill
         self.distribution = .fill
         self.spacing = 4.0
-        
+        self.createItems(itemViews: itemViews)
+    }
+    
+    private func createItems (itemViews: [ItemView]) {
         for itemView in itemViews {
             self.addArrangedSubview(itemView)
             let dividerView = createDivider()
@@ -33,6 +36,8 @@ class ItemsStackView: UIStackView {
             self.removeArrangedSubview(view)
             view.removeFromSuperview()
         }
+        
+        self.createItems(itemViews: itemViews)
     }
     
     required init(coder: NSCoder) {

@@ -10,22 +10,74 @@ import UIKit
 import SVProgressHUD
 
 final class ApiService {
+    
     static let shared = ApiService()
+    
+    static let movieLoader = MovieDataAdapter(apiKey: "bcd3c6393606f8cd9ab1c236f6d4e0ea")
     
     private let apiKey = "bcd3c6393606f8cd9ab1c236f6d4e0ea"
     
-    func loadTopRatedMovies (
-        page: Int = 1,
-        complitionHandler: @escaping (([Movie])-> Void),
+    func loadGenres (
+        mediaType: MediaType,
+        complitionHandler: @escaping (([Genre])-> Void),
         complitionHandlerError: @escaping ((String) -> Void)
     ) {
-        let endpoint = Endpoint.getTopRated(apiKey: apiKey, language: "en", page: page)
-        SVProgressHUD.show()
-        URLSession.shared.request(for: [Movie].self, endpoint) { (result) in
-            SVProgressHUD.dismiss()
+        let endpoint: Endpoint! = mediaType == MediaType.movie ? Endpoint.getMovieGenres(apiKey: apiKey, language: "en") : Endpoint.getShowGenres(apiKey: apiKey, language: "en")
+        
+        URLSession.shared.request(for: GenreResponse.self, endpoint) { (result) in
             switch (result) {
-            case .success(let movies):
-                complitionHandler(movies)
+            case .success(let genreResponse):
+                complitionHandler(genreResponse.genres)
+            case .failure(let error):
+                complitionHandlerError(error.errorMsg)
+            }
+        }
+    }
+    
+    func loadCastPeople(
+        mediaType: MediaType,
+        movieID: Int,
+        complitionHandler: @escaping ((PersonResponse) -> Void),
+        complitionHandlerError: @escaping ((String) -> Void)) {
+            let endpoint = Endpoint.getMovieCast(apiKey: apiKey, movieID: movieID, language: "en", mediaType: mediaType)
+            URLSession.shared.request(for: PersonResponse.self, endpoint) { (result) in
+                switch (result) {
+                case .success(let personResponse):
+                    complitionHandler(personResponse)
+                case .failure(let err):
+                    complitionHandlerError(err.errorMsg)
+                }
+            }
+    }
+    
+    func loadImages (
+        movieID: Int,
+        mediaType: MediaType,
+        completionHandler: @escaping (([MovieImage]) -> Void),
+        complitionHandlerError: @escaping ((String) -> Void)) {
+        let endpoint = Endpoint.getImages(apiKey: apiKey, id: movieID, language: "", mediaType: mediaType)
+        
+        URLSession.shared.request(for: MovieImages.self, endpoint) { (result) in
+            switch (result) {
+            case .success(let imagesResponse):
+                completionHandler(imagesResponse.backdrops)
+            case .failure(let err):
+                complitionHandlerError(err.errorMsg)
+            }
+        }
+    }
+    
+    func getPersonDetails (
+        personID: Int,
+        completionHandler: @escaping ((Person) -> Void),
+        complitionHandlerError: @escaping ((String) -> Void)) {
+        
+        let endpoint = Endpoint.getPersonDetails(apiKey: apiKey, id: personID, language: "en")
+        
+        URLSession.shared.request(for: Person.self, endpoint) { (result) in
+            switch (result) {
+            case .success(let personInfo):
+                completionHandler(personInfo)
             case .failure(let err):
                 complitionHandlerError(err.errorMsg)
             }

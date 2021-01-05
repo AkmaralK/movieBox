@@ -12,3 +12,7 @@ struct Genre: Decodable {
     let id: Int
     let name: String
 }
+
+struct GenreResponse: Decodable {
+    var genres: [Genre]
+}

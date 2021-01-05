@@ -13,6 +13,7 @@ class MoviesList: UICollectionView {
     
     func setUp () {
         self.register(MovieCell.self, forCellWithReuseIdentifier: "movieCell")
+        
         self.showsHorizontalScrollIndicator = false
         self.backgroundColor = .clear
         

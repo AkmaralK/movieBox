@@ -47,7 +47,7 @@ final class SearchViewController: UIViewController, UICollectionViewDelegate, UI
 
      func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "searchCell", for: indexPath) as! SearchMovieCell
-        cell.nameLabel.text = fakeData[indexPath.row].name
+        cell.nameLabel.text = fakeData[indexPath.row].title
         cell.movieImage.image = UIImage(named: "movieImg")
     
         return cell

@@ -55,7 +55,7 @@ extension MovieFavoritesViewController: UICollectionViewDelegateFlowLayout {
         let movie = Movie.getFakeMovies()[indexPath.item]
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "MovieViewController")
-        vc.navigationItem.title = movie.name
+        vc.navigationItem.title = movie.title
         navigationController?.pushViewController(vc, animated: true)
     }
 }
