@@ -17,6 +17,7 @@ final class MovieViewController: UIViewController, UniqueIdHelper, Alertable {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var wallpaperImageView: UIImageView!
     @IBOutlet weak var movieImageView: UIImageView!
+    @IBOutlet weak var moviePosterImageView: UIImageView!
     @IBOutlet weak var movieTitleLbl: UILabel!
     @IBOutlet weak var movieDesLbl: UILabel!
     @IBOutlet weak var genresStackView: UIStackView!
@@ -91,6 +92,9 @@ final class MovieViewController: UIViewController, UniqueIdHelper, Alertable {
         return showMoreView
     }()
     
+    let movieImageVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
+    
+    
     // MARK: - Props
     
     var media: MediaData!
@@ -135,6 +139,11 @@ final class MovieViewController: UIViewController, UniqueIdHelper, Alertable {
     
     // MARK: - UI
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.animateOnViewDidLoad()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.loadFullDetails()
@@ -148,14 +157,13 @@ final class MovieViewController: UIViewController, UniqueIdHelper, Alertable {
         self.loadPeople()
         self.loadMovieImages()
     }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        self.calculateHeight()
-    }
+
+    // MARK: - UI Functions
     
     private func setUpUI () {
         self.view.backgroundColor = UIColor.darkColor
+        self.scrollView.delegate = self
+        
         setUpSectionView(sectionView: aboutSectionView, title: "Подробнее", subtitle: "Обзор", subview: aboutLbl)
         setUpSectionView(sectionView: castSectionView, title: "Актерский состав", subtitle: "TOP BILLED CAST", subview: castCollectionView)
         setUpSectionView(sectionView: otherMovies, title: "Похоже фильмы", subtitle: "мотрите вместе с нами", subview: (otherMoviesCollectionView))
@@ -187,8 +195,25 @@ final class MovieViewController: UIViewController, UniqueIdHelper, Alertable {
     
     
     private func updateUI () {
+        self.movieImageView.showCustomAnimatedSkeleton()
+        self.moviePosterImageView.showCustomAnimatedSkeleton()
+        
+        if (media.bigImageUrl == nil || media.bigImageUrl == "") {
+            self.movieImageView.image = UIImage(named: "moviePlaceholder")
+            self.movieImageView.hideSkeleton()
+        } else {
+            self.movieImageView.sd_setImage(with: URL(string: media.bigImageUrl ?? "")) { (newImage, _, _, _) in
+                self.movieImageView.hideSkeleton()
+                self.movieImageView.image = newImage
+            }
+        }
+        
+        self.moviePosterImageView.sd_setImage(with: URL(string: media.imageUrl ?? "")) { (newImage, _, _, _) in
+            self.moviePosterImageView.hideSkeleton()
+            self.moviePosterImageView.image = newImage
+        }
+        
         self.wallpaperImageView.sd_setImage(with:  URL(string: media.bigImageUrl ?? ""))
-        self.movieImageView.sd_setImage(with: URL(string: media.bigImageUrl ?? ""))
         self.movieTitleLbl.text = media.title
         self.movieDesLbl.text = media.date
         self.progressView.value = CGFloat(10 * media.voteAverage)
@@ -196,7 +221,7 @@ final class MovieViewController: UIViewController, UniqueIdHelper, Alertable {
     }
     
     private func calculateHeight () {
-        scrollView.contentSize.height = wallpaperImageView.frame.height + movieImageView.frame.height
+        scrollView.contentSize.height = wallpaperImageView.frame.height + self.view.frame.height * 0.7
     }
 }
 
@@ -211,7 +236,7 @@ extension MovieViewController {
         subview: UIView
     ) {
         sectionView.setUp()
-        sectionView.titleLabel.text = title
+        sectionView.headerView.titleLabel.text = title
         sectionView.subtitleLabel.text = subtitle
         sectionView.contentView.addSubview(subview)
     }
@@ -220,9 +245,11 @@ extension MovieViewController {
         genresStackView.alignment = .leading
         genresStackView.distribution = .fillEqually
         
-        media.genres.forEach { (genre) in
-            let genreChipView = createGenreChip (genre: genre)
-            genresStackView.addArrangedSubview(genreChipView)
+        for (i, genre) in media.genres.enumerated() {
+            if (i != 3) {
+                let genreChipView = createGenreChip (genre: genre)
+                genresStackView.addArrangedSubview(genreChipView)
+            }
         }
     }
     
@@ -255,8 +282,25 @@ extension MovieViewController {
     private func setUpMovieBackground () {
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = self.movieImageView.bounds
-        gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
+        gradientLayer.colors = [UIColor.black.cgColor, UIColor.clear.cgColor, UIColor.black.cgColor, UIColor.black.cgColor]
         self.movieImageView.layer.addSublayer(gradientLayer)
+        self.movieImageView.clipsToBounds = true
+        self.movieImageView.layer.masksToBounds = true
+        
+        self.movieImageView.addSubview(movieImageVisualEffectView)
+        self.movieImageVisualEffectView.frame = self.movieImageView.frame
+        self.movieImageVisualEffectView.alpha = 0
+    }
+    
+    private func showEmptyView (for sectionView: SectionView) {
+        let emptyView = EmptyView()
+        sectionView.contentView.addSubview(emptyView)
+        emptyView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+    }
+    
+    private func addShowSeasonsButton () {
     }
 }
 
@@ -271,6 +315,11 @@ extension MovieViewController {
             self.recommendedMovies.next(totalPages: movieResponse.total_pages)
             self.recommendedMovies.data = movieResponse.results
             self.otherMoviesCollectionView.reloadData()
+            
+            if (movieResponse.results.count == 0) {
+                self.showEmptyView(for: self.otherMovies)
+            }
+            
         }) { (msg) in
             self.showAlert("Error", msg)
         }
@@ -367,6 +416,11 @@ extension MovieViewController: UICollectionViewDelegate, UICollectionViewDataSou
             self.navigationController?.pushViewController(GalleryViewController(photos: self.imageURLs.map {
                 $0.toAXCustomPhoto()
             }), animated: true)
+        } else if (collectionView is PersonList) {
+            let person = castActors.data[indexPath.row]
+            let personVC = PersonViewController()
+            personVC.person = person
+            self.navigationController?.pushViewController(personVC, animated: true)
         }
     }
     
@@ -383,6 +437,12 @@ extension MovieViewController: UICollectionViewDelegate, UICollectionViewDataSou
         }
     }
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (scrollView == self.scrollView && !(scrollView is UICollectionView)) {
+            animateOnScroll()
+        }
+    }
+    
     // MARK: - Configure Cells
     
     private func configurePersonListCell (for indexPath: IndexPath, collectionView: UICollectionView) -> UICollectionViewCell {
@@ -393,7 +453,7 @@ extension MovieViewController: UICollectionViewDelegate, UICollectionViewDataSou
         } else {
             let personData = castActors.data[indexPath.row]
             cell.hideCellSkeleton()
-            cell.avatarImage.sd_setImage(with: URL(string: personData.avatarURL))
+            cell.avatarImage.sd_setImage(with: URL(string: personData.avatarURL), placeholderImage: UIImage(named: "moviePlaceholder"))
             cell.personNameLbl.text = personData.name
             cell.personDescriptionLbl.text = personData.characterName
         }
@@ -411,7 +471,7 @@ extension MovieViewController: UICollectionViewDelegate, UICollectionViewDataSou
             cell.hideCellSkeleton()
             cell.movieTitleLbl.text = movie.title
             cell.movieDescriptionLbl.text = movie.date
-            cell.movieImage.sd_setImage(with: URL(string: movie.imageUrl ?? ""))
+            cell.movieImage.sd_setImage(with: URL(string: movie.imageUrl ?? ""), placeholderImage: UIImage(named: "moviePlaceholder"))
         }
         
         return cell
@@ -431,5 +491,33 @@ extension MovieViewController: UICollectionViewDelegate, UICollectionViewDataSou
         }
         
         return cell
+    }
+}
+
+// MARK: -  Animations
+
+extension MovieViewController {
+    private func animateOnScroll () {
+        if (scrollView.contentOffset.y <= 65) {
+            let posterScale = (scrollView.contentOffset.y > 65 ? 65 :  scrollView.contentOffset.y > 0 ? scrollView.contentOffset.y : 0) * 0.025
+            let posterTranslationY = (scrollView.contentOffset.y > 65 ? 65 :  scrollView.contentOffset.y > 0 ? scrollView.contentOffset.y : 0)
+            
+            UIView.animate(withDuration: 0.1, animations: {
+                self.moviePosterImageView.transform = CGAffineTransform(scaleX: 1 + posterScale, y: 1 + posterScale).translatedBy(x: 0, y: -posterTranslationY)
+                self.movieImageView.transform = CGAffineTransform(scaleX: 1 + posterScale, y: 1 + posterScale)
+                self.movieImageVisualEffectView.alpha = (self.scrollView.contentOffset.y) / 65
+            })
+        }
+    }
+    
+    
+    private func animateOnViewDidLoad () {
+        self.movieImageView.transform = CGAffineTransform(scaleX: 4, y: 0.4)
+        self.moviePosterImageView.transform = CGAffineTransform(scaleX: 0.2, y: 0.2)
+        
+        UIView.animate(withDuration: 0.4, animations: {
+            self.movieImageView.transform = .identity
+            self.moviePosterImageView.transform = .identity
+        })
     }
 }

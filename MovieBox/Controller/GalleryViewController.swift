@@ -66,6 +66,7 @@ extension GalleryViewController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let dataSource = AXPhotosDataSource(photos: photos)
         let photosViewController = AXPhotosViewController(dataSource: dataSource)
+//        photosViewController.currentPhotoIndex = indexPath.row
         self.present(photosViewController, animated: true, completion: nil)
     }
 }

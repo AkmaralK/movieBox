@@ -66,4 +66,21 @@ final class ApiService {
             }
         }
     }
+    
+    func getPersonDetails (
+        personID: Int,
+        completionHandler: @escaping ((Person) -> Void),
+        complitionHandlerError: @escaping ((String) -> Void)) {
+        
+        let endpoint = Endpoint.getPersonDetails(apiKey: apiKey, id: personID, language: "en")
+        
+        URLSession.shared.request(for: Person.self, endpoint) { (result) in
+            switch (result) {
+            case .success(let personInfo):
+                completionHandler(personInfo)
+            case .failure(let err):
+                complitionHandlerError(err.errorMsg)
+            }
+        }
+    }
 }

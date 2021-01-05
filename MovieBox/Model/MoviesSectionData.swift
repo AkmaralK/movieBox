@@ -26,7 +26,7 @@ struct DataSection<T> {
 }
 
 enum MoviesSectionTypes: CaseIterable {
-    case topRated, upcoming, topRatedTv, popular, popularTv
+    case topRated, upcoming, topRatedTv, popular, popularTv, nowPlaying, airingToday
     
     var title: String {
         switch self {
@@ -40,14 +40,18 @@ enum MoviesSectionTypes: CaseIterable {
             return "Popular"
         case .popularTv:
             return "Popular TV"
+        case .nowPlaying:
+            return "Now playing"
+        case .airingToday:
+            return "Airing Today (TV)"
         }
     }
     
     var mediaType: MediaType {
         switch self {
-        case .topRatedTv, .popularTv:
+        case .topRatedTv, .popularTv, .airingToday:
             return .tv
-        case .upcoming, .topRated, .popular:
+        case .upcoming, .topRated, .popular, .nowPlaying:
             return .movie
         }
     }
@@ -64,6 +68,10 @@ enum MoviesSectionTypes: CaseIterable {
             return Endpoint.getUpcomingMovies(apiKey: apiKey, language: language, page: page, mediaType: mediaType)
         case .popular, .popularTv:
             return Endpoint.getPopular(apiKey: apiKey, language: language, page: page, mediaType: mediaType)
+        case .nowPlaying:
+            return Endpoint.getNowPlaying(apiKey: apiKey, language: language, page: page)
+        case .airingToday:
+            return Endpoint.getAiringToday(apiKey: apiKey, language: language, page: page)
         }
     }
 }

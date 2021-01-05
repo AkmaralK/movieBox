@@ -38,6 +38,12 @@
 		FB61FA2B259A124E00171182 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB61FA2A259A124E00171182 /* Endpoint.swift */; };
 		FB61FA2D259A12DC00171182 /* RequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB61FA2C259A12DC00171182 /* RequestError.swift */; };
 		FB6D84F02595CF8B006541A4 /* ChipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6D84EF2595CF8B006541A4 /* ChipView.swift */; };
+		FB84434B25A33EA200260598 /* AppButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB84434A25A33EA200260598 /* AppButton.swift */; };
+		FB84434D25A340CB00260598 /* PersonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB84434C25A340CB00260598 /* PersonViewController.swift */; };
+		FB84434F25A4613300260598 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB84434E25A4613300260598 /* EmptyView.swift */; };
+		FB84435125A466BB00260598 /* TextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB84435025A466BB00260598 /* TextCell.swift */; };
+		FB84435325A4672E00260598 /* GenericCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB84435225A4672E00260598 /* GenericCell.swift */; };
+		FB84435525A4689800260598 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB84435425A4689800260598 /* HeaderView.swift */; };
 		FBA1D46D2598BA4A00DBD348 /* ItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA1D46C2598BA4A00DBD348 /* ItemView.swift */; };
 		FBA1D46F2598BC3C00DBD348 /* ItemsStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA1D46E2598BC3C00DBD348 /* ItemsStackView.swift */; };
 		FBA7CD88259DE7BD00E408B4 /* MovieResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA7CD87259DE7BD00E408B4 /* MovieResponse.swift */; };
@@ -53,6 +59,7 @@
 		FBCC3C8D2594CB7C00B13416 /* MoviesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCC3C8C2594CB7C00B13416 /* MoviesList.swift */; };
 		FBCC3C8F2594DC7000B13416 /* MovieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCC3C8E2594DC7000B13416 /* MovieViewController.swift */; };
 		FBCE898C259653B800868DFE /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCE898B259653B800868DFE /* MainTableViewCell.swift */; };
+		FBE1D19225A21F1000B95419 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE1D19125A21F1000B95419 /* UIView+Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -91,6 +98,12 @@
 		FB61FA2A259A124E00171182 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		FB61FA2C259A12DC00171182 /* RequestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestError.swift; sourceTree = "<group>"; };
 		FB6D84EF2595CF8B006541A4 /* ChipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipView.swift; sourceTree = "<group>"; };
+		FB84434A25A33EA200260598 /* AppButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppButton.swift; sourceTree = "<group>"; };
+		FB84434C25A340CB00260598 /* PersonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonViewController.swift; sourceTree = "<group>"; };
+		FB84434E25A4613300260598 /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
+		FB84435025A466BB00260598 /* TextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCell.swift; sourceTree = "<group>"; };
+		FB84435225A4672E00260598 /* GenericCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericCell.swift; sourceTree = "<group>"; };
+		FB84435425A4689800260598 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		FBA1D46C2598BA4A00DBD348 /* ItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemView.swift; sourceTree = "<group>"; };
 		FBA1D46E2598BC3C00DBD348 /* ItemsStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsStackView.swift; sourceTree = "<group>"; };
 		FBA7CD87259DE7BD00E408B4 /* MovieResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieResponse.swift; sourceTree = "<group>"; };
@@ -106,6 +119,7 @@
 		FBCC3C8C2594CB7C00B13416 /* MoviesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesList.swift; sourceTree = "<group>"; };
 		FBCC3C8E2594DC7000B13416 /* MovieViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewController.swift; sourceTree = "<group>"; };
 		FBCE898B259653B800868DFE /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
+		FBE1D19125A21F1000B95419 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,6 +197,9 @@
 				FBCE898B259653B800868DFE /* MainTableViewCell.swift */,
 				FBA1D46C2598BA4A00DBD348 /* ItemView.swift */,
 				FBA1D46E2598BC3C00DBD348 /* ItemsStackView.swift */,
+				FB84434A25A33EA200260598 /* AppButton.swift */,
+				FB84434E25A4613300260598 /* EmptyView.swift */,
+				FB84435425A4689800260598 /* HeaderView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -212,6 +229,7 @@
 				A29DBBC1259A42500020F066 /* VideoLaunchController.swift */,
 				FBB84BBE259E57FD0093606A /* LoadingViewController.swift */,
 				FB0ECA6625A0A939000ABBFD /* GalleryViewController.swift */,
+				FB84434C25A340CB00260598 /* PersonViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -241,6 +259,7 @@
 			children = (
 				FB0367A52593A39E00CF2389 /* UIColor+Ext.swift */,
 				FB0ECA6425A09465000ABBFD /* UIScollView+Ext.swift */,
+				FBE1D19125A21F1000B95419 /* UIView+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -254,6 +273,7 @@
 				FB0ECA5F25A08648000ABBFD /* ImageItemCell.swift */,
 				540C0AEE2598FF1900B44E5D /* MovieCollectionViewCell.swift */,
 				FBAAD237259628F0004B572D /* SearchMovieCell.swift */,
+				FB84435025A466BB00260598 /* TextCell.swift */,
 			);
 			path = UICollectionViewCells;
 			sourceTree = "<group>";
@@ -292,6 +312,7 @@
 			children = (
 				FBB84BBA259E3D5D0093606A /* UniqueIdHelper.swift */,
 				FBB84BC2259E5B2D0093606A /* Alertable.swift */,
+				FB84435225A4672E00260598 /* GenericCell.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -422,19 +443,25 @@
 				FB0367A62593A39E00CF2389 /* UIColor+Ext.swift in Sources */,
 				FBA1D46D2598BA4A00DBD348 /* ItemView.swift in Sources */,
 				A29DBBC2259A42500020F066 /* VideoLaunchController.swift in Sources */,
+				FB84435325A4672E00260598 /* GenericCell.swift in Sources */,
 				FB0ECA6725A0A939000ABBFD /* GalleryViewController.swift in Sources */,
 				FB2E051E2595EB7C0097770E /* Person.swift in Sources */,
+				FB84435125A466BB00260598 /* TextCell.swift in Sources */,
 				FBAAD238259628F0004B572D /* SearchMovieCell.swift in Sources */,
+				FBE1D19225A21F1000B95419 /* UIView+Ext.swift in Sources */,
 				FB0ECA6325A08CB0000ABBFD /* MovieImages.swift in Sources */,
 				FBCC3C8F2594DC7000B13416 /* MovieViewController.swift in Sources */,
 				FB61FA2B259A124E00171182 /* Endpoint.swift in Sources */,
 				FBCC3C842594B05500B13416 /* MovieCell.swift in Sources */,
 				FB61FA29259A117D00171182 /* APIBase.swift in Sources */,
 				FBAFF435259F58A1005034D9 /* MovieAdapter.swift in Sources */,
+				FB84434D25A340CB00260598 /* PersonViewController.swift in Sources */,
 				FBCE898C259653B800868DFE /* MainTableViewCell.swift in Sources */,
 				FB2E051A2595E9E70097770E /* PersonCell.swift in Sources */,
 				FB6D84F02595CF8B006541A4 /* ChipView.swift in Sources */,
 				FB03678C2593A14D00CF2389 /* AppDelegate.swift in Sources */,
+				FB84434F25A4613300260598 /* EmptyView.swift in Sources */,
+				FB84435525A4689800260598 /* HeaderView.swift in Sources */,
 				FBB84BBD259E43E70093606A /* MoviesSectionData.swift in Sources */,
 				FB2E051C2595EA520097770E /* PersonList.swift in Sources */,
 				FB61FA2D259A12DC00171182 /* RequestError.swift in Sources */,
@@ -445,6 +472,7 @@
 				FB0367A82593A8DD00CF2389 /* Movie.swift in Sources */,
 				FBB84BBB259E3D5D0093606A /* UniqueIdHelper.swift in Sources */,
 				FBB84BBF259E57FD0093606A /* LoadingViewController.swift in Sources */,
+				FB84434B25A33EA200260598 /* AppButton.swift in Sources */,
 				FBA1D46F2598BC3C00DBD348 /* ItemsStackView.swift in Sources */,
 				FB4CEF74259B91E20096E538 /* APIService.swift in Sources */,
 				FBAFF437259F5DB0005034D9 /* MediaDataLoader.swift in Sources */,

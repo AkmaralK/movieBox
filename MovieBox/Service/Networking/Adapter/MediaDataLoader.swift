@@ -67,4 +67,22 @@ class MediaDataLoader <T: MediaData>: MediaDataLoaderService {
             }
         }
     }
+    
+    func getPersonMovies(
+        mediaType: MediaType,
+        id: Int,
+        completionHandler: @escaping (([MediaData]) -> Void),
+        complitionHandlerError: @escaping ((String) -> Void)
+    ) {
+        let endpoint = Endpoint.getPersonMovies(apiKey: apiKey, id: id, language: "en", mediaType: mediaType)
+        
+        URLSession.shared.request(for: CastMoviesResponse<T>.self, endpoint) { (result) in
+            switch (result) {
+            case .success(let mediaDataRespnse):
+                completionHandler(mediaDataRespnse.cast)
+            case .failure(let err):
+                complitionHandlerError(err.errorMsg)
+            }
+        }
+    }
 }

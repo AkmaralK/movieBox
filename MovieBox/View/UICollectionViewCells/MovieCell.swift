@@ -16,8 +16,9 @@ class MovieCell: UICollectionViewCell, UniqueIdHelper {
     lazy var movieImage: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
-        imageView.backgroundColor = .red
         imageView.isSkeletonable = true
+        imageView.clipsToBounds = true
+        imageView.layer.masksToBounds = true 
         return imageView
     }()
     

@@ -9,6 +9,7 @@
 import UIKit
 import SkeletonView
 import SDWebImage
+import SnapKit
 
 class MainViewController: UIViewController, UniqueIdHelper, Alertable {
     
@@ -16,12 +17,27 @@ class MainViewController: UIViewController, UniqueIdHelper, Alertable {
     
     @IBOutlet weak var tableView: UITableView!
     
+    lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = .red
+        refreshControl.addTarget(self, action: #selector(doRefresh), for: .valueChanged)
+        return refreshControl
+    }()
+    
+    
     // MARK: - Props
     
     static var uniqueID = "MainViewController"
     
     private var data: [MoviesSectionTypes: DataSection<MediaData>] = MoviesSectionTypes.allCases.reduce(into: [MoviesSectionTypes: DataSection]()) {
         $0[$1] = DataSection(data: [], isLoading: true)
+    }
+    
+    // MARK: - UI Actions
+    
+    @objc private func doRefresh () {
+        self.refreshControl.beginRefreshing()
+        self.loadData()
     }
     
     // MARK: - Init
@@ -41,6 +57,7 @@ class MainViewController: UIViewController, UniqueIdHelper, Alertable {
         tableView.showsVerticalScrollIndicator = false
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = UITableView.automaticDimension
+        tableView.addSubview(refreshControl)
     }
     
     private func setUpUI () {
@@ -56,6 +73,7 @@ class MainViewController: UIViewController, UniqueIdHelper, Alertable {
                 self.data[type]?.isLoading = false
                 self.data[type]?.next(totalPages: moviesResponse.total_pages)
                 self.tableView.reloadData()
+                self.refreshControl.endRefreshing()
             }) { (msg) in
                 self.showAlert("Error", msg)
             }
@@ -83,18 +101,20 @@ class MainViewController: UIViewController, UniqueIdHelper, Alertable {
 }
 
 
+// MARK: - UITableView DataSource and Delegate
+
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data.keys.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: MainTableViewCell.uniqueID) as! MainTableViewCell
         let movieData = data.values[data.values.index(data.values.startIndex, offsetBy: indexPath.row)]
         let sectionTitle = data.keys[data.keys.index(data.keys.startIndex, offsetBy: indexPath.row)].title
         
         
-        cell.sectionView.titleLabel.text = sectionTitle
+        cell.sectionView.headerView.titleLabel.text = sectionTitle
         cell.sectionView.subtitleLabel.text = "\(movieData.data.count) видео"
         cell.moviesCollectionView.delegate = self
         cell.moviesCollectionView.dataSource = self
@@ -106,6 +126,8 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+
+// MARK: - UICollectionView DataSource and Delegate
 
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -121,7 +143,12 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             movieCell.showCellSkeleton()
         } else {
             movieCell.hideCellSkeleton()
-            movieCell.movieImage.sd_setImage(with: URL(string: movieData.data[indexPath.row].imageUrl ?? ""))
+            movieCell.movieImage.showCustomAnimatedSkeleton()
+            movieCell.movieImage.sd_setImage(with: URL(string: movieData.data[indexPath.row].imageUrl ?? "")) { (newImage, _, _, _) in
+                movieCell.movieImage.hideSkeleton()
+                movieCell.movieImage.image = newImage
+            }
+            
             movieCell.movieTitleLbl.text = movieData.data[indexPath.row].title
             movieCell.movieDescriptionLbl.text = movieData.data[indexPath.row].date
         }
