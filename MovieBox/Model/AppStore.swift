@@ -26,8 +26,11 @@ final class AppStore {
     var genres: [Genre] = []
     
     func getGenre (from id: Int) -> Genre {
-        return genres.first(where: { (genre) -> Bool in
+       if let genId = genres.first(where: { (genre) -> Bool in
             genre.id == id
-        })!
+       }) {
+        return genId
+       }
+        return Genre(id: 0, name: "")
     }
 }

@@ -53,7 +53,7 @@ final class SearchTableViewController: UITableViewController, UISearchBarDelegat
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         filteredData = searchText.isEmpty ? data : data.filter { (item: Person) -> Bool in
-            return item.name.range(of: searchText, options: .caseInsensitive, range: nil, locale: nil) != nil
+            return item.name?.range(of: searchText, options: .caseInsensitive, range: nil, locale: nil) != nil
         }
 
         tableView.reloadData()
@@ -79,3 +79,4 @@ final class SearchTableViewController: UITableViewController, UISearchBarDelegat
         return UITableViewCell()
     }
 }
+
