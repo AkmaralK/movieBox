@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5hO-Cc-JnV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5hO-Cc-JnV">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -847,11 +847,60 @@
                     <navigationItem key="navigationItem" id="1v7-46-Cz7"/>
                     <connections>
                         <outlet property="movieCollectionView" destination="6Wf-C5-Kxd" id="Gpt-kM-Qr2"/>
+                        <segue destination="C7A-mv-2Qb" kind="showDetail" identifier="" id="VxT-JA-Gl4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ceD-Fq-mcV" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="284" y="-174.06296851574214"/>
+        </scene>
+        <!--Search Table View Controller-->
+        <scene sceneID="sKu-ec-Rz8">
+            <objects>
+                <tableViewController id="C7A-mv-2Qb" customClass="SearchTableViewController" customModule="MovieBox" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="t2m-oJ-7Ze">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="idCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="idCell" rowHeight="60" id="eDL-Gu-X8Q" customClass="SearchCell" customModule="MovieBox" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="414" height="60"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="eDL-Gu-X8Q" id="IQm-rC-wdu">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XZq-qg-Bwx">
+                                            <rect key="frame" x="50" y="20" width="42" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="XZq-qg-Bwx" firstAttribute="leading" secondItem="IQm-rC-wdu" secondAttribute="leadingMargin" constant="30" id="Uio-MR-fBf"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="XZq-qg-Bwx" secondAttribute="bottom" constant="8" id="eQ0-0T-aGC"/>
+                                        <constraint firstItem="XZq-qg-Bwx" firstAttribute="top" secondItem="IQm-rC-wdu" secondAttribute="topMargin" constant="9" id="smg-wj-bJ5"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="nameLabel" destination="XZq-qg-Bwx" id="vwc-YS-HN1"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="C7A-mv-2Qb" id="7xf-cO-7j3"/>
+                            <outlet property="delegate" destination="C7A-mv-2Qb" id="yEt-be-5KO"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="UITableView" destination="t2m-oJ-7Ze" id="foZ-Od-maS"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uvw-Nf-cEp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1186.9565217391305" y="-174.10714285714286"/>
         </scene>
         <!--Movie Favorites View Controller-->
         <scene sceneID="EXR-0l-5zm">
