@@ -345,6 +345,10 @@ extension MovieViewController {
             self.castActors.isFinished = true
             self.castActors.isLoading = false
             self.castCollectionView.reloadData()
+            
+            if ((personsResponse.cast + personsResponse.crew).count == 0) {
+                self.showEmptyView(for: self.castSectionView)
+            }
         }) { (msg) in
             self.showAlert("Error", msg)
         }
