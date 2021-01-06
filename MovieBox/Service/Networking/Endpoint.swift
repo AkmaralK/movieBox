@@ -40,6 +40,7 @@ enum Endpoint {
     case getPersonDetails (apiKey: String, id: Int, language: String)
     
     
+    
     static let baseURL: String = ServiceBaseURL.main.value
     
     var path: String {

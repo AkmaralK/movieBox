@@ -26,8 +26,8 @@ class SectionView: UIView {
     }()
 
     func setUp () {
-        self.backgroundColor = UIColor.darkColor
-        self.alpha = 0.6
+        self.backgroundColor = UIColor(red: 13/255, green: 13/255, blue: 13/255, alpha: 0.6)
+        self.alpha = 1
         
         
         self.setUpViews()

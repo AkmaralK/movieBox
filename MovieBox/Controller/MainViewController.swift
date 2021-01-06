@@ -160,6 +160,10 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let movieData = data.values[data.values.index(data.values.startIndex, offsetBy: collectionView.tag)]
         
+//        self.hidesBottomBarWhenPushed = true
+//        self.navigationController?.pushViewController(SeasonsViewController(), animated: true)
+        
+        
         if let movieVC = storyboard.instantiateViewController(withIdentifier: MovieViewController.uniqueID) as? MovieViewController {
             movieVC.media = movieData.data[indexPath.row]
             self.navigationController?.pushViewController(movieVC, animated: true)

@@ -20,6 +20,7 @@ final class MovieViewController: UIViewController, UniqueIdHelper, Alertable {
     @IBOutlet weak var moviePosterImageView: UIImageView!
     @IBOutlet weak var movieTitleLbl: UILabel!
     @IBOutlet weak var movieDesLbl: UILabel!
+    @IBOutlet weak var moreButton: UIButton!
     @IBOutlet weak var genresStackView: UIStackView!
     @IBOutlet weak var aboutSectionView: SectionView!
     @IBOutlet weak var castSectionView: SectionView!
@@ -137,6 +138,10 @@ final class MovieViewController: UIViewController, UniqueIdHelper, Alertable {
         }
     }
     
+    private var showSeasons: Bool {
+        return mediaType == .tv && ((media as! TvShow).seasons ?? []).count > 0
+    }
+    
     // MARK: - UI
     
     override func viewWillAppear(_ animated: Bool) {
@@ -146,6 +151,7 @@ final class MovieViewController: UIViewController, UniqueIdHelper, Alertable {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        self.hidesBottomBarWhenPushed = false
         self.loadFullDetails()
     }
     
@@ -157,12 +163,25 @@ final class MovieViewController: UIViewController, UniqueIdHelper, Alertable {
         self.loadPeople()
         self.loadMovieImages()
     }
-
+    
+    // MARK: - UIAction
+    
+    @objc fileprivate func onMoreButtonClick () {
+        if (self.showSeasons) {
+            self.hidesBottomBarWhenPushed = true
+            let seasonsViewController = SeasonsViewController()
+            seasonsViewController.seasons = (self.media as! TvShow).seasons ?? []
+            self.navigationController?.pushViewController(seasonsViewController, animated: true)
+        }
+    }
+    
+    
     // MARK: - UI Functions
     
     private func setUpUI () {
         self.view.backgroundColor = UIColor.darkColor
         self.scrollView.delegate = self
+        self.moreButton.addTarget(self, action: #selector(onMoreButtonClick), for: .touchUpInside)
         
         setUpSectionView(sectionView: aboutSectionView, title: "Подробнее", subtitle: "Обзор", subview: aboutLbl)
         setUpSectionView(sectionView: castSectionView, title: "Актерский состав", subtitle: "TOP BILLED CAST", subview: castCollectionView)
@@ -359,6 +378,10 @@ extension MovieViewController {
             self.media = mediaData
             self.showFacts()
             self.castCollectionView.reloadData()
+            
+            if (self.showSeasons) {
+                self.moreButton.setTitle("Show Seasons", for: .normal)
+            }
         }) { (msg) in
             self.showAlert("Error", msg)
         }

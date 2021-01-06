@@ -113,9 +113,11 @@ struct TvShow: MediaData, Decodable {
     var voteAverage: Double
     var originalCoutries: [String]?
     var character: String?
+    var seasons: [Season]?
+    
     
     enum CodingKeys: CodingKey {
-        case backdrop_path, genre_ids, id, original_language, poster_path, first_air_date,  status, name, overview, number_of_episodes, number_of_seasons, vote_average, origin_country, character
+        case backdrop_path, genre_ids, id, original_language, poster_path, first_air_date,  status, name, overview, number_of_episodes, number_of_seasons, vote_average, origin_country, character, seasons
     }
     
     var hasFacts: Bool {
@@ -143,6 +145,8 @@ struct TvShow: MediaData, Decodable {
         if let _imageBig = try? values.decode(String.self, forKey: .backdrop_path) {
             self.bigImageUrl = ImageSize.wallpaper.getURL(imagePath: _imageBig)
         }
+        
+        self.seasons = try? values.decode([Season].self, forKey: .seasons)
     }
 }
 

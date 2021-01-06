@@ -36,6 +36,10 @@
 		FB2E051E2595EB7C0097770E /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2E051D2595EB7C0097770E /* Person.swift */; };
 		FB4CEF74259B91E20096E538 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4CEF73259B91E20096E538 /* APIService.swift */; };
 		FB4CEF77259B95720096E538 /* launchscreen.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = FB4CEF76259B95720096E538 /* launchscreen.mp4 */; };
+		FB5027FC25A5ADA500CA2609 /* SeasonsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5027FB25A5ADA400CA2609 /* SeasonsViewController.swift */; };
+		FB5027FE25A6052C00CA2609 /* Seasons.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5027FD25A6052C00CA2609 /* Seasons.swift */; };
+		FB50280025A626D000CA2609 /* CarouselLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5027FF25A626D000CA2609 /* CarouselLayout.swift */; };
+		FB50280225A626EC00CA2609 /* SeasonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB50280125A626EC00CA2609 /* SeasonCell.swift */; };
 		FB61FA29259A117D00171182 /* APIBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB61FA28259A117D00171182 /* APIBase.swift */; };
 		FB61FA2B259A124E00171182 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB61FA2A259A124E00171182 /* Endpoint.swift */; };
 		FB61FA2D259A12DC00171182 /* RequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB61FA2C259A12DC00171182 /* RequestError.swift */; };
@@ -98,6 +102,10 @@
 		FB2E051D2595EB7C0097770E /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 		FB4CEF73259B91E20096E538 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		FB4CEF76259B95720096E538 /* launchscreen.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = launchscreen.mp4; sourceTree = "<group>"; };
+		FB5027FB25A5ADA400CA2609 /* SeasonsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonsViewController.swift; sourceTree = "<group>"; };
+		FB5027FD25A6052C00CA2609 /* Seasons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seasons.swift; sourceTree = "<group>"; };
+		FB5027FF25A626D000CA2609 /* CarouselLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselLayout.swift; sourceTree = "<group>"; };
+		FB50280125A626EC00CA2609 /* SeasonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonCell.swift; sourceTree = "<group>"; };
 		FB61FA28259A117D00171182 /* APIBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIBase.swift; sourceTree = "<group>"; };
 		FB61FA2A259A124E00171182 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		FB61FA2C259A12DC00171182 /* RequestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestError.swift; sourceTree = "<group>"; };
@@ -220,6 +228,9 @@
 				FBB84BC0259E58270093606A /* AppStore.swift */,
 				FB0ECA6225A08CB0000ABBFD /* MovieImages.swift */,
 				FB0ECA6825A0B200000ABBFD /* Country.swift */,
+				FB5027FD25A6052C00CA2609 /* Seasons.swift */,
+				FB5027FF25A626D000CA2609 /* CarouselLayout.swift */,
+				FB50280125A626EC00CA2609 /* SeasonCell.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -236,6 +247,7 @@
 				FBB84BBE259E57FD0093606A /* LoadingViewController.swift */,
 				FB0ECA6625A0A939000ABBFD /* GalleryViewController.swift */,
 				FB84434C25A340CB00260598 /* PersonViewController.swift */,
+				FB5027FB25A5ADA400CA2609 /* SeasonsViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -449,8 +461,10 @@
 				FB0367A62593A39E00CF2389 /* UIColor+Ext.swift in Sources */,
 				A21FA8BC25A484F10032096F /* SearchTableViewController.swift in Sources */,
 				FBA1D46D2598BA4A00DBD348 /* ItemView.swift in Sources */,
+				FB5027FE25A6052C00CA2609 /* Seasons.swift in Sources */,
 				A29DBBC2259A42500020F066 /* VideoLaunchController.swift in Sources */,
 				FB84435325A4672E00260598 /* GenericCell.swift in Sources */,
+				FB5027FC25A5ADA500CA2609 /* SeasonsViewController.swift in Sources */,
 				FB0ECA6725A0A939000ABBFD /* GalleryViewController.swift in Sources */,
 				FB2E051E2595EB7C0097770E /* Person.swift in Sources */,
 				FB84435125A466BB00260598 /* TextCell.swift in Sources */,
@@ -463,6 +477,7 @@
 				FBCC3C842594B05500B13416 /* MovieCell.swift in Sources */,
 				FB61FA29259A117D00171182 /* APIBase.swift in Sources */,
 				FBAFF435259F58A1005034D9 /* MovieAdapter.swift in Sources */,
+				FB50280225A626EC00CA2609 /* SeasonCell.swift in Sources */,
 				FB84434D25A340CB00260598 /* PersonViewController.swift in Sources */,
 				FBCE898C259653B800868DFE /* MainTableViewCell.swift in Sources */,
 				FB2E051A2595E9E70097770E /* PersonCell.swift in Sources */,
@@ -481,6 +496,7 @@
 				FBB84BBB259E3D5D0093606A /* UniqueIdHelper.swift in Sources */,
 				FBB84BBF259E57FD0093606A /* LoadingViewController.swift in Sources */,
 				FB84434B25A33EA200260598 /* AppButton.swift in Sources */,
+				FB50280025A626D000CA2609 /* CarouselLayout.swift in Sources */,
 				FBA1D46F2598BC3C00DBD348 /* ItemsStackView.swift in Sources */,
 				FB4CEF74259B91E20096E538 /* APIService.swift in Sources */,
 				FBAFF437259F5DB0005034D9 /* MediaDataLoader.swift in Sources */,
