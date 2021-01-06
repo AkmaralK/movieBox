@@ -7,25 +7,34 @@
 //
 import UIKit
 
-class SearchViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+final class SearchViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UISearchBarDelegate {
     
     @IBOutlet weak var movieCollectionView: UICollectionView!
     let fakeData = Movie.getFakeMovies()
-    var searchBar = UISearchBar()
-    
+    let searchBar = UISearchBar()
     
     override func viewDidLoad() {
         super.viewDidLoad()
      
         movieCollectionView.dataSource = self
         movieCollectionView.delegate = self
-        searchBar.sizeToFit()
-        searchBar.backgroundColor = UIColor.darkColor
-        navigationItem.titleView = searchBar
-        searchBar.placeholder = "Search MovieBox"
-       // self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        setUpNavBar()
     }
 
+    func setUpNavBar() {
+            searchBar.delegate = self
+            searchBar.sizeToFit()
+            searchBar.searchBarStyle = .minimal
+            searchBar.placeholder = "Search MovieBox"
+            searchBar.backgroundColor = UIColor.darkColor
+            navigationItem.titleView = searchBar
+            searchBar.isTranslucent = true
+        }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+            self.present(UINavigationController(rootViewController: SearchTableViewController()), animated: false, completion: nil)
+        } 
+    
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1

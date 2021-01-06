@@ -6,11 +6,11 @@
 //  Copyright © 2020 Yerkebulan Yelzhan. All rights reserved.
 //
 
-import UIKit
 import AVKit
 import AVFoundation
+import UIKit
 
-class VideoLaunchController: UIViewController {
+final class VideoLaunchController: UIViewController {
 
     var audioPlayer = AVAudioPlayer()
 
@@ -19,16 +19,13 @@ class VideoLaunchController: UIViewController {
         playSound(file: "launchscreen", ext: "wav")
     }
 
-    //------------------------------------------------------------------------------
-
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.setupAVPlayer()  // Call method to setup AVPlayer & AVPlayerLayer to play video
     }
     
-    
-    
-    
+
     func playSound(file:String, ext:String) -> Void {
         do {
             let url = URL.init(fileURLWithPath: Bundle.main.path(forResource: file, ofType: ext)!)
@@ -56,7 +53,7 @@ class VideoLaunchController: UIViewController {
         avPlayer.addPeriodicTimeObserver(forInterval: CMTime(seconds: 1, preferredTimescale: 1) , queue: .main) { [weak self] time in
 
             if time == avAssets.duration {
-                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: LoadingViewController.uniqueID) as! LoadingViewController
+                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainViewController") as! UITabBarController
                 vc.modalPresentationStyle = .fullScreen
                 self?.present(vc, animated: true, completion: nil)
             }
