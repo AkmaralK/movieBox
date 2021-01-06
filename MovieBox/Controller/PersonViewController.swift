@@ -146,7 +146,7 @@ final class PersonViewController: UIViewController, Alertable {
 
 extension PersonViewController {
     fileprivate func updateUI () {
-        self.headerImage.sd_setImage(with: URL(string: person.wallpaperURL))
+        self.headerImage.sd_setImage(with: URL(string: person.wallpaperURL), placeholderImage: UIImage(named: "moviePlaceholder"))
         self.titleLbl.text = (person.name ?? "").split(separator: " ").joined(separator: "\n")
     }
     
@@ -230,6 +230,7 @@ extension PersonViewController: UITableViewDelegate, UITableViewDataSource {
             let item = self.cellsData[indexPath.section - 1][indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: type(of: item).reuseId)!
             cell.backgroundColor = .black
+            cell.selectionStyle = .none
             item.configure(cell: cell, index: indexPath.row + 1)
             return cell
         }
