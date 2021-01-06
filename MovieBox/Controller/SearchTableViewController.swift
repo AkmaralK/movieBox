@@ -8,19 +8,22 @@
 
 import UIKit
 
-final class SearchTableViewController: UITableViewController, UISearchBarDelegate {
+final class SearchTableViewController: UITableViewController, UISearchBarDelegate, Alertable {
     
-   
-    
+
+ 
     let searchBar = UISearchBar()
-    private var data = [Person]()
-    private var filteredData = [Person]()
+    private var filteredData = [MoviesSectionTypes: DataSection<MediaData>]()
+    
+    private var data: [MoviesSectionTypes: DataSection<MediaData>] = MoviesSectionTypes.allCases.reduce(into: [MoviesSectionTypes: DataSection]()) {
+        $0[$1] = DataSection(data: [], isLoading: true)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
         setUpNavBar()
-        data = Person.getFake()
+        self.loadData()
         filteredData = data
         tableView.register(SearchCell.self, forCellReuseIdentifier: "idCell")
         
@@ -41,6 +44,19 @@ final class SearchTableViewController: UITableViewController, UISearchBarDelegat
         searchBar.isTranslucent = true
     }
     
+    private func loadData () {
+        MoviesSectionTypes.allCases.forEach { (type) in
+            ApiService.movieLoader.loadMovieShowBySection(mediaType: type.mediaType, section: type, complitionHandler: { (moviesResponse) in
+                self.data[type]!.data = moviesResponse.results
+                self.data[type]?.isLoading = false
+                self.data[type]?.next(totalPages: moviesResponse.total_pages)
+                self.tableView.reloadData()
+            }) { (msg) in
+                self.showAlert("Error", msg)
+            }
+        }
+    }
+    
 //    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
 //            searchBar.showsCancelButton = true
 //        }
@@ -52,15 +68,16 @@ final class SearchTableViewController: UITableViewController, UISearchBarDelegat
 //    }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        filteredData = searchText.isEmpty ? data : data.filter { (item: Person) -> Bool in
-            return item.name?.range(of: searchText, options: .caseInsensitive, range: nil, locale: nil) != nil
-        }
+        
+//        filteredData = searchText.isEmpty ? data : data.filter { (item: MediaData) -> Bool in
+//            return item.title.range(of: searchText, options: .caseInsensitive, range: nil, locale: nil) != nil
+//        }
 
         tableView.reloadData()
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredData.count
+        return filteredData.keys.count
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -69,14 +86,15 @@ final class SearchTableViewController: UITableViewController, UISearchBarDelegat
    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "idCell", for: indexPath) as? SearchCell {
-           
-            cell.nameLabel?.text = filteredData[indexPath.row].name
-            cell.nameLabel?.textColor = UIColor.lightGray
-            return cell
-        }
         
-        return UITableViewCell()
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "idCell", for: indexPath) as? SearchCell {
+        let movieData = data.values[data.values.index(data.values.startIndex, offsetBy: indexPath.row)]
+        cell.nameLabel?.text = movieData.data[indexPath.row].title
+        cell.movieImageView?.sd_setImage(with: URL(string: movieData.data[indexPath.row].imageUrl ?? ""), placeholderImage: UIImage(named: "moviePlaceholder"))
+        cell.selectionStyle = .none
+        return cell
+        }
+      return UITableViewCell()
     }
 }
 

@@ -13,6 +13,7 @@ final class SearchViewController: UIViewController, UICollectionViewDelegate, UI
     let fakeData = Movie.getFakeMovies()
     let searchBar = UISearchBar()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
      
@@ -30,6 +31,8 @@ final class SearchViewController: UIViewController, UICollectionViewDelegate, UI
             navigationItem.titleView = searchBar
             searchBar.isTranslucent = true
         }
+    
+
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
             self.present(UINavigationController(rootViewController: SearchTableViewController()), animated: false, completion: nil)
