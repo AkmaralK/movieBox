@@ -29,6 +29,7 @@ final class SearchTableViewController: UITableViewController, UISearchBarDelegat
         
     }
     
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         searchBar.becomeFirstResponder()
@@ -73,11 +74,12 @@ final class SearchTableViewController: UITableViewController, UISearchBarDelegat
 //            return item.title.range(of: searchText, options: .caseInsensitive, range: nil, locale: nil) != nil
 //        }
 
+        self.loadData()
         tableView.reloadData()
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredData.keys.count
+        return self.data.keys.count
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -88,8 +90,8 @@ final class SearchTableViewController: UITableViewController, UISearchBarDelegat
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if let cell = tableView.dequeueReusableCell(withIdentifier: "idCell", for: indexPath) as? SearchCell {
-        let movieData = data.values[data.values.index(data.values.startIndex, offsetBy: indexPath.row)]
-        cell.nameLabel?.text = movieData.data[indexPath.row].title
+            let movieData = self.data.values[data.values.index(data.values.startIndex, offsetBy: indexPath.row)]
+            cell.nameLabel?.text = "title"; // movieData.data[indexPath.row].title
         cell.movieImageView?.sd_setImage(with: URL(string: movieData.data[indexPath.row].imageUrl ?? ""), placeholderImage: UIImage(named: "moviePlaceholder"))
         cell.selectionStyle = .none
         return cell
