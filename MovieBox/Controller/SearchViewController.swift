@@ -35,8 +35,11 @@ final class SearchViewController: UIViewController, UICollectionViewDelegate, UI
 
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-            self.present(UINavigationController(rootViewController: SearchTableViewController()), animated: false, completion: nil)
-        } 
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        if let searchVC = storyboard.instantiateViewController(withIdentifier: SearchTableViewController.uniqueID) as? SearchTableViewController {
+            self.present(UINavigationController(rootViewController: searchVC), animated: false, completion: nil)
+        }
+    }
     
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {

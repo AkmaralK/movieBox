@@ -8,9 +8,9 @@
 
 import UIKit
 
-final class SearchTableViewController: UITableViewController, UISearchBarDelegate, Alertable {
+final class SearchTableViewController: UITableViewController, UISearchBarDelegate, Alertable, UniqueIdHelper {
     
-
+    static var uniqueID: String = "searchTableVC"
  
     let searchBar = UISearchBar()
     private var filteredData = [MoviesSectionTypes: DataSection<MediaData>]()
@@ -19,14 +19,17 @@ final class SearchTableViewController: UITableViewController, UISearchBarDelegat
         $0[$1] = DataSection(data: [], isLoading: true)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+//        self.tableView.register(SearchCell.self, forCellReuseIdentifier: "idCell")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
         setUpNavBar()
         self.loadData()
         filteredData = data
-        tableView.register(SearchCell.self, forCellReuseIdentifier: "idCell")
-        
     }
     
     
@@ -79,7 +82,9 @@ final class SearchTableViewController: UITableViewController, UISearchBarDelegat
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.data.keys.count
+        let count = self.data.keys.count
+        print("NUMBER OF ROWS", count)
+        return count 
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -89,14 +94,12 @@ final class SearchTableViewController: UITableViewController, UISearchBarDelegat
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "idCell", for: indexPath) as? SearchCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "idCell", for: indexPath) as! SearchCell
             let movieData = self.data.values[data.values.index(data.values.startIndex, offsetBy: indexPath.row)]
-            cell.nameLabel?.text = "title"; // movieData.data[indexPath.row].title
-        cell.movieImageView?.sd_setImage(with: URL(string: movieData.data[indexPath.row].imageUrl ?? ""), placeholderImage: UIImage(named: "moviePlaceholder"))
+        cell.nameLabel.text = "title"; // movieData.data[indexPath.row].title
+        cell.movieImageView.image = UIImage(named: "moviePlaceholder")
         cell.selectionStyle = .none
         return cell
-        }
-      return UITableViewCell()
     }
 }
 
