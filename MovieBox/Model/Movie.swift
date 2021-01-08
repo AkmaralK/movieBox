@@ -9,7 +9,7 @@
 import Foundation
 
 enum ImageSize {
-    case poster, wallpaper, bigPoster
+    case poster, wallpaper, bigPoster, smallWallpaper
     
     var path: String {
         switch self {
@@ -19,6 +19,8 @@ enum ImageSize {
             return "t/p/w1920_and_h800_multi_faces"
         case .bigPoster:
             return "t/p/w600_and_h900_bestv2"
+        case .smallWallpaper:
+            return "t/p/w227_and_h127_bestv2"
         }
     }
     

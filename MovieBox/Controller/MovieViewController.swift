@@ -170,6 +170,7 @@ final class MovieViewController: UIViewController, UniqueIdHelper, Alertable {
         if (self.showSeasons) {
             self.hidesBottomBarWhenPushed = true
             let seasonsViewController = SeasonsViewController()
+            seasonsViewController.tvID = self.media.id
             seasonsViewController.seasons = (self.media as! TvShow).seasons ?? []
             self.navigationController?.pushViewController(seasonsViewController, animated: true)
         }

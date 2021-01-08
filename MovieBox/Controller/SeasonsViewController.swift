@@ -8,9 +8,6 @@
 
 import UIKit
 
-
-
-
 final class SeasonsViewController: UIViewController {
     
     // MARK: - Outlets
@@ -46,6 +43,7 @@ final class SeasonsViewController: UIViewController {
         button.layer.cornerRadius = 8
         button.setTitle("Select", for: .normal)
         button.setTitleColor(.white, for: .normal)
+        button.addTarget(self, action: #selector(onNextClick), for: .touchUpInside)
         return button
     }()
     
@@ -70,6 +68,18 @@ final class SeasonsViewController: UIViewController {
     fileprivate var currentPageIndex: Int = 0
     
     var seasons: [Season] = []
+    
+    var tvID: Int!
+    
+    @objc fileprivate func onNextClick () {
+        let selectedSeason = seasons[currentPageIndex]
+        let episodesVC = EpisodeViewController()
+        episodesVC.numberOfSeasons = seasons.count
+        episodesVC.currentSeason = selectedSeason.id
+        episodesVC.tvID = self.tvID
+        
+        self.navigationController?.pushViewController(episodesVC, animated: true)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -148,10 +158,20 @@ extension SeasonsViewController: UICollectionViewDataSource, UICollectionViewDel
         let season = seasons[indexPath.row]
         cell.imageView.sd_setImage(with: URL(string: season.imageURL ?? ""), placeholderImage: UIImage(named: "moviePlaceholder"))
         cell.titleLbl.text = season.name
-        cell.subtitleLbl.text = "\(season.episodeCount) seasons"
+        cell.subtitleLbl.text = "\(season.episodeCount) episodes"
         cell.subtitleLbl2.text = season.date
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let selectedSeason = seasons[indexPath.row]
+        let episodesVC = EpisodeViewController()
+        episodesVC.numberOfSeasons = seasons.count
+        episodesVC.currentSeason = selectedSeason.id
+        episodesVC.tvID = self.tvID
+        
+        self.navigationController?.pushViewController(episodesVC, animated: true)
     }
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {

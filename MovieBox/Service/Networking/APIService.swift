@@ -83,4 +83,22 @@ final class ApiService {
             }
         }
     }
+    
+    func getEpisodes (
+        tvID: Int,
+        seasonID: Int,
+        completionHandler: @escaping (([Episode]) -> Void),
+        complitionHandlerError: @escaping ((String) -> Void)
+    ) {
+        let endpoint = Endpoint.getEpisodes(apiKey: apiKey, tvID: tvID, seasonID: seasonID, language: "en")
+        
+        URLSession.shared.request(for: EpisodeResponse.self, endpoint) { (result) in
+            switch (result) {
+            case .success(let episodeResult):
+                completionHandler(episodeResult.episodes)
+            case .failure(let err):
+                complitionHandlerError(err.errorMsg)
+            }
+        }
+    }
 }
