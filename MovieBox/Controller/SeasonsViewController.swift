@@ -154,18 +154,6 @@ extension SeasonsViewController: UICollectionViewDataSource, UICollectionViewDel
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let cell = collectionView.cellForItem(at: indexPath) {
-            UIView.animate(withDuration: 0.3, animations: {
-                let scaleX = self.view.frame.width / self.layout.itemSize.width
-                let scaleY = self.view.frame.height / self.layout.itemSize.height
-                let translateY = self.view.frame.height / 4
-                
-                cell.transform = CGAffineTransform(scaleX: scaleX, y: scaleY).translatedBy(x: 0, y: -translateY)
-            })
-        }
-    }
-    
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let pageWidth = itemSize.width + layout.itemSpacing
         let currentPage = round(targetContentOffset.pointee.x / pageWidth)
