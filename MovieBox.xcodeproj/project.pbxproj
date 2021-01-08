@@ -44,6 +44,7 @@
 		FB61FA2B259A124E00171182 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB61FA2A259A124E00171182 /* Endpoint.swift */; };
 		FB61FA2D259A12DC00171182 /* RequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB61FA2C259A12DC00171182 /* RequestError.swift */; };
 		FB62541E25A86CBE001646ED /* EpisodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB62541D25A86CBE001646ED /* EpisodeViewController.swift */; };
+		FB62542025A881AE001646ED /* EpisodeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB62541F25A881AE001646ED /* EpisodeCell.swift */; };
 		FB6D84F02595CF8B006541A4 /* ChipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6D84EF2595CF8B006541A4 /* ChipView.swift */; };
 		FB84434B25A33EA200260598 /* AppButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB84434A25A33EA200260598 /* AppButton.swift */; };
 		FB84434D25A340CB00260598 /* PersonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB84434C25A340CB00260598 /* PersonViewController.swift */; };
@@ -111,6 +112,7 @@
 		FB61FA2A259A124E00171182 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		FB61FA2C259A12DC00171182 /* RequestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestError.swift; sourceTree = "<group>"; };
 		FB62541D25A86CBE001646ED /* EpisodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeViewController.swift; sourceTree = "<group>"; };
+		FB62541F25A881AE001646ED /* EpisodeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeCell.swift; sourceTree = "<group>"; };
 		FB6D84EF2595CF8B006541A4 /* ChipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipView.swift; sourceTree = "<group>"; };
 		FB84434A25A33EA200260598 /* AppButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppButton.swift; sourceTree = "<group>"; };
 		FB84434C25A340CB00260598 /* PersonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonViewController.swift; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 				FB84434A25A33EA200260598 /* AppButton.swift */,
 				FB84434E25A4613300260598 /* EmptyView.swift */,
 				FB84435425A4689800260598 /* HeaderView.swift */,
+				FB62541F25A881AE001646ED /* EpisodeCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -480,6 +483,7 @@
 				FBCC3C842594B05500B13416 /* MovieCell.swift in Sources */,
 				FB61FA29259A117D00171182 /* APIBase.swift in Sources */,
 				FBAFF435259F58A1005034D9 /* MovieAdapter.swift in Sources */,
+				FB62542025A881AE001646ED /* EpisodeCell.swift in Sources */,
 				FB50280225A626EC00CA2609 /* SeasonCell.swift in Sources */,
 				FB84434D25A340CB00260598 /* PersonViewController.swift in Sources */,
 				FBCE898C259653B800868DFE /* MainTableViewCell.swift in Sources */,
