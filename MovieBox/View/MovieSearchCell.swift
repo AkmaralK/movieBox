@@ -8,8 +8,9 @@
 
 import UIKit
 
-class SearchCell: UITableViewCell {
+class MovieSearchCell: UITableViewCell {
 
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var movieImageView: UIImageView!
+    
 }

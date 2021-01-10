@@ -12,7 +12,12 @@
 		540C0AED2598FEC700B44E5D /* MovieFavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540C0AEC2598FEC700B44E5D /* MovieFavoritesViewController.swift */; };
 		540C0AEF2598FF1900B44E5D /* MovieCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540C0AEE2598FF1900B44E5D /* MovieCollectionViewCell.swift */; };
 		A21FA8BC25A484F10032096F /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21FA8BB25A484F10032096F /* SearchTableViewController.swift */; };
-		A21FA8C525A573F00032096F /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21FA8C425A573F00032096F /* SearchCell.swift */; };
+		A21FA8C525A573F00032096F /* MovieSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21FA8C425A573F00032096F /* MovieSearchCell.swift */; };
+		A21FA8C925A8652D0032096F /* DiscoverMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21FA8C825A8652D0032096F /* DiscoverMovie.swift */; };
+		A21FA8CC25A86BB40032096F /* MovieLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21FA8CB25A86BB40032096F /* MovieLoader.swift */; };
+		A21FA8CF25AAD6EF0032096F /* DiscoverTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21FA8CE25AAD6EF0032096F /* DiscoverTV.swift */; };
+		A21FA8D225AAD90F0032096F /* TVLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21FA8D125AAD90F0032096F /* TVLoader.swift */; };
+		A21FA8D625AB04800032096F /* TvSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21FA8D525AB04800032096F /* TvSearchCell.swift */; };
 		A29DBBC2259A42500020F066 /* VideoLaunchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29DBBC1259A42500020F066 /* VideoLaunchController.swift */; };
 		A29DBBC8259AF2BC0020F066 /* launchscreen.wav in Resources */ = {isa = PBXBuildFile; fileRef = A29DBBC7259AF2BC0020F066 /* launchscreen.wav */; };
 		FB03678C2593A14D00CF2389 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB03678B2593A14D00CF2389 /* AppDelegate.swift */; };
@@ -71,7 +76,12 @@
 		540C0AEC2598FEC700B44E5D /* MovieFavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieFavoritesViewController.swift; sourceTree = "<group>"; };
 		540C0AEE2598FF1900B44E5D /* MovieCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCollectionViewCell.swift; sourceTree = "<group>"; };
 		A21FA8BB25A484F10032096F /* SearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
-		A21FA8C425A573F00032096F /* SearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
+		A21FA8C425A573F00032096F /* MovieSearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieSearchCell.swift; sourceTree = "<group>"; };
+		A21FA8C825A8652D0032096F /* DiscoverMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverMovie.swift; sourceTree = "<group>"; };
+		A21FA8CB25A86BB40032096F /* MovieLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieLoader.swift; sourceTree = "<group>"; };
+		A21FA8CE25AAD6EF0032096F /* DiscoverTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTV.swift; sourceTree = "<group>"; };
+		A21FA8D125AAD90F0032096F /* TVLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVLoader.swift; sourceTree = "<group>"; };
+		A21FA8D525AB04800032096F /* TvSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TvSearchCell.swift; sourceTree = "<group>"; };
 		A29DBBC1259A42500020F066 /* VideoLaunchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoLaunchController.swift; sourceTree = "<group>"; };
 		A29DBBC7259AF2BC0020F066 /* launchscreen.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = launchscreen.wav; sourceTree = "<group>"; };
 		B67312F6D2B7E99D9E744FA5 /* Pods_MovieBox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MovieBox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -191,7 +201,7 @@
 		FB03679F2593A15D00CF2389 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				A21FA8C425A573F00032096F /* SearchCell.swift */,
+				A21FA8C425A573F00032096F /* MovieSearchCell.swift */,
 				FB0ECA6125A0867E000ABBFD /* UICollectionViewCells */,
 				FB0367912593A14D00CF2389 /* Main.storyboard */,
 				FB0367962593A14F00CF2389 /* LaunchScreen.storyboard */,
@@ -205,6 +215,7 @@
 				FB84434A25A33EA200260598 /* AppButton.swift */,
 				FB84434E25A4613300260598 /* EmptyView.swift */,
 				FB84435425A4689800260598 /* HeaderView.swift */,
+				A21FA8D525AB04800032096F /* TvSearchCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -220,6 +231,8 @@
 				FBB84BC0259E58270093606A /* AppStore.swift */,
 				FB0ECA6225A08CB0000ABBFD /* MovieImages.swift */,
 				FB0ECA6825A0B200000ABBFD /* Country.swift */,
+				A21FA8C825A8652D0032096F /* DiscoverMovie.swift */,
+				A21FA8CE25AAD6EF0032096F /* DiscoverTV.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -244,6 +257,8 @@
 			isa = PBXGroup;
 			children = (
 				FB61FA27259A116F00171182 /* Networking */,
+				A21FA8CB25A86BB40032096F /* MovieLoader.swift */,
+				A21FA8D125AAD90F0032096F /* TVLoader.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -444,6 +459,7 @@
 				FB1AD0FE259627A00087C80B /* SearchViewController.swift in Sources */,
 				FBCC3C8D2594CB7C00B13416 /* MoviesList.swift in Sources */,
 				FB0367902593A14D00CF2389 /* MainViewController.swift in Sources */,
+				A21FA8CF25AAD6EF0032096F /* DiscoverTV.swift in Sources */,
 				FB0ECA6525A09465000ABBFD /* UIScollView+Ext.swift in Sources */,
 				FB2E05182595E33A0097770E /* SectionView.swift in Sources */,
 				FB0367A62593A39E00CF2389 /* UIColor+Ext.swift in Sources */,
@@ -451,9 +467,10 @@
 				FBA1D46D2598BA4A00DBD348 /* ItemView.swift in Sources */,
 				A29DBBC2259A42500020F066 /* VideoLaunchController.swift in Sources */,
 				FB84435325A4672E00260598 /* GenericCell.swift in Sources */,
-				A21FA8C525A573F00032096F /* SearchCell.swift in Sources */,
+				A21FA8C525A573F00032096F /* MovieSearchCell.swift in Sources */,
 				FB0ECA6725A0A939000ABBFD /* GalleryViewController.swift in Sources */,
 				FB2E051E2595EB7C0097770E /* Person.swift in Sources */,
+				A21FA8D625AB04800032096F /* TvSearchCell.swift in Sources */,
 				FB84435125A466BB00260598 /* TextCell.swift in Sources */,
 				FBAAD238259628F0004B572D /* SearchMovieCell.swift in Sources */,
 				FBE1D19225A21F1000B95419 /* UIView+Ext.swift in Sources */,
@@ -466,17 +483,20 @@
 				FB84434D25A340CB00260598 /* PersonViewController.swift in Sources */,
 				FBCE898C259653B800868DFE /* MainTableViewCell.swift in Sources */,
 				FB2E051A2595E9E70097770E /* PersonCell.swift in Sources */,
+				A21FA8D225AAD90F0032096F /* TVLoader.swift in Sources */,
 				FB6D84F02595CF8B006541A4 /* ChipView.swift in Sources */,
 				FB03678C2593A14D00CF2389 /* AppDelegate.swift in Sources */,
 				FB84434F25A4613300260598 /* EmptyView.swift in Sources */,
 				FB84435525A4689800260598 /* HeaderView.swift in Sources */,
 				FBB84BBD259E43E70093606A /* MoviesSectionData.swift in Sources */,
+				A21FA8C925A8652D0032096F /* DiscoverMovie.swift in Sources */,
 				FB2E051C2595EA520097770E /* PersonList.swift in Sources */,
 				FB61FA2D259A12DC00171182 /* RequestError.swift in Sources */,
 				FB03678E2593A14D00CF2389 /* SceneDelegate.swift in Sources */,
 				FBA7CD88259DE7BD00E408B4 /* MovieResponse.swift in Sources */,
 				FBB84BC1259E58270093606A /* AppStore.swift in Sources */,
 				FB0ECA6925A0B200000ABBFD /* Country.swift in Sources */,
+				A21FA8CC25A86BB40032096F /* MovieLoader.swift in Sources */,
 				FB0367A82593A8DD00CF2389 /* Movie.swift in Sources */,
 				FBB84BBB259E3D5D0093606A /* UniqueIdHelper.swift in Sources */,
 				FBB84BBF259E57FD0093606A /* LoadingViewController.swift in Sources */,

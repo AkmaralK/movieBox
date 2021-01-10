@@ -8,29 +8,78 @@
 
 import UIKit
 
-final class SearchTableViewController: UITableViewController, UISearchBarDelegate, Alertable, UniqueIdHelper {
+final class SearchTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, Alertable, UniqueIdHelper {
     
+  
     static var uniqueID: String = "searchTableVC"
- 
+    @IBOutlet var searchTableView: UITableView!
     let searchBar = UISearchBar()
-    private var filteredData = [MoviesSectionTypes: DataSection<MediaData>]()
+    private var filteredData = [ResultMovie]()
+    private var filteredTV = [ResultTV]()
+    private var movies = [ResultMovie]()
+    private var movieLoader = MovieLoader()
+    private var tvLoader = TVLoader()
+    private var tvShows = [ResultTV]()
     
-    private var data: [MoviesSectionTypes: DataSection<MediaData>] = MoviesSectionTypes.allCases.reduce(into: [MoviesSectionTypes: DataSection]()) {
-        $0[$1] = DataSection(data: [], isLoading: true)
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        self.tableView.register(SearchCell.self, forCellReuseIdentifier: "idCell")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .black
-        setUpNavBar()
-        self.loadData()
-        filteredData = data
+        self.searchTableView.dataSource = self
+        self.searchTableView.delegate = self
+         view.backgroundColor = .black
+              NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(updateMovies),
+                name: Notification.Name("movieNotification"),
+                object: nil)
+         movieLoader.getMovieDetails()
+         tvLoader.getTVDetails()
+         setUpNavBar()
+         filteredData = movies
+        // filteredTV = tvShows
     }
+    
+    @objc func updateMovies(notification: Notification) {
+        if let movies = notification.object as? [ResultMovie] {
+            self.movies = movies
+            self.filteredData = movies
+            searchTableView.reloadData()
+        } else if let tvShows = notification.object as? [ResultTV] {
+                self.tvShows = tvShows
+               // self.filteredTV = tvShows
+            searchTableView.reloadData()
+            }
+    }
+    
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//            let control = UISegmentedControl(items: ["Movie","TV"])
+//        control.backgroundColor = UIColor.lightGray
+//            control.addTarget(self, action: Selector(("valueChanged:")), for: UIControl.Event.valueChanged)
+//            if(section == 0){
+//                return control;
+//            }
+//            return nil;
+//        }
+//
+//        func valueChanged(segmentedControl: UISegmentedControl) {
+//            print("Coming in : \(segmentedControl.selectedSegmentIndex)")
+//            if(segmentedControl.selectedSegmentIndex == 0){
+//                self.filteredData = self.movies
+//            } else if(segmentedControl.selectedSegmentIndex == 1){
+//                self.filteredData = self.movies
+//            } else if(segmentedControl.selectedSegmentIndex == 2){
+//                self.filteredTV = self.tvShows
+//            }
+//            self.searchTableView.reloadData()
+//        }
+//
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//            return 44.0
+//        }
     
     
     override func viewDidAppear(_ animated: Bool) {
@@ -39,6 +88,7 @@ final class SearchTableViewController: UITableViewController, UISearchBarDelegat
     }
     
     func setUpNavBar() {
+        searchBar.delegate = self
         searchBar.sizeToFit()
         searchBar.searchBarStyle = .minimal
         searchBar.placeholder = "Search by "
@@ -48,58 +98,54 @@ final class SearchTableViewController: UITableViewController, UISearchBarDelegat
         searchBar.isTranslucent = true
     }
     
-    private func loadData () {
-        MoviesSectionTypes.allCases.forEach { (type) in
-            ApiService.movieLoader.loadMovieShowBySection(mediaType: type.mediaType, section: type, complitionHandler: { (moviesResponse) in
-                self.data[type]!.data = moviesResponse.results
-                self.data[type]?.isLoading = false
-                self.data[type]?.next(totalPages: moviesResponse.total_pages)
-                self.tableView.reloadData()
-            }) { (msg) in
-                self.showAlert("Error", msg)
-            }
-        }
-    }
     
-//    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-//            searchBar.showsCancelButton = true
-//        }
-//
-//    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-//            searchBar.showsCancelButton = false
-//            searchBar.text = ""
-//            searchBar.resignFirstResponder()
-//    }
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+            searchBar.showsCancelButton = true
+        }
+
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+            searchBar.showsCancelButton = false
+            searchBar.text = ""
+            searchBar.resignFirstResponder()
+    }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
-//        filteredData = searchText.isEmpty ? data : data.filter { (item: MediaData) -> Bool in
-//            return item.title.range(of: searchText, options: .caseInsensitive, range: nil, locale: nil) != nil
-//        }
 
-        self.loadData()
-        tableView.reloadData()
+        filteredData = movies.filter({$0.originalTitle.lowercased().prefix(searchText.count) == searchText.lowercased()})
+        
+        self.searchTableView.reloadData()
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let count = self.data.keys.count
-        print("NUMBER OF ROWS", count)
-        return count 
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+
+        return (filteredData.count + tvShows.count)
+
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
     }
    
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.row < filteredData.count {
+            let cell = searchTableView.dequeueReusableCell(withIdentifier: "idCell", for: indexPath) as! MovieSearchCell
+                cell.nameLabel.text = filteredData[indexPath.row].originalTitle
+                let posterPath = filteredData[indexPath.row].posterPath
+                cell.movieImageView.sd_setImage(with: URL(string: "https://image.tmdb.org/t/p/w500/\(posterPath)"), placeholderImage: UIImage(named: "placeholder.png"))
+                cell.backgroundColor = UIColor.darkColor
+                cell.textLabel?.textColor = UIColor.white
+                return cell
+        } else  {
+            let cell1 = searchTableView.dequeueReusableCell(withIdentifier: "idTvCell", for: indexPath) as! TvSearchCell
+                        cell1.tvNameLabel.text = tvShows[indexPath.row - filteredData.count].originalName
+                        let posterPath = tvShows[indexPath.row - filteredData.count].posterPath
+                        cell1.tvImageView.sd_setImage(with: URL(string: "https://image.tmdb.org/t/p/w500/\(posterPath)"), placeholderImage: UIImage(named: "placeholder.png"))
+                        cell1.backgroundColor = UIColor.darkColor
+                        return cell1
+        }
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "idCell", for: indexPath) as! SearchCell
-            let movieData = self.data.values[data.values.index(data.values.startIndex, offsetBy: indexPath.row)]
-        cell.nameLabel.text = "title"; // movieData.data[indexPath.row].title
-        cell.movieImageView.image = UIImage(named: "moviePlaceholder")
-        cell.selectionStyle = .none
-        return cell
-    }
+   }
+     
 }
-

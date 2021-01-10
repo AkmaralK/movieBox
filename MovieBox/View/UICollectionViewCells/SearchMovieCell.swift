@@ -11,6 +11,8 @@ import UIKit
 class SearchMovieCell: UICollectionViewCell {
 
     @IBOutlet weak var movieImage: UIImageView!
-
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var tvImage: UIImageView!
+    @IBOutlet weak var tvLabel: UILabel!
+    
 }
