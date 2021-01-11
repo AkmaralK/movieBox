@@ -27,22 +27,20 @@ final class SearchTableViewController: UIViewController, UISearchBarDelegate, Al
         self.searchTableView.dataSource = self
         self.searchTableView.delegate = self
         view.backgroundColor = .black
-        
-        MediaType.allCases.forEach { (type) in
-            ApiService.movieLoader.getDiscoverMedia(mediaType: type, completionHandler: { (response) in
-                if (type == .movie) {
-                    self.data.append(contentsOf: response.results as! [Movie])
-                    self.searchTableView.reloadData()
-                } else {
-                    self.data.append(contentsOf: response.results as! [TvShow])
-                    self.searchTableView.reloadData()
-                }
-            }) { (msg) in
-                self.showAlert("Error", msg)
-            }
-        }
-        
         setUpNavBar()
+//        MediaType.allCases.forEach { (type) in
+//            ApiService.movieLoader.getDiscoverMedia(mediaType: type, completionHandler: { (response) in
+//                if (type == .movie) {
+//                    self.data.append(contentsOf: response.results as! [Movie])
+//                    self.searchTableView.reloadData()
+//                } else {
+//                    self.data.append(contentsOf: response.results as! [TvShow])
+//                    self.searchTableView.reloadData()
+//                }
+//            }) { (msg) in
+//                self.showAlert("Error", msg)
+//            }
+//        }
     }
     
 
@@ -63,6 +61,8 @@ final class SearchTableViewController: UIViewController, UISearchBarDelegate, Al
     }
     
     
+    
+    
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.showsCancelButton = true
     }
@@ -71,6 +71,7 @@ final class SearchTableViewController: UIViewController, UISearchBarDelegate, Al
         searchBar.showsCancelButton = false
         searchBar.text = ""
         searchBar.resignFirstResponder()
+        dismiss(animated: true, completion: nil)
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -115,7 +116,7 @@ extension SearchTableViewController: UITableViewDataSource, UITableViewDelegate 
             let posterPath = URL(string: (currentData as! Movie).imageUrl ?? "")
             cell.movieImageView.sd_setImage(with: posterPath, placeholderImage: UIImage(named: "placeholder.png"))
             cell.backgroundColor = UIColor.darkColor
-            cell.textLabel?.textColor = UIColor.white
+            //cell.textLabel?.textColor = UIColor.white
         } else if (currentData is TvShow) {
             let cell1 = searchTableView.dequeueReusableCell(withIdentifier: "idTvCell", for: indexPath) as! TvSearchCell
                         
@@ -128,4 +129,30 @@ extension SearchTableViewController: UITableViewDataSource, UITableViewDelegate 
         
         return UITableViewCell()
     }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+           let control = UISegmentedControl(items: ["Movie", "TvShows"])
+        control.backgroundColor = UIColor.white
+        control.addTarget(self, action: #selector(valueChanged), for: UIControl.Event.valueChanged)
+           if(section == 0){
+               return control;
+           }
+           return nil;
+       }
+       
+    @objc func valueChanged(segmentedControl: UISegmentedControl) -> [Any] {
+           print("Coming in : \(segmentedControl.selectedSegmentIndex)")
+           if (segmentedControl.selectedSegmentIndex == 0) {
+            return self.data
+           } else if(segmentedControl.selectedSegmentIndex == 1) {
+               return self.data
+           } else {
+              return self.data
+           }
+         //  searchTableView.reloadData()
+       }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+           return 44.0
+       }
 }
