@@ -15,6 +15,9 @@ final class SearchTableViewController: UIViewController, UISearchBarDelegate, Al
     let searchBar = UISearchBar()
     
     private var data: [Any] = []
+    var sectionsData = [[], [], []]
+    private var selectedSection: Int = 0
+
     
     fileprivate var searchWorkTask: DispatchWorkItem?
     
@@ -28,19 +31,7 @@ final class SearchTableViewController: UIViewController, UISearchBarDelegate, Al
         self.searchTableView.delegate = self
         view.backgroundColor = .black
         setUpNavBar()
-//        MediaType.allCases.forEach { (type) in
-//            ApiService.movieLoader.getDiscoverMedia(mediaType: type, completionHandler: { (response) in
-//                if (type == .movie) {
-//                    self.data.append(contentsOf: response.results as! [Movie])
-//                    self.searchTableView.reloadData()
-//                } else {
-//                    self.data.append(contentsOf: response.results as! [TvShow])
-//                    self.searchTableView.reloadData()
-//                }
-//            }) { (msg) in
-//                self.showAlert("Error", msg)
-//            }
-//        }
+
     }
     
 
@@ -87,7 +78,16 @@ final class SearchTableViewController: UIViewController, UISearchBarDelegate, Al
     
     fileprivate func searchByKeyword (queryText: String) {
         ApiService.shared.searchMedia(query: queryText, completionHandler: { (searchData) in
-            self.data = searchData
+           self.data = searchData
+            for item in searchData {
+                if item is Movie {
+                    self.sectionsData[0].append(item)
+                } else if item is TvShow {
+                    self.sectionsData[1].append(item)
+                } else if item is Person {
+                    self.sectionsData[2].append(item)
+                }
+            }
             self.searchTableView.reloadData()
         }) { (err) in
             self.showAlert("Error", err)
@@ -98,7 +98,7 @@ final class SearchTableViewController: UIViewController, UISearchBarDelegate, Al
 
 extension SearchTableViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.data.count
+        return data.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -106,50 +106,51 @@ extension SearchTableViewController: UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell( withIdentifier: "idCell" ) as! MovieSearchCell
         
-        let currentData = self.data[indexPath.row]
-        
-        if (currentData is Movie) {
-            let cell = searchTableView.dequeueReusableCell(withIdentifier: "idCell", for: indexPath) as! MovieSearchCell
-            
-            cell.nameLabel.text = (currentData as! Movie).title
-            let posterPath = URL(string: (currentData as! Movie).imageUrl ?? "")
+        if  selectedSection == 0 {
+            let cellData = sectionsData[selectedSection][indexPath.row]
+            cell.nameLabel.text = (cellData as! Movie).title
+            let posterPath = URL(string: (cellData as! Movie).imageUrl ?? "")
             cell.movieImageView.sd_setImage(with: posterPath, placeholderImage: UIImage(named: "placeholder.png"))
             cell.backgroundColor = UIColor.darkColor
-            //cell.textLabel?.textColor = UIColor.white
-        } else if (currentData is TvShow) {
-            let cell1 = searchTableView.dequeueReusableCell(withIdentifier: "idTvCell", for: indexPath) as! TvSearchCell
-                        
-            cell1.tvNameLabel.text = (currentData as! TvShow).title
-            let posterPath = URL(string: (currentData as! TvShow).imageUrl ?? "")
-            cell1.tvImageView.sd_setImage(with: posterPath, placeholderImage: UIImage(named: "placeholder.png"))
-            cell1.backgroundColor = UIColor.darkColor
-            return cell1
+            return cell
+        }
+        else if selectedSection == 1 {
+            let cellData = sectionsData[selectedSection][indexPath.row]
+            cell.nameLabel.text = (cellData as! TvShow).title
+            let posterPath = URL(string: (cellData as! TvShow).imageUrl ?? "")
+            cell.movieImageView.sd_setImage(with: posterPath, placeholderImage: UIImage(named: "placeholder.png"))
+            cell.backgroundColor = UIColor.darkColor
+            return cell
+        } else if selectedSection == 2 {
+            let cellData = sectionsData[selectedSection][indexPath.row]
+            cell.nameLabel.text = (cellData as! Person).name
+            let posterPath = URL(string: (cellData as! Person).avatarURL )
+            cell.movieImageView.sd_setImage(with: posterPath, placeholderImage: UIImage(named: "placeholder.png"))
+            cell.backgroundColor = UIColor.darkColor
+            return cell
         }
         
         return UITableViewCell()
     }
     
+
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-           let control = UISegmentedControl(items: ["Movie", "TvShows"])
-        control.backgroundColor = UIColor.white
-        control.addTarget(self, action: #selector(valueChanged), for: UIControl.Event.valueChanged)
-           if(section == 0){
-               return control;
-           }
-           return nil;
+            let control = UISegmentedControl(items: ["Movie", "TV Show", "Actors"])
+            control.backgroundColor = UIColor.white
+            control.addTarget(self, action: #selector(valueChanged), for: UIControl.Event.valueChanged)
+            if (section == 0) {
+               return control
+            }
+            return nil
        }
-       
-    @objc func valueChanged(segmentedControl: UISegmentedControl) -> [Any] {
+
+    @objc func valueChanged(segmentedControl: UISegmentedControl) {
            print("Coming in : \(segmentedControl.selectedSegmentIndex)")
-           if (segmentedControl.selectedSegmentIndex == 0) {
-            return self.data
-           } else if(segmentedControl.selectedSegmentIndex == 1) {
-               return self.data
-           } else {
-              return self.data
-           }
-         //  searchTableView.reloadData()
+            self.selectedSection = segmentedControl.selectedSegmentIndex
+      self.searchTableView.reloadData()
+      
        }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
