@@ -14,6 +14,11 @@ final class SearchTableViewController: UIViewController, UITableViewDataSource, 
     static var uniqueID: String = "searchTableVC"
     @IBOutlet var searchTableView: UITableView!
     let searchBar = UISearchBar()
+    
+    private var movieArray = [Movie]()
+    private var tvArray = [TvShow]()
+    
+    // MARK: - Trash
     private var filteredData = [Movie]()
     private var filteredTV = [TvShow]()
     private var movies = [Movie]()
@@ -48,35 +53,7 @@ final class SearchTableViewController: UIViewController, UITableViewDataSource, 
         filteredData = movies
     }
     
-    
-    
-    //    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    //            let control = UISegmentedControl(items: ["Movie","TV"])
-    //        control.backgroundColor = UIColor.lightGray
-    //            control.addTarget(self, action: Selector(("valueChanged:")), for: UIControl.Event.valueChanged)
-    //            if(section == 0){
-    //                return control;
-    //            }
-    //            return nil;
-    //        }
-    //
-    //        func valueChanged(segmentedControl: UISegmentedControl) {
-    //            print("Coming in : \(segmentedControl.selectedSegmentIndex)")
-    //            if(segmentedControl.selectedSegmentIndex == 0){
-    //                self.filteredData = self.movies
-    //            } else if(segmentedControl.selectedSegmentIndex == 1){
-    //                self.filteredData = self.movies
-    //            } else if(segmentedControl.selectedSegmentIndex == 2){
-    //                self.filteredTV = self.tvShows
-    //            }
-    //            self.searchTableView.reloadData()
-    //        }
-    //
-    //    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    //            return 44.0
-    //        }
-    
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         searchBar.becomeFirstResponder()
@@ -106,9 +83,9 @@ final class SearchTableViewController: UIViewController, UITableViewDataSource, 
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
-        filteredData = movies.filter({$0.title.lowercased().prefix(searchText.count) == searchText.lowercased()})
-        
-        self.searchTableView.reloadData()
+//        filteredData = movies.filter({$0.title.lowercased().prefix(searchText.count) == searchText.lowercased()})
+//
+//        self.searchTableView.reloadData()
     }
     
     
@@ -126,10 +103,10 @@ final class SearchTableViewController: UIViewController, UITableViewDataSource, 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row < filteredData.count {
             let cell = searchTableView.dequeueReusableCell(withIdentifier: "idCell", for: indexPath) as! MovieSearchCell
-            let data = filteredData[indexPath.row]
+            let data = movieArray[indexPath.row]
             
             cell.nameLabel.text = data.title
-            let posterPath = URL(string: filteredData[indexPath.row].imageUrl ?? "")
+            let posterPath = URL(string: data.imageUrl ?? "")
             cell.movieImageView.sd_setImage(with: posterPath, placeholderImage: UIImage(named: "placeholder.png"))
             cell.backgroundColor = UIColor.darkColor
             cell.textLabel?.textColor = UIColor.white
@@ -137,7 +114,7 @@ final class SearchTableViewController: UIViewController, UITableViewDataSource, 
         } else  {
             let cell1 = searchTableView.dequeueReusableCell(withIdentifier: "idTvCell", for: indexPath) as! TvSearchCell
             
-            let data = tvShows[indexPath.row - filteredData.count]
+            let data = tvArray[indexPath.row - filteredData.count]
             
             cell1.tvNameLabel.text = data.title
             let posterPath = URL(string: data.imageUrl ?? "")
@@ -145,7 +122,5 @@ final class SearchTableViewController: UIViewController, UITableViewDataSource, 
             cell1.backgroundColor = UIColor.darkColor
             return cell1
         }
-        
     }
-    
 }

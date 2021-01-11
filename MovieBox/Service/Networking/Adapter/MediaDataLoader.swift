@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SVProgressHUD
 
 class MediaDataLoader <T: MediaData>: MediaDataLoaderService {
     
@@ -99,6 +100,26 @@ class MediaDataLoader <T: MediaData>: MediaDataLoaderService {
                 completionHandler(mediaDataRespnse.convertedToResponse())
             case .failure(let err):
                 complitionHandlerError(err.errorMsg)
+            }
+        }
+    }
+    
+    func searchMedia (
+        mediaType: MediaType,
+        completionHandler: @escaping ((MediaDataResponse) -> Void),
+        complitionHandlerError: @escaping ((String) -> Void)
+    ) {
+        let endpoint = Endpoint.searchMedia(apiKey: apiKey, language: "en", mediaType: mediaType)
+        SVProgressHUD.show()
+        
+        URLSession.shared.request(for: MediaDataResponseShape<T>.self, endpoint) { (result) in
+            switch (result) {
+            case .success(let mediaDataRespnse):
+                completionHandler(mediaDataRespnse.convertedToResponse())
+                SVProgressHUD.dismiss()
+            case .failure(let err):
+                complitionHandlerError(err.errorMsg)
+                SVProgressHUD.dismiss()
             }
         }
     }
