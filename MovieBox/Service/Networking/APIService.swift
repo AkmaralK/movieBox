@@ -83,4 +83,61 @@ final class ApiService {
             }
         }
     }
+    
+    func searchMedia (
+        query: String,
+        completionHandler: @escaping (([Any]) -> Void),
+        complitionHandlerError: @escaping ((String) -> Void)
+    ) {
+        let endpoint = Endpoint.searchMedia(apiKey: apiKey, language: "en", query: query)
+        SVProgressHUD.show()
+        
+        URLSession.shared.requestJSON(endpoint) { (result) in
+            switch (result) {
+            case .success(let data):
+                self.parseSearchJSON(json: data) { (results) in
+                    completionHandler(results)
+                    SVProgressHUD.dismiss()
+                }
+            case .failure(let err):
+                complitionHandlerError(err.errorMsg)
+                SVProgressHUD.dismiss()
+            }
+        }
+    }
+    
+    // MARK: - UTILS
+    
+    fileprivate func parseSearchJSON (
+        json: [String: Any],
+        completion: (([Any]) -> Void)
+    ) {
+        var searchResults: [Any] = []
+        
+        if let results = json["results"] as? [[String: Any]] {
+            results.forEach { (result) in
+                if let jsonData = try? JSONSerialization.data(withJSONObject: result, options: .prettyPrinted) {
+                    let mediaType = result["media_type"] as? String ?? ""
+                    let decoder = JSONDecoder()
+                    
+                    if (mediaType == MediaType.tv.key) {
+                        if let jsonResponse = try? decoder.decode(TvShow.self, from: jsonData) {
+                            searchResults.append(jsonResponse)
+                            completion(searchResults)
+                        }
+                    } else if mediaType == MediaType.movie.key {
+                        if let jsonResponse = try? decoder.decode(Movie.self, from: jsonData) {
+                            searchResults.append(jsonResponse)
+                            completion(searchResults)
+                        }
+                    } else {
+                        if let jsonResponse = try? decoder.decode(Person.self, from: jsonData) {
+                            searchResults.append(jsonResponse)
+                            completion(searchResults)
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

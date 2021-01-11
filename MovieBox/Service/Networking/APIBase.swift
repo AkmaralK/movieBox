@@ -13,6 +13,7 @@ extension URLSession {
     func request<T:Decodable> (
         for: T.Type = T.self,
         _ endpoint: Endpoint,
+        returnJSON: Bool = false,
         completion: @escaping (Swift.Result<T, RequestError>) -> Void) {
         let request = createRequest(from: endpoint)
         let dataTask = URLSession.shared.dataTask(with: request) { data, response, error in
@@ -38,6 +39,35 @@ extension URLSession {
                     } else {
                         completion(.failure(.undefined))
                     }
+                }
+            }
+        }
+        
+        dataTask.resume()
+    }
+    
+    func requestJSON (
+        _ endpoint: Endpoint,
+        completion: @escaping (Swift.Result<[String: Any], RequestError>) -> Void)
+    {
+        let request = createRequest(from: endpoint)
+        
+        let dataTask = URLSession.shared.dataTask(with: request) { data, response, error in
+            DispatchQueue.main.async {
+                guard let jsonData = data else {
+                    completion(.failure(.noData))
+                    return
+                }
+                
+                guard error == nil else {
+                    completion(.failure(.withParameter(message: error!.localizedDescription)))
+                    return
+                }
+                
+                if let dataResult = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any] {
+                    completion(.success(dataResult))
+                } else {
+                    completion(.failure(.undefined))
                 }
             }
         }
