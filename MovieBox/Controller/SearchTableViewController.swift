@@ -79,6 +79,7 @@ final class SearchTableViewController: UIViewController, UISearchBarDelegate, Al
     fileprivate func searchByKeyword (queryText: String) {
         ApiService.shared.searchMedia(query: queryText, completionHandler: { (searchData) in
            self.data = searchData
+            self.sectionsData = [[], [], []]
             for item in searchData {
                 if item is Movie {
                     self.sectionsData[0].append(item)
@@ -98,7 +99,7 @@ final class SearchTableViewController: UIViewController, UISearchBarDelegate, Al
 
 extension SearchTableViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data.count
+        return sectionsData[selectedSection].count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
