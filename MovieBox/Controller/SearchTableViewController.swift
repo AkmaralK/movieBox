@@ -30,6 +30,7 @@ final class SearchTableViewController: UIViewController, UISearchBarDelegate, Al
         self.searchTableView.dataSource = self
         self.searchTableView.delegate = self
         view.backgroundColor = .black
+        UISearchBar.appearance().tintColor = UIColor.red //cancel button color
         setUpNavBar()
 
     }
@@ -79,7 +80,7 @@ final class SearchTableViewController: UIViewController, UISearchBarDelegate, Al
     fileprivate func searchByKeyword (queryText: String) {
         ApiService.shared.searchMedia(query: queryText, completionHandler: { (searchData) in
            self.data = searchData
-            self.sectionsData = [[], [], []]
+           self.sectionsData = [[], [], []]
             for item in searchData {
                 if item is Movie {
                     self.sectionsData[0].append(item)
@@ -139,7 +140,11 @@ extension SearchTableViewController: UITableViewDataSource, UITableViewDelegate 
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
             let control = UISegmentedControl(items: ["Movie", "TV Show", "Actors"])
-            control.backgroundColor = UIColor.white
+            control.backgroundColor = UIColor.black
+            control.tintColor = UIColor.darkColor
+            control.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
+            control.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.lightGray], for: .normal)
+        
             control.addTarget(self, action: #selector(valueChanged), for: UIControl.Event.valueChanged)
             if (section == 0) {
                return control
@@ -157,4 +162,16 @@ extension SearchTableViewController: UITableViewDataSource, UITableViewDelegate 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
            return 44.0
        }
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let movieData = sectionsData[indexPath.row]
+        if let movieVC = storyboard.instantiateViewController(withIdentifier: MovieViewController.uniqueID) as? MovieViewController {
+            movieVC.media = movieData[indexPath.row] as? MediaData
+            self.navigationController?.pushViewController(movieVC, animated: true)
+        }
+        
+    }
+
 }

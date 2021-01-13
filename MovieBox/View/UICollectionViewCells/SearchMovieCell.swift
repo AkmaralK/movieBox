@@ -14,5 +14,7 @@ class SearchMovieCell: UICollectionViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var tvImage: UIImageView!
     @IBOutlet weak var tvLabel: UILabel!
+    @IBOutlet weak var actorImageView: UIImageView!
+    @IBOutlet weak var actorNameLabel: UILabel!
     
 }

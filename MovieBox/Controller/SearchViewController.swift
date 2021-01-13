@@ -12,14 +12,15 @@ final class SearchViewController: UIViewController, UICollectionViewDelegate, UI
     
     @IBOutlet weak var movieCollectionView: UICollectionView!
     @IBOutlet weak var tvShowCollectionView: UICollectionView!
+    @IBOutlet weak var actorsCollectionView: UICollectionView!
     private var movies = [Movie]()
     private var tvShows = [TvShow]()
+    private var actors = [Person]()
     let searchBar = UISearchBar()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setUpNavBar()
         
         MediaType.allCases.forEach { (type) in
@@ -34,6 +35,13 @@ final class SearchViewController: UIViewController, UICollectionViewDelegate, UI
             }) { (msg) in
                 self.showAlert("Error", msg)
             }
+        }
+        
+        ApiService.shared.getPersonPopular(completionHandler: { (personPopular) in
+            self.actors = personPopular
+            self.actorsCollectionView.reloadData()
+        }) { (msg) in
+            self.showAlert("Error", msg)
         }
     }
     
@@ -66,6 +74,8 @@ final class SearchViewController: UIViewController, UICollectionViewDelegate, UI
             return movies.count
         } else if collectionView == tvShowCollectionView {
             return tvShows.count
+        } else if collectionView == actorsCollectionView {
+            return actors.count
         } else {
             return 1
         }
@@ -77,18 +87,20 @@ final class SearchViewController: UIViewController, UICollectionViewDelegate, UI
         if collectionView == movieCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "searchCell", for: indexPath) as! SearchMovieCell
             let movie = movies[indexPath.row]
-            
             cell.nameLabel.text = movie.title
-            
             cell.movieImage.sd_setImage(with: URL(string: movie.imageUrl ?? ""), placeholderImage: UIImage(named: "placeholder.png"))
             return cell
         } else if collectionView == tvShowCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "searchTVCell", for: indexPath) as! SearchMovieCell
             let tvShow = tvShows[indexPath.row]
-            
             cell.tvLabel.text = tvShow.title
-            
             cell.tvImage.sd_setImage(with: URL(string: tvShow.imageUrl ?? ""), placeholderImage: UIImage(named: "placeholder.png"))
+            return cell
+        } else if collectionView == actorsCollectionView {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "searchPersonCell", for: indexPath) as! SearchMovieCell
+            let person = actors[indexPath.row]
+            cell.actorNameLabel.text = person.name
+            cell.actorImageView.sd_setImage(with: URL(string: person.avatarURL), placeholderImage: UIImage(named: "placeholder.png"))
             return cell
         } else {
             return UICollectionViewCell()
@@ -97,5 +109,15 @@ final class SearchViewController: UIViewController, UICollectionViewDelegate, UI
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.item + 1)
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        if let movieVC = storyboard.instantiateViewController(withIdentifier: MovieViewController.uniqueID) as? MovieViewController {
+            if collectionView == movieCollectionView {
+                movieVC.media = movies[indexPath.row] as MediaData
+                self.navigationController?.pushViewController(movieVC, animated: true)
+            } else if collectionView == tvShowCollectionView {
+                movieVC.media = tvShows[indexPath.row] as MediaData
+                self.navigationController?.pushViewController(movieVC, animated: true)
+            }
+        }
     }
 }

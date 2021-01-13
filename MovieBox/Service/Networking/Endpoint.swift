@@ -40,6 +40,7 @@ enum Endpoint {
     case getPersonDetails (apiKey: String, id: Int, language: String)
     case getDiscover (apiKey: String, language: String, mediaType: MediaType)
     case searchMedia (apiKey: String, language: String, query: String)
+    case getPersonPopular (apiKey: String, language: String, page: Int)
     
     static let baseURL: String = ServiceBaseURL.main.value
     
@@ -75,6 +76,8 @@ enum Endpoint {
             return "/3/discover/\(type.key)"
         case .searchMedia(_, _, _):
             return "/3/search/multi"
+        case.getPersonPopular(_, _, _):
+            return "/3/person/popular"
         }
     }
     
@@ -85,7 +88,8 @@ enum Endpoint {
              .getPopular(apiKey: let key, language: let language, let page, _),
              .getRecommendedMovies(apiKey: let key, language: let language, _, page: let page, _),
              .getNowPlaying(apiKey: let key, language: let language, page: let page),
-             .getAiringToday(apiKey: let key, language: let language, page: let page):
+             .getAiringToday(apiKey: let key, language: let language, page: let page),
+             .getPersonPopular(apiKey: let key, language: let language, page: let page):
             return [
                 URLQueryItem(name: "api_key", value: key),
                 URLQueryItem(name: "language", value: language),
