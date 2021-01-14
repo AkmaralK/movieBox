@@ -34,7 +34,7 @@ struct Person: Decodable {
         self.biography = try? values.decode(String.self, forKey: .biography)
         
         self.characterName = (try? values.decode(String.self, forKey: .character)) ?? (try? values.decode(String.self, forKey: .job)) ?? ""
-    }
+    } 
     
     static func getFake() -> [Person] {
         return [
@@ -42,8 +42,12 @@ struct Person: Decodable {
     }
 }
 
-
 struct PersonResponse: Decodable {
     let cast: [Person]
     let crew: [Person]
+}
+
+struct ActorsResponse: Decodable {
+    let results: [Person]
+    
 }

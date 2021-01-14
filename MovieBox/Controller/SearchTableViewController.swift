@@ -166,9 +166,9 @@ extension SearchTableViewController: UITableViewDataSource, UITableViewDelegate 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-        let movieData = sectionsData[indexPath.row]
+        let movieData = sectionsData[indexPath.section]
         if let movieVC = storyboard.instantiateViewController(withIdentifier: MovieViewController.uniqueID) as? MovieViewController {
-            movieVC.media = movieData[indexPath.row] as? MediaData
+            movieVC.media = movieData[indexPath.item] as? MediaData
             self.navigationController?.pushViewController(movieVC, animated: true)
         }
         

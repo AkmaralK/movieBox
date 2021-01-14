@@ -90,10 +90,10 @@ final class ApiService {
         
         let endpoint = Endpoint.getPersonPopular(apiKey: apiKey, language: "en", page: 1)
         
-        URLSession.shared.request(for: PersonResponse.self, endpoint) { (result) in
+        URLSession.shared.request(for: ActorsResponse.self, endpoint) { (result) in
             switch (result) {
             case .success(let personInfo):
-                completionHandler(personInfo.cast)
+                completionHandler(personInfo.results)
             case .failure(let err):
                 complitionHandlerError(err.errorMsg)
             }

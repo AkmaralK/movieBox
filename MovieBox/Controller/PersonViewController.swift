@@ -15,7 +15,6 @@ final class PersonViewController: UIViewController, Alertable {
         var character: String
         var movie: String
     }
-    
     // MARK: - UI Outlets
     
     fileprivate lazy var tableView: UITableView = {

@@ -22,6 +22,14 @@ final class SearchViewController: UIViewController, UICollectionViewDelegate, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpNavBar()
+        ApiService.shared.getPersonPopular(completionHandler: { (personPopular) in
+            self.actors = [Person]()
+            self.actors = personPopular
+            print(self.actors)
+            self.actorsCollectionView.reloadData()
+        }) { (msg) in
+            self.showAlert("Error", msg)
+        }
         
         MediaType.allCases.forEach { (type) in
             ApiService.movieLoader.getDiscoverMedia(mediaType: type, completionHandler: { (response) in
@@ -35,13 +43,6 @@ final class SearchViewController: UIViewController, UICollectionViewDelegate, UI
             }) { (msg) in
                 self.showAlert("Error", msg)
             }
-        }
-        
-        ApiService.shared.getPersonPopular(completionHandler: { (personPopular) in
-            self.actors = personPopular
-            self.actorsCollectionView.reloadData()
-        }) { (msg) in
-            self.showAlert("Error", msg)
         }
     }
     
@@ -65,9 +66,9 @@ final class SearchViewController: UIViewController, UICollectionViewDelegate, UI
     }
     
     
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
+//    func numberOfSections(in collectionView: UICollectionView) -> Int {
+//        return 2
+//    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == movieCollectionView {
@@ -118,6 +119,14 @@ final class SearchViewController: UIViewController, UICollectionViewDelegate, UI
                 movieVC.media = tvShows[indexPath.row] as MediaData
                 self.navigationController?.pushViewController(movieVC, animated: true)
             }
+            
         }
+            if collectionView == actorsCollectionView {
+                let person = actors[indexPath.row]
+                let personVC = PersonViewController()
+                personVC.person = person
+                self.navigationController?.pushViewController(personVC, animated: true)
+            }
     }
+
 }
