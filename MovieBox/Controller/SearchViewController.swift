@@ -23,7 +23,6 @@ final class SearchViewController: UIViewController, UICollectionViewDelegate, UI
         super.viewDidLoad()
         setUpNavBar()
         ApiService.shared.getPersonPopular(completionHandler: { (personPopular) in
-            self.actors = [Person]()
             self.actors = personPopular
             print(self.actors)
             self.actorsCollectionView.reloadData()
@@ -65,10 +64,6 @@ final class SearchViewController: UIViewController, UICollectionViewDelegate, UI
         }
     }
     
-    
-//    func numberOfSections(in collectionView: UICollectionView) -> Int {
-//        return 2
-//    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == movieCollectionView {
