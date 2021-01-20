@@ -216,6 +216,29 @@ final class ApiService {
         }
     }
     
+    func addToFavorite (
+        userUID: String,
+        mediaData: MediaData,
+        completionHandler: @escaping ((Bool) -> Void),
+        complitionHandlerError: @escaping ((String) -> Void)
+    ) {
+        SVProgressHUD.show()
+        
+        Firestore.firestore().collection("users").document(userUID).collection("favs").document("\(mediaData.id)").setData([
+            "id": mediaData.id,
+            "imageUrl": mediaData.imageUrl,
+            "title": mediaData.title
+        ], merge: false) { error in
+            SVProgressHUD.dismiss()
+            
+            if let error = error {
+                complitionHandlerError(error.localizedDescription)
+            } else {
+                completionHandler(true)
+            }
+        }
+    }
+    
     
     // MARK: - UTILS
     

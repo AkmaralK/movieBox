@@ -9,6 +9,12 @@
 import UIKit
 import SkeletonView
 
+class FavoriteButton: UIButton {
+    var indexPath: IndexPath!
+    var collectionViewIndex: Int!
+}
+
+
 class MovieCell: UICollectionViewCell, UniqueIdHelper {
     
     static var uniqueID: String = "movieCell"
@@ -40,8 +46,8 @@ class MovieCell: UICollectionViewCell, UniqueIdHelper {
         return label
     }()
     
-    lazy var favoriteBtn: UIButton = {
-        let btn = UIButton()
+    lazy var favoriteBtn: FavoriteButton = {
+        let btn = FavoriteButton()
         btn.setTitle("В избранные", for: .normal)
         btn.setTitleColor(UIColor.gray, for: .normal)
         btn.layer.borderWidth = 1

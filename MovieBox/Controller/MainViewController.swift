@@ -11,7 +11,7 @@ import SkeletonView
 import SDWebImage
 import SnapKit
 
-class MainViewController: UIViewController, UniqueIdHelper, Alertable {
+class MainViewController: UIViewController, UniqueIdHelper, Alertable, FavoriteHandler {
     
     // MARK: - Outlets
     
@@ -29,7 +29,7 @@ class MainViewController: UIViewController, UniqueIdHelper, Alertable {
     
     static var uniqueID = "MainViewController"
     
-    private var data: [MoviesSectionTypes: DataSection<MediaData>] = MoviesSectionTypes.allCases.reduce(into: [MoviesSectionTypes: DataSection]()) {
+    var data: [MoviesSectionTypes: DataSection<MediaData>] = MoviesSectionTypes.allCases.reduce(into: [MoviesSectionTypes: DataSection]()) {
         $0[$1] = DataSection(data: [], isLoading: true)
     }
     
@@ -62,6 +62,12 @@ class MainViewController: UIViewController, UniqueIdHelper, Alertable {
     
     private func setUpUI () {
         self.view.backgroundColor = UIColor.darkColor
+    }
+    
+    @objc private func addMovieToFavorite (sender: FavoriteButton) {
+        let movieData = data.values[data.values.index(data.values.startIndex, offsetBy: sender.collectionViewIndex)]
+        let mediaData = movieData.data[sender.indexPath.row]
+        self.addToFavorite(movie: mediaData)
     }
     
     // MARK: - Navigation
@@ -152,7 +158,13 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             
             movieCell.movieTitleLbl.text = movieData.data[indexPath.row].title
             movieCell.movieDescriptionLbl.text = movieData.data[indexPath.row].date
+            movieCell.favoriteBtn.setTitle(movieData.data[indexPath.row].isFavorite ? "Remove" : "Add", for: .normal)
         }
+        
+        movieCell.favoriteBtn.indexPath = indexPath
+        movieCell.favoriteBtn.collectionViewIndex = collectionView.tag
+        
+        movieCell.favoriteBtn.addTarget(self, action: #selector(addMovieToFavorite(sender:)), for: .touchUpInside)
         
         return movieCell
     }

@@ -10,7 +10,7 @@ import UIKit
 import MBCircularProgressBar
 import AXPhotoViewer
 
-final class MovieViewController: UIViewController, UniqueIdHelper, Alertable {
+final class MovieViewController: UIViewController, UniqueIdHelper, Alertable, FavoriteHandler {
     
     // MARK: - Oulets
     
@@ -101,7 +101,7 @@ final class MovieViewController: UIViewController, UniqueIdHelper, Alertable {
     
     static var uniqueID: String = "MovieViewController"
     
-    private var recommendedMovies: DataSection<MediaData> = DataSection(
+    var recommendedMovies: DataSection<MediaData> = DataSection(
         data: [],
         page: 1,
         isLoading: true,
@@ -302,6 +302,10 @@ extension MovieViewController {
     
     private func addShowSeasonsButton () {
     }
+    
+    @objc private func onFavButtonClick (sender: FavoriteButton) {
+        
+    }
 }
 
 
@@ -356,7 +360,10 @@ extension MovieViewController {
     
     private func loadFullDetails () {
         ApiService.movieLoader.getDetails(mediaType: mediaType, id: media.id, completionHandler: { (mediaData) in
+            
+            var isFavourite = self.media.isFavorite
             self.media = mediaData
+            self.media.isFavorite = isFavourite
             self.showFacts()
             self.castCollectionView.reloadData()
         }) { (msg) in
@@ -476,6 +483,12 @@ extension MovieViewController: UICollectionViewDelegate, UICollectionViewDataSou
             cell.movieTitleLbl.text = movie.title
             cell.movieDescriptionLbl.text = movie.date
             cell.movieImage.sd_setImage(with: URL(string: movie.imageUrl ?? ""), placeholderImage: UIImage(named: "moviePlaceholder"))
+            
+            cell.favoriteBtn.setTitle(movie.isFavorite ? "Remove" : "Add", for: .normal)
+            cell.favoriteBtn.indexPath = indexPath
+            cell.favoriteBtn.collectionViewIndex = collectionView.tag
+            
+            cell.favoriteBtn.addTarget(self, action: #selector(onFavButtonClick(sender:)), for: .touchUpInside)
         }
         
         return cell

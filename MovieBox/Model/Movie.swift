@@ -39,6 +39,7 @@ protocol MediaData: Decodable {
     var overview: String { get set }
     var voteAverage: Double { get set }
     var character: String? { get set }
+    var isFavorite: Bool { get set }
 }
 
 extension MediaData {
@@ -66,6 +67,8 @@ struct Movie: MediaData, Decodable {
     var voteAverage: Double
     var originalCountries: [Country]?
     var character: String?
+    var isFavorite: Bool = false
+    
     
     enum CodingKeys: CodingKey {
         case backdrop_path, genre_ids, id, original_language, poster_path, release_date, revenue, status, title, overview, vote_average, production_countries, character
@@ -113,6 +116,7 @@ struct TvShow: MediaData, Decodable {
     var voteAverage: Double
     var originalCoutries: [String]?
     var character: String?
+    var isFavorite: Bool = false
     
     enum CodingKeys: CodingKey {
         case backdrop_path, genre_ids, id, original_language, poster_path, first_air_date,  status, name, overview, number_of_episodes, number_of_seasons, vote_average, origin_country, character

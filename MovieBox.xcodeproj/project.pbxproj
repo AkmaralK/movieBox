@@ -69,6 +69,7 @@
 		FBE1D19225A21F1000B95419 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE1D19125A21F1000B95419 /* UIView+Ext.swift */; };
 		FBF0339725B8347100E41FC1 /* ProfileAvatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF0339625B8347100E41FC1 /* ProfileAvatar.swift */; };
 		FBF0339925B8348500E41FC1 /* ProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF0339825B8348500E41FC1 /* ProfileHeader.swift */; };
+		FBF0339B25B86AB200E41FC1 /* FavoriteHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF0339A25B86AB200E41FC1 /* FavoriteHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -138,6 +139,7 @@
 		FBE1D19125A21F1000B95419 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 		FBF0339625B8347100E41FC1 /* ProfileAvatar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAvatar.swift; sourceTree = "<group>"; };
 		FBF0339825B8348500E41FC1 /* ProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeader.swift; sourceTree = "<group>"; };
+		FBF0339A25B86AB200E41FC1 /* FavoriteHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -340,6 +342,7 @@
 				FBB84BBA259E3D5D0093606A /* UniqueIdHelper.swift */,
 				FBB84BC2259E5B2D0093606A /* Alertable.swift */,
 				FB84435225A4672E00260598 /* GenericCell.swift */,
+				FBF0339A25B86AB200E41FC1 /* FavoriteHandler.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -532,6 +535,7 @@
 				FB61FA2D259A12DC00171182 /* RequestError.swift in Sources */,
 				FB03678E2593A14D00CF2389 /* SceneDelegate.swift in Sources */,
 				FBA7CD88259DE7BD00E408B4 /* MovieResponse.swift in Sources */,
+				FBF0339B25B86AB200E41FC1 /* FavoriteHandler.swift in Sources */,
 				FBB84BC1259E58270093606A /* AppStore.swift in Sources */,
 				FB0ECA6925A0B200000ABBFD /* Country.swift in Sources */,
 				FB0367A82593A8DD00CF2389 /* Movie.swift in Sources */,
