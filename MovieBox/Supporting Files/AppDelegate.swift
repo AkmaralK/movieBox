@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
+import SVProgressHUD
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -14,7 +17,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow? 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        FirebaseApp.configure()
+        
+        if let user = Auth.auth().currentUser {
+            AppStore.shared.user = AppUser(
+                name: "",
+                email: user.email ?? "No email",
+                loaded: false
+            )
+        }
+        
+        SVProgressHUD.setDefaultStyle(.custom)
+        SVProgressHUD.setForegroundColor(UIColor.red)
+        SVProgressHUD.setBackgroundColor(UIColor.darkColor)
+        
         return true
     }
 

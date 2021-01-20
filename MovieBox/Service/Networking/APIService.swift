@@ -8,6 +8,8 @@
 
 import UIKit
 import SVProgressHUD
+import FirebaseAuth
+import FirebaseFirestore
 
 final class ApiService {
     
@@ -122,7 +124,118 @@ final class ApiService {
         }
     }
     
+    // MARK: - Auth
+    
+    func login(
+        email: String,
+        password: String,
+        completionHandler: @escaping ((AppUser) -> Void),
+        complitionHandlerError: @escaping ((String) -> Void)
+    ) {
+        SVProgressHUD.show()
+        
+        Auth.auth().signIn(withEmail: email, password: password) { (data, error) in
+            self.handleLogin(data, error, completionHandler: completionHandler, complitionHandlerError: complitionHandlerError)
+        }
+    }
+    
+    func register (
+        email: String,
+        password: String,
+        completionHandler: @escaping ((AppUser) -> Void),
+        complitionHandlerError: @escaping ((String) -> Void)
+    ) {
+        SVProgressHUD.show()
+        
+        Auth.auth().createUser(withEmail: email, password: password) { (data, error) in
+            self.handleLogin(data, error, completionHandler: completionHandler, complitionHandlerError: complitionHandlerError)
+        }
+    }
+    
+    
+    func logout (
+        completionHandler: @escaping ((Bool) -> Void),
+        complitionHandlerError: @escaping ((String) -> Void)
+    ) {
+        do {
+            _ = try Auth.auth().signOut()
+            AppStore.shared.user = nil
+            completionHandler(true)
+        } catch {
+            complitionHandlerError(RequestError.noData.errorMsg)
+        }
+    }
+    
+    
+    // MARK: - Firestore
+    
+    func getCurrentUser (
+        userUID: String,
+        completionHandler: @escaping ((AppUser) -> Void),
+        complitionHandlerError: @escaping ((String) -> Void)
+    ) {
+        SVProgressHUD.show()
+        
+        Firestore.firestore().collection("users").document(userUID).getDocument { (document, error) in
+            SVProgressHUD.dismiss()
+            
+            if let document = document {
+                var user: AppUser = AppUser(name: "User", email: Auth.auth().currentUser!.email ?? "No email", loaded: true)
+                
+                if (document.exists) {
+                    user = AppUser(name: document.data()!["name"] as? String ?? "", email: Auth.auth().currentUser!.email ?? "", loaded: true)
+                }
+                
+                AppStore.shared.user = user
+                completionHandler(user)
+            } else if let error = error {
+                complitionHandlerError(error.localizedDescription)
+            } else {
+                complitionHandlerError(RequestError.noData.errorMsg)
+            }
+        }
+    }
+    
+    
+    func updateUser (
+        name: String,
+        email: String,
+        userUID: String,
+        completionHandler: @escaping ((Bool) -> Void),
+        complitionHandlerError: @escaping ((String) -> Void)
+    ) {
+        Firestore.firestore().collection("users").document(userUID).setData([
+        "name": name,
+        "email": email
+        ], merge: true) { (error) in
+            if let error = error {
+                complitionHandlerError(error.localizedDescription)
+            } else {
+                completionHandler(true)
+            }
+        }
+    }
+    
+    
     // MARK: - UTILS
+    
+    fileprivate func handleLogin (
+        _ authDataResult: AuthDataResult?,
+        _ error: Error?,
+        completionHandler: @escaping ((AppUser) -> Void),
+        complitionHandlerError: @escaping ((String) -> Void)
+    ) {
+        SVProgressHUD.dismiss()
+        
+        if let error = error {
+            complitionHandlerError(error.localizedDescription)
+        } else if let _ = authDataResult {
+            self.getCurrentUser(userUID: Auth.auth().currentUser?.uid ?? "", completionHandler: completionHandler, complitionHandlerError: complitionHandlerError)
+            
+        } else {
+            complitionHandlerError(RequestError.noData.errorMsg)
+        }
+    }
     
     fileprivate func parseSearchJSON (
         json: [String: Any],

@@ -8,6 +8,7 @@
 
 import Foundation
 
+
 enum MediaType: CaseIterable {
     case movie, tv
     
@@ -23,6 +24,9 @@ enum MediaType: CaseIterable {
 
 final class AppStore {
     static let shared = AppStore()
+    
+    var user: AppUser?
+    
     var genres: [Genre] = []
     
     func getGenre (from id: Int) -> Genre {

@@ -116,6 +116,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         
         cell.sectionView.headerView.titleLabel.text = sectionTitle
         cell.sectionView.subtitleLabel.text = "\(movieData.data.count) видео"
+        cell.sectionView.alpha = 1
         cell.moviesCollectionView.delegate = self
         cell.moviesCollectionView.dataSource = self
         cell.moviesCollectionView.tag = indexPath.row
