@@ -26,8 +26,22 @@ final class LoadingViewController: UIViewController, Alertable, UniqueIdHelper {
         return loaded
     }
     
+    lazy var loadingLbl: UILabel = {
+        let lbl = UILabel()
+        lbl.text = "Loading..."
+        lbl.textColor = .red
+        return lbl
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.addSubview(loadingLbl)
+        self.view.backgroundColor = .darkColor
+        
+        loadingLbl.snp.makeConstraints { (make) in
+            make.center.equalToSuperview()
+        }
+        
         loadGenres()
     }
     

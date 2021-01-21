@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Фильмы-->
+        <!--Movies-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="MainViewController" customModule="MovieBox" customModuleProvider="target" sceneMemberID="viewController">
@@ -42,17 +42,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Фильмы" id="q8u-NZ-kHV">
-                        <barButtonItem key="rightBarButtonItem" image="magnifyingglass" catalog="system" style="plain" id="YwV-BW-2Pg">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Iul-r6-h3g">
-                                <rect key="frame" x="327" y="7" width="32" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" image="magnifyingglass" catalog="system"/>
-                            </button>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Movies" id="q8u-NZ-kHV"/>
                     <connections>
                         <outlet property="tableView" destination="zig-OB-1kG" id="E3S-QB-KBo"/>
                         <segue destination="R8f-wx-z3T" kind="presentation" identifier="movieDetails" id="8Mp-f9-IMa"/>
@@ -107,7 +97,7 @@
                                                             <constraint firstAttribute="height" constant="44" id="Unc-ZU-wLR"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
-                                                        <state key="normal" title="Подробнее">
+                                                        <state key="normal" title="More">
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
                                                     </button>
@@ -182,7 +172,7 @@
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Пользовательская оценка" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ca2-YR-TDg">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Global rank among users" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ca2-YR-TDg">
                                                         <rect key="frame" x="86" y="0.0" width="241" height="70"/>
                                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -290,6 +280,7 @@
                         <outlet property="factsSectionView" destination="vwB-6m-RoR" id="NCt-hW-3cT"/>
                         <outlet property="genresStackView" destination="RGw-xU-vwG" id="pQf-pV-sZW"/>
                         <outlet property="imagesSectionView" destination="YHo-2n-GjG" id="DKH-2Z-Yas"/>
+                        <outlet property="moreButton" destination="DiM-fM-J1I" id="BUD-hZ-EzO"/>
                         <outlet property="movieDesLbl" destination="BDj-h8-7vU" id="qZa-U6-5sY"/>
                         <outlet property="movieImageView" destination="MzK-sx-c9S" id="cyB-89-3Hg"/>
                         <outlet property="moviePosterImageView" destination="uFc-ZA-bkm" id="U2a-h0-o1J"/>
@@ -304,7 +295,7 @@
             </objects>
             <point key="canvasLocation" x="3" y="-1006"/>
         </scene>
-        <!--Auth View Controller-->
+        <!--Auth-->
         <scene sceneID="OmC-tT-VyJ">
             <objects>
                 <viewController storyboardIdentifier="AuthViewController" id="fD5-cW-mrW" customClass="AuthViewController" customModule="MovieBox" customModuleProvider="target" sceneMemberID="viewController">
@@ -314,41 +305,47 @@
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xlQ-9v-QPk">
                                 <rect key="frame" x="24" y="84" width="327" height="27.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
-                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="23"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Ny-nj-d2X">
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Ny-nj-d2X">
                                 <rect key="frame" x="24" y="131.5" width="41" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="zaf-xk-zRk">
                                 <rect key="frame" x="24" y="160" width="327" height="44"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="M8y-gB-qHi"/>
                                 </constraints>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="th9-tr-Lif">
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="th9-tr-Lif">
                                 <rect key="frame" x="24" y="224" width="74" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="vXt-Pa-fid">
                                 <rect key="frame" x="24" y="253" width="327" height="44"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="aBN-pi-yVe"/>
                                 </constraints>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3w2-GI-1ds">
                                 <rect key="frame" x="87.5" y="327" width="200" height="44"/>
-                                <color key="backgroundColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="1qZ-5K-qGY"/>
                                     <constraint firstAttribute="width" constant="200" id="HvJ-ak-0He"/>
@@ -362,10 +359,12 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="md0-vN-5XG"/>
                                 </constraints>
-                                <state key="normal" title="I do not have an account"/>
+                                <state key="normal" title="I do not have an account">
+                                    <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" red="0.1349111576" green="0.13653659330000001" blue="0.13653659330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="5jr-gp-1gx" firstAttribute="centerX" secondItem="eic-Wz-cWf" secondAttribute="centerX" id="2ND-wW-zBg"/>
                             <constraint firstItem="eic-Wz-cWf" firstAttribute="bottom" secondItem="5jr-gp-1gx" secondAttribute="bottom" constant="18" id="3ee-CS-9Yu"/>
@@ -388,7 +387,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="eic-Wz-cWf"/>
                     </view>
-                    <navigationItem key="navigationItem" id="OrA-Xm-ZFA"/>
+                    <navigationItem key="navigationItem" title="Auth" id="OrA-Xm-ZFA"/>
                     <connections>
                         <outlet property="emailField" destination="zaf-xk-zRk" id="uEW-gk-cal"/>
                         <outlet property="modeToggleBtn" destination="5jr-gp-1gx" id="Xjb-eR-ygN"/>
@@ -460,7 +459,7 @@
         <scene sceneID="Ixx-ei-48g">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="aG5-C6-XiP" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Home" id="GK6-HU-iV3"/>
+                    <tabBarItem key="tabBarItem" title="Home" image="house" catalog="system" id="GK6-HU-iV3"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="lxI-uA-ruY">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -548,7 +547,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="250" id="swm-eb-E9y"/>
                                                 </constraints>
-                                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="PhP-Hu-Zi6">
+                                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="PhP-Hu-Zi6">
                                                     <size key="itemSize" width="120" height="120"/>
                                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -609,7 +608,7 @@
                                                     <constraint firstAttribute="height" constant="67" id="Aba-U7-Jv7"/>
                                                 </constraints>
                                                 <attributedString key="attributedText">
-                                                    <fragment content="          Фильмы">
+                                                    <fragment content="          Movies">
                                                         <attributes>
                                                             <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <font key="NSFont" metaFont="system" size="20"/>
@@ -626,7 +625,7 @@
                                                     <constraint firstAttribute="height" constant="67" id="2EJ-rp-ApD"/>
                                                 </constraints>
                                                 <attributedString key="attributedText">
-                                                    <fragment content="          Сериалы">
+                                                    <fragment content="          TV Show">
                                                         <attributes>
                                                             <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <font key="NSFont" metaFont="system" size="20"/>
@@ -643,7 +642,7 @@
                                                     <constraint firstAttribute="height" constant="67" id="EPl-Q2-g1o"/>
                                                 </constraints>
                                                 <attributedString key="attributedText">
-                                                    <fragment content="          Актеры">
+                                                    <fragment content="          Actors">
                                                         <attributes>
                                                             <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <font key="NSFont" metaFont="system" size="20"/>
@@ -659,7 +658,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="250" id="QyT-H4-C1H"/>
                                                 </constraints>
-                                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="1mZ-C1-XZG">
+                                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="1mZ-C1-XZG">
                                                     <size key="itemSize" width="114" height="118"/>
                                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -719,7 +718,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="250" id="vzK-cG-Mak"/>
                                                 </constraints>
-                                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="OiS-Ab-5fg">
+                                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="OiS-Ab-5fg">
                                                     <size key="itemSize" width="120" height="120"/>
                                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -859,7 +858,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ceD-Fq-mcV" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="284" y="-174.06296851574214"/>
+            <point key="canvasLocation" x="170" y="-175"/>
         </scene>
         <!--Movie Favorites View Controller-->
         <scene sceneID="EXR-0l-5zm">
@@ -941,7 +940,7 @@
         <scene sceneID="itd-pI-MKW">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="9JR-30-qS1" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Favorites" id="DnQ-gv-gcf"/>
+                    <tabBarItem key="tabBarItem" title="Favorites" image="star" catalog="system" id="DnQ-gv-gcf"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Lch-Uc-EJ3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1025,9 +1024,11 @@
     <resources>
         <image name="celebs" width="128" height="128"/>
         <image name="film-roll" width="256" height="256"/>
+        <image name="house" catalog="system" width="64" height="54"/>
         <image name="magnifyingglass" catalog="system" width="64" height="56"/>
         <image name="movieImg" width="382" height="566"/>
         <image name="person" catalog="system" width="64" height="58"/>
+        <image name="star" catalog="system" width="64" height="58"/>
         <image name="tv" width="256" height="256"/>
     </resources>
     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

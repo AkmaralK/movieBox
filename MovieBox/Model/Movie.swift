@@ -9,7 +9,7 @@
 import Foundation
 
 enum ImageSize {
-    case poster, wallpaper, bigPoster
+    case poster, wallpaper, bigPoster, smallWallpaper
     
     var path: String {
         switch self {
@@ -19,6 +19,8 @@ enum ImageSize {
             return "t/p/w1920_and_h800_multi_faces"
         case .bigPoster:
             return "t/p/w600_and_h900_bestv2"
+        case .smallWallpaper:
+            return "t/p/w227_and_h127_bestv2"
         }
     }
     
@@ -117,9 +119,10 @@ struct TvShow: MediaData, Decodable {
     var originalCoutries: [String]?
     var character: String?
     var isFavorite: Bool = false
+    var seasons: [Season]?
     
     enum CodingKeys: CodingKey {
-        case backdrop_path, genre_ids, id, original_language, poster_path, first_air_date,  status, name, overview, number_of_episodes, number_of_seasons, vote_average, origin_country, character
+        case backdrop_path, genre_ids, id, original_language, poster_path, first_air_date,  status, name, overview, number_of_episodes, number_of_seasons, vote_average, origin_country, character, seasons
     }
     
     var hasFacts: Bool {
@@ -147,6 +150,8 @@ struct TvShow: MediaData, Decodable {
         if let _imageBig = try? values.decode(String.self, forKey: .backdrop_path) {
             self.bigImageUrl = ImageSize.wallpaper.getURL(imagePath: _imageBig)
         }
+        
+        self.seasons = try? values.decode([Season].self, forKey: .seasons)
     }
 }
 

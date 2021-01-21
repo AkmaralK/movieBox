@@ -27,6 +27,7 @@ final class MovieViewController: UIViewController, UniqueIdHelper, Alertable, Fa
     @IBOutlet weak var factsSectionView: SectionView!
     @IBOutlet weak var imagesSectionView: SectionView!
     @IBOutlet weak var progressView: MBCircularProgressBarView!
+    @IBOutlet weak var moreButton: UIButton!
     
     lazy var aboutLbl: UILabel = {
         let lbl = UILabel()
@@ -124,17 +125,21 @@ final class MovieViewController: UIViewController, UniqueIdHelper, Alertable, Fa
     private var factsData: [(String, String)] {
         if (mediaType == .tv) {
             let tvShow = media as! TvShow
-            return [("Страны", tvShow.originalCoutries?.joined(separator: ", ") ?? "Не известно"),
-                ("Количество сезонов", tvShow.numberOfSeasons != nil ? "\(tvShow.numberOfSeasons!)" : "Не известно"),
-                ( "Количество эпизодов", tvShow.numberOfEpisodes != nil ? "\(tvShow.numberOfEpisodes!)" : "Не известно")]
+            return [("Country", tvShow.originalCoutries?.joined(separator: ", ") ?? "Undefined"),
+                ("Seasons count", tvShow.numberOfSeasons != nil ? "\(tvShow.numberOfSeasons!)" : "Undefined"),
+                ( "Episodes count", tvShow.numberOfEpisodes != nil ? "\(tvShow.numberOfEpisodes!)" : "Undefined")]
         } else {
             let movie = media as! Movie
             return [
-                ("Страны", movie.originalCountries?.map { $0.name }.joined(separator: ", ") ?? "Не известно"),
-                ("Оригинальный язык", movie.initialLanguage ?? "Не известно"),
-                ("Статус", movie.status ?? "Не известно")
+                ("Country", movie.originalCountries?.map { $0.name }.joined(separator: ", ") ?? "Undefined"),
+                ("Language", movie.initialLanguage ?? "Undefined"),
+                ("Status", movie.status ?? "Undefined")
             ]
         }
+    }
+    
+    private var showSeasons: Bool {
+        return mediaType == .tv && ((media as! TvShow).seasons ?? []).count > 0
     }
     
     // MARK: - UI
@@ -158,16 +163,33 @@ final class MovieViewController: UIViewController, UniqueIdHelper, Alertable, Fa
         self.loadMovieImages()
     }
 
+    
+    // MARK: - UIAction
+    
+    @objc fileprivate func onMoreButtonClick () {
+        if (self.showSeasons) {
+            self.hidesBottomBarWhenPushed = true
+            let seasonsViewController = SeasonsViewController()
+            seasonsViewController.tvID = self.media.id
+            seasonsViewController.seasons = (self.media as! TvShow).seasons ?? []
+            self.navigationController?.pushViewController(seasonsViewController, animated: true)
+        } else {
+            self.scrollView.setContentOffset(CGPoint(x: 0, y: self.view.frame.height), animated: true)
+        }
+    }
+    
+    
     // MARK: - UI Functions
     
     private func setUpUI () {
         self.view.backgroundColor = UIColor.darkColor
         self.scrollView.delegate = self
+        self.moreButton.addTarget(self, action: #selector(onMoreButtonClick), for: .touchUpInside)
         
-        setUpSectionView(sectionView: aboutSectionView, title: "Подробнее", subtitle: "Обзор", subview: aboutLbl)
-        setUpSectionView(sectionView: castSectionView, title: "Актерский состав", subtitle: "TOP BILLED CAST", subview: castCollectionView)
-        setUpSectionView(sectionView: otherMovies, title: "Похоже фильмы", subtitle: "мотрите вместе с нами", subview: (otherMoviesCollectionView))
-        setUpSectionView(sectionView: imagesSectionView, title: "Фото", subtitle: "Кушти фотолар", subview: imagePreviewCollectionView)
+        setUpSectionView(sectionView: aboutSectionView, title: "Details", subtitle: "Full details", subview: aboutLbl)
+        setUpSectionView(sectionView: castSectionView, title: "Cast", subtitle: "TOP BILLED CAST", subview: castCollectionView)
+        setUpSectionView(sectionView: otherMovies, title: "Recommendated movies", subtitle: "Watch with us", subview: (otherMoviesCollectionView))
+        setUpSectionView(sectionView: imagesSectionView, title: "Photo", subtitle: "Full list", subview: imagePreviewCollectionView)
         
         aboutLbl.snp.makeConstraints { (make) in
             make.bottom.top.leading.trailing.equalToSuperview()
@@ -261,7 +283,7 @@ extension MovieViewController {
             return itemView
         }))
         
-        setUpSectionView(sectionView: factsSectionView, title: "Факты", subtitle: "Могут быть интересными", subview: factItemsView)
+        setUpSectionView(sectionView: factsSectionView, title: "Facts", subtitle: "Can be interesting", subview: factItemsView)
         
         factItemsView.snp.makeConstraints { (make) in
             make.bottom.top.leading.trailing.equalToSuperview()
@@ -301,6 +323,7 @@ extension MovieViewController {
     }
     
     private func addShowSeasonsButton () {
+        print("Hi")
     }
     
     @objc private func onFavButtonClick (sender: FavoriteButton) {
@@ -366,6 +389,10 @@ extension MovieViewController {
             self.media.isFavorite = isFavourite
             self.showFacts()
             self.castCollectionView.reloadData()
+            
+            if (self.showSeasons) {
+                self.moreButton.setTitle("Show Seasons", for: .normal)
+            }
         }) { (msg) in
             self.showAlert("Error", msg)
         }
