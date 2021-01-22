@@ -860,77 +860,17 @@
             </objects>
             <point key="canvasLocation" x="170" y="-175"/>
         </scene>
-        <!--Movie Favorites View Controller-->
+        <!--Favorites-->
         <scene sceneID="EXR-0l-5zm">
             <objects>
-                <viewController id="jP4-S3-Ymj" customClass="MovieFavoritesViewController" customModule="MovieBox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Favorites" id="jP4-S3-Ymj" customClass="FavouritesViewController" customModule="MovieBox" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mgd-7i-cew">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="VbF-eq-e70">
-                                <rect key="frame" x="0.0" y="44" width="375" height="574"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="qI4-qd-sVu">
-                                    <size key="itemSize" width="172" height="287"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MovieCollectionViewCell" id="4tV-8c-pQa" customClass="MovieCollectionViewCell" customModule="MovieBox" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="172" height="287"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="VCb-j7-W1Y">
-                                            <rect key="frame" x="0.0" y="0.0" width="172" height="287"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="n7m-JN-xZl">
-                                                    <rect key="frame" x="0.0" y="0.0" width="172" height="250.5"/>
-                                                    <color key="backgroundColor" red="0.23068341270000001" green="0.86415155440000002" blue="0.51005414660000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TDn-wU-tct">
-                                                    <rect key="frame" x="8" y="258.5" width="156" height="20.5"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="20.5" id="saf-ZL-cWb"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="n7m-JN-xZl" secondAttribute="trailing" id="0eS-F2-l5U"/>
-                                                <constraint firstItem="TDn-wU-tct" firstAttribute="leading" secondItem="VCb-j7-W1Y" secondAttribute="leading" constant="8" id="1OF-FA-WNd"/>
-                                                <constraint firstItem="n7m-JN-xZl" firstAttribute="leading" secondItem="VCb-j7-W1Y" secondAttribute="leading" id="H2M-Sd-enW"/>
-                                                <constraint firstAttribute="bottom" secondItem="TDn-wU-tct" secondAttribute="bottom" constant="8" id="djV-ug-lUG"/>
-                                                <constraint firstItem="TDn-wU-tct" firstAttribute="top" secondItem="n7m-JN-xZl" secondAttribute="bottom" constant="8" id="e1g-Q8-CdI"/>
-                                                <constraint firstItem="n7m-JN-xZl" firstAttribute="top" secondItem="VCb-j7-W1Y" secondAttribute="top" id="nFc-aT-MyA"/>
-                                                <constraint firstAttribute="trailing" secondItem="TDn-wU-tct" secondAttribute="trailing" constant="8" id="zyo-bF-yIS"/>
-                                            </constraints>
-                                        </collectionViewCellContentView>
-                                        <size key="customSize" width="172" height="287"/>
-                                        <connections>
-                                            <outlet property="movieImageView" destination="n7m-JN-xZl" id="MQB-5H-Bt2"/>
-                                            <outlet property="nameLabel" destination="TDn-wU-tct" id="O9t-Zd-VE7"/>
-                                        </connections>
-                                    </collectionViewCell>
-                                </cells>
-                            </collectionView>
-                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <constraints>
-                            <constraint firstItem="nEt-Tl-nf8" firstAttribute="bottom" secondItem="VbF-eq-e70" secondAttribute="bottom" id="Ctc-KB-R0p"/>
-                            <constraint firstItem="VbF-eq-e70" firstAttribute="leading" secondItem="mgd-7i-cew" secondAttribute="leading" id="htL-aB-YVY"/>
-                            <constraint firstItem="VbF-eq-e70" firstAttribute="top" secondItem="nEt-Tl-nf8" secondAttribute="top" id="nYw-OV-jiY"/>
-                            <constraint firstItem="nEt-Tl-nf8" firstAttribute="trailing" secondItem="VbF-eq-e70" secondAttribute="trailing" id="p6V-oU-Vcv"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="nEt-Tl-nf8"/>
                     </view>
-                    <navigationItem key="navigationItem" id="uKk-7v-TnN"/>
-                    <connections>
-                        <outlet property="collectionView" destination="VbF-eq-e70" id="UWc-yb-WKo"/>
-                    </connections>
+                    <navigationItem key="navigationItem" title="Favorites" id="uKk-7v-TnN"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0wz-3F-Cls" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -942,9 +882,13 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="9JR-30-qS1" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Favorites" image="star" catalog="system" id="DnQ-gv-gcf"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Lch-Uc-EJ3">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="Lch-Uc-EJ3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

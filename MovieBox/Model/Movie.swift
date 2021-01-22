@@ -52,6 +52,10 @@ extension MediaData {
             return .tv
         }
     }
+    
+    func getFavItem () -> FavItem {
+        return FavItem(id: id, imageUrl: imageUrl ?? "", title: title, mediaType: self.getMediaType().key)
+    }
 }
 
 

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 final class LoadingViewController: UIViewController, Alertable, UniqueIdHelper {
     
@@ -16,14 +17,16 @@ final class LoadingViewController: UIViewController, Alertable, UniqueIdHelper {
         MediaType.tv : false, MediaType.movie : false
     ]
     
-    var loadedGenres: Bool {
+    var loadedUserAndFavs: Bool = false
+    
+    var loadedEverything: Bool {
         var loaded = true
         
         MediaType.allCases.forEach { (mediaType) in
             loaded = loadedGenresByMediaType[mediaType] ?? false
         }
         
-        return loaded
+        return loaded && loadedUserAndFavs
     }
     
     lazy var loadingLbl: UILabel = {
@@ -43,6 +46,7 @@ final class LoadingViewController: UIViewController, Alertable, UniqueIdHelper {
         }
         
         loadGenres()
+        loadUser()
     }
     
     // MARK: - Networking
@@ -53,12 +57,34 @@ final class LoadingViewController: UIViewController, Alertable, UniqueIdHelper {
                 AppStore.shared.genres.append(contentsOf: genres)
                 self.loadedGenresByMediaType[mediaType] = true
                 
-                if (self.loadedGenres) {
+                if (self.loadedEverything) {
                     self.loadedEverythingCallback()
                 }
             }) { (errorMsg) in
                 self.showAlert("Error", errorMsg)
             }
+        }
+    }
+    
+    private func loadUser () {
+        if let user = Auth.auth().currentUser {
+            ApiService.shared.getCurrentUser(userUID: user.uid, completionHandler: { (newUser) in
+                AppStore.shared.user = newUser
+                ApiService.shared.getFavorites(userUID: user.uid, completionHandler: { (response) in
+                    AppStore.shared.favMovies = response
+                    self.loadedUserAndFavs = true
+                    
+                    if (self.loadedEverything) {
+                        self.loadedEverythingCallback()
+                    }
+                }) { (error) in
+                    self.showAlert("Error", error)
+                }
+            }) { (error) in
+                self.showAlert("Error", error)
+            }
+        } else {
+            loadedUserAndFavs = true
         }
     }
     

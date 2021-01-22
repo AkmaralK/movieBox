@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import FirebaseAuth
 
 final class AuthViewController: UIViewController, Alertable, UniqueIdHelper {
     
@@ -60,6 +60,17 @@ final class AuthViewController: UIViewController, Alertable, UniqueIdHelper {
 extension AuthViewController {
     fileprivate func loginRegisterResponseHandler () {
         self.navigationController?.setViewControllers([ProfileViewController()], animated: true)
+        self.loadFavs()
+    }
+    
+    fileprivate func loadFavs () {
+        if let user = AppStore.shared.user, !user.loaded {
+            ApiService.shared.getFavorites(userUID: Auth.auth().currentUser!.uid, completionHandler: { (items) in
+                AppStore.shared.favMovies = items
+            }) { (error) in
+                self.showAlert("Error", error)
+            }
+        }
     }
 }
 

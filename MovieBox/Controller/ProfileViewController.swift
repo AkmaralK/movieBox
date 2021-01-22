@@ -68,11 +68,34 @@ final class ProfileViewController: UIViewController, Alertable {
         super.viewDidLoad()
         self.setUP()
         self.updateUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let movieCount = AppStore.shared.favMovies.count
+        let movieCountText = "\(movieCount) element\(movieCount == 0 ? "" : "s")"
         
+        self.favoritesButton.setTitle(movieCountText, for: .normal)
+    }
+    
+    // MARK: - Network
+    
+    fileprivate func loadUser () {
         if let user = AppStore.shared.user, !user.loaded {
             ApiService.shared.getCurrentUser(userUID: Auth.auth().currentUser!.uid, completionHandler: { (newUser) in
                 AppStore.shared.user = newUser
                 self.updateUI()
+                self.loadFavs()
+            }) { (error) in
+                self.showAlert("Error", error)
+            }
+        }
+    }
+    
+    fileprivate func loadFavs () {
+        if let user = AppStore.shared.user, !user.loaded {
+            ApiService.shared.getFavorites(userUID: Auth.auth().currentUser!.uid, completionHandler: { (items) in
+                AppStore.shared.favMovies = items
             }) { (error) in
                 self.showAlert("Error", error)
             }
@@ -167,6 +190,7 @@ extension ProfileViewController {
         let authViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: AuthViewController.uniqueID) as! AuthViewController
         
         ApiService.shared.logout(completionHandler: { (_) in
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: NSNotification.Name.favUpdateNotificationKey), object: nil, userInfo: nil)
             self.navigationController?.setViewControllers([authViewController], animated: true)
         }) { (errorMsg) in
             self.showAlert("Error", errorMsg)

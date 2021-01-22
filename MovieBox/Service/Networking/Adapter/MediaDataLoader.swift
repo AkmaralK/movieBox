@@ -54,12 +54,18 @@ class MediaDataLoader <T: MediaData>: MediaDataLoaderService {
     func getDetail(
         mediaType: MediaType,
         id: Int,
+        showLoading: Bool,
         completionHandler: @escaping ((MediaData) -> Void),
         complitionHandlerError: @escaping ((String) -> Void)
     ) {
         let endpoint = Endpoint.getDetails(apiKey: apiKey, id: id, language: "en", mediaType: mediaType)
         
+        if (showLoading) { SVProgressHUD.show() }
+        
         URLSession.shared.request(for: T.self, endpoint) { (result) in
+            
+            if (showLoading) { SVProgressHUD.dismiss() }
+            
             switch (result) {
             case .success(let mediaDataRespnse):
                 completionHandler(mediaDataRespnse)

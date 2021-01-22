@@ -29,7 +29,8 @@ final class AppStore {
     
     var genres: [Genre] = []
     
-    var favMovies: [MediaData] = []
+    var favMovies: [Int: FavItem] = [:]
+    
     
     func getGenre (from id: Int) -> Genre {
        if let genId = genres.first(where: { (genre) -> Bool in

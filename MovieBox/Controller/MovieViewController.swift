@@ -10,7 +10,7 @@ import UIKit
 import MBCircularProgressBar
 import AXPhotoViewer
 
-final class MovieViewController: UIViewController, UniqueIdHelper, Alertable, FavoriteHandler {
+final class MovieViewController: UIViewController, UniqueIdHelper, Alertable, FavoriteHandler, FavoriteChangeResponser {
     
     // MARK: - Oulets
     
@@ -149,6 +149,10 @@ final class MovieViewController: UIViewController, UniqueIdHelper, Alertable, Fa
         self.animateOnViewDidLoad()
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: NSNotification.Name.favUpdateNotificationKey), object: nil)
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.loadFullDetails()
@@ -161,6 +165,8 @@ final class MovieViewController: UIViewController, UniqueIdHelper, Alertable, Fa
         self.loadRecommended()
         self.loadPeople()
         self.loadMovieImages()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(responseToChangeInFavs(notification:)), name: NSNotification.Name(rawValue: NSNotification.Name.favUpdateNotificationKey), object: nil)
     }
 
     
@@ -178,6 +184,15 @@ final class MovieViewController: UIViewController, UniqueIdHelper, Alertable, Fa
         }
     }
     
+    @objc func responseToChangeInFavs(notification: NSNotification) {
+        self.otherMoviesCollectionView.reloadData()
+    }
+    
+    @objc func onFavButtonClicked (sender: FavoriteButton) {
+        let movieData = self.recommendedMovies.data[sender.indexPath.row]
+        
+        _ = sender.isFav ? self.removeFromFavourite(id: movieData.id) : self.addToFavorite(movie: movieData.getFavItem())
+    }
     
     // MARK: - UI Functions
     
@@ -320,14 +335,6 @@ extension MovieViewController {
         emptyView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
-    }
-    
-    private func addShowSeasonsButton () {
-        print("Hi")
-    }
-    
-    @objc private func onFavButtonClick (sender: FavoriteButton) {
-        
     }
 }
 
@@ -511,11 +518,15 @@ extension MovieViewController: UICollectionViewDelegate, UICollectionViewDataSou
             cell.movieDescriptionLbl.text = movie.date
             cell.movieImage.sd_setImage(with: URL(string: movie.imageUrl ?? ""), placeholderImage: UIImage(named: "moviePlaceholder"))
             
-            cell.favoriteBtn.setTitle(movie.isFavorite ? "Remove" : "Add", for: .normal)
+            let isFav = AppStore.shared.favMovies[movie.id] != nil
+            
+            cell.favoriteBtn.setTitle(isFav ? "Remove" : "Add", for: .normal)
+            cell.favoriteBtn.isFav = isFav
+            
             cell.favoriteBtn.indexPath = indexPath
             cell.favoriteBtn.collectionViewIndex = collectionView.tag
             
-            cell.favoriteBtn.addTarget(self, action: #selector(onFavButtonClick(sender:)), for: .touchUpInside)
+            cell.favoriteBtn.addTarget(self, action: #selector(onFavButtonClicked(sender:)), for: .touchUpInside)
         }
         
         return cell

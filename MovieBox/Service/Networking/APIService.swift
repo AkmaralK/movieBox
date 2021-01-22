@@ -178,6 +178,7 @@ final class ApiService {
         do {
             _ = try Auth.auth().signOut()
             AppStore.shared.user = nil
+            AppStore.shared.favMovies = [:]
             completionHandler(true)
         } catch {
             complitionHandlerError(RequestError.noData.errorMsg)
@@ -214,7 +215,6 @@ final class ApiService {
         }
     }
     
-    
     func updateUser (
         name: String,
         email: String,
@@ -234,19 +234,68 @@ final class ApiService {
         }
     }
     
+    func getFavorites (
+        userUID: String,
+        completionHandler: @escaping ([Int: FavItem]) -> Void,
+        complitionHandlerError: @escaping ((String) -> Void)
+    ) {
+        SVProgressHUD.show()
+        Firestore.firestore().collection("users").document(userUID).collection("favs").getDocuments { (snapshot, error) in
+            
+            SVProgressHUD.dismiss()
+       
+            var response: [Int: FavItem] = [:]
+            
+            if let snapshot = snapshot {
+                snapshot.documents.forEach { (doc) in
+                     let docData = doc.data()
+                    
+                    response[Int(doc.documentID)!] = FavItem(id: docData["id"] as! Int, imageUrl: docData["imageUrl"] as? String ?? "" , title: docData["title"] as? String ?? "", mediaType: docData["mediaType"] as! String)
+                }
+
+                completionHandler(response)
+            } else if let error = error {
+                complitionHandlerError(error.localizedDescription)
+            } else {
+                completionHandler([:])
+            }
+        }
+    }
+    
+    
     func addToFavorite (
         userUID: String,
-        mediaData: MediaData,
+        favItem: FavItem,
+        completionHandler: @escaping ((Bool) -> Void),
+        complitionHandlerError: @escaping ((String) -> Void)
+    ) {
+        SVProgressHUD.show()
+        Firestore.firestore().collection("users").document(userUID).collection("favs").document("\(favItem.id)").setData([
+            "id": favItem.id,
+            "imageUrl": favItem.imageUrl,
+            "title": favItem.title,
+            "mediaType": favItem.mediaType.key
+        ], merge: false) { error in
+            SVProgressHUD.dismiss()
+            
+            if let error = error {
+                complitionHandlerError(error.localizedDescription)
+            } else {
+                completionHandler(true)
+            }
+        }
+    }
+    
+    func removeFromFavorite (
+        userUID: String,
+        movieID: Int,
         completionHandler: @escaping ((Bool) -> Void),
         complitionHandlerError: @escaping ((String) -> Void)
     ) {
         SVProgressHUD.show()
         
-        Firestore.firestore().collection("users").document(userUID).collection("favs").document("\(mediaData.id)").setData([
-            "id": mediaData.id,
-            "imageUrl": mediaData.imageUrl,
-            "title": mediaData.title
-        ], merge: false) { error in
+        Firestore.firestore().collection("users").document(userUID).collection("favs").document("\(movieID)").delete { (error) in
+            
             SVProgressHUD.dismiss()
             
             if let error = error {

@@ -9,16 +9,24 @@
 import UIKit
 import FirebaseAuth
 
+extension Notification.Name {
+    static let favUpdateNotificationKey = "favUpdateNotificationKey"
+}
+
+
+
 protocol FavoriteHandler: UIViewController, Alertable {}
 
 extension FavoriteHandler {
 
-    func addToFavorite (movie: MediaData) {
+    func addToFavorite (movie: FavItem) {
         if let user = Auth.auth().currentUser {
-            ApiService.shared.addToFavorite(userUID: user.uid, mediaData: movie, completionHandler: { (_) in
+            ApiService.shared.addToFavorite(userUID: user.uid, favItem: movie, completionHandler: { (_) in
                 
-//                AppStore.shared.favMovies.append(<#T##newElement: MediaData##MediaData#>)
-                self.updateAllMovies(index: movie.id, isFavorite: true)
+                AppStore.shared.favMovies[movie.id] = movie
+                
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: NSNotification.Name.favUpdateNotificationKey), object: nil, userInfo: nil)
+                
             }) { (msg) in
                 self.showAlert("Error", msg)
             }
@@ -27,41 +35,22 @@ extension FavoriteHandler {
         }
     }
     
-    fileprivate func updateAllMovies (index: Int, isFavorite: Bool) {
-        if let tabBarController = self.tabBarController {
-            updateFirstTab(index: index, isFavorite: isFavorite)
+    func removeFromFavourite (id: Int) {
+        if let user = Auth.auth().currentUser {
+            ApiService.shared.removeFromFavorite(userUID: user.uid, movieID: id, completionHandler: { (_) in
+                AppStore.shared.favMovies[id] = nil
+                
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: NSNotification.Name.favUpdateNotificationKey), object: nil, userInfo: nil)
+            }, complitionHandlerError: { (msg) in
+                self.showAlert("Error", msg)
+            })
+        } else {
+            self.showAlert("Error", "You have to sign in")
         }
     }
-    
-    fileprivate func updateFirstTab (index: Int, isFavorite: Bool) {
-        let navController = tabBarController!.viewControllers![0] as! UINavigationController
-        
-        navController.viewControllers.forEach { (vc) in
-            if (vc is MainViewController) {
-                updateMainVC(index: index, isFavorite: isFavorite, movieVC: vc as! MainViewController)
-            } else if (vc is MovieViewController) {
-                updateMovieVC(index: index, isFavorite: isFavorite, movieVC: vc as! MovieViewController)
-            }
-        }
-    }
-    
-    fileprivate func updateMainVC (index: Int, isFavorite: Bool, movieVC: MainViewController) {
-        for (i, el) in movieVC.data.values.enumerated() {
-            for (k, _) in el.data.enumerated() {
-                if (el.data[k].id == index) {
-                    movieVC.data[movieVC.data.keys[movieVC.data.keys.index(movieVC.data.keys.startIndex, offsetBy: i)]]?.data[k].isFavorite = isFavorite
-                }
-            }
-        }
-        
-        movieVC.tableView.reloadData()
-    }
-    
-    fileprivate func updateMovieVC (index: Int, isFavorite: Bool, movieVC: MovieViewController) {
-        for (i, _) in movieVC.recommendedMovies.data.enumerated() {
-            if (movieVC.recommendedMovies.data[i].id == index) {
-                movieVC.recommendedMovies.data[i].isFavorite = isFavorite
-            }
-        }
-    }
+}
+
+
+protocol FavoriteChangeResponser {
+    func responseToChangeInFavs (notification: NSNotification)
 }

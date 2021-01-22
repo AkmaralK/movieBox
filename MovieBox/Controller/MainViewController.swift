@@ -11,7 +11,7 @@ import SkeletonView
 import SDWebImage
 import SnapKit
 
-class MainViewController: UIViewController, UniqueIdHelper, Alertable, FavoriteHandler {
+class MainViewController: UIViewController, UniqueIdHelper, Alertable, FavoriteHandler, FavoriteChangeResponser {
     
     // MARK: - Outlets
     
@@ -40,13 +40,23 @@ class MainViewController: UIViewController, UniqueIdHelper, Alertable, FavoriteH
         self.loadData()
     }
     
+    @objc func responseToChangeInFavs(notification: NSNotification) {
+        self.tableView.reloadData()
+    }
+    
     // MARK: - Init
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTableView()
         setUpUI()
         self.loadData()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(responseToChangeInFavs(notification:)), name: NSNotification.Name(rawValue: NSNotification.Name.favUpdateNotificationKey), object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: NSNotification.Name.favUpdateNotificationKey), object: nil)
     }
     
     // MARK: - Private methods
@@ -64,10 +74,11 @@ class MainViewController: UIViewController, UniqueIdHelper, Alertable, FavoriteH
         self.view.backgroundColor = UIColor.darkColor
     }
     
-    @objc private func addMovieToFavorite (sender: FavoriteButton) {
+    @objc private func favBtnOnClick (sender: FavoriteButton) {
         let movieData = data.values[data.values.index(data.values.startIndex, offsetBy: sender.collectionViewIndex)]
         let mediaData = movieData.data[sender.indexPath.row]
-        self.addToFavorite(movie: mediaData)
+        
+        _ = sender.isFav ? self.removeFromFavourite(id: mediaData.id) : self.addToFavorite(movie: mediaData.getFavItem())
     }
     
     // MARK: - Navigation
@@ -158,13 +169,17 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             
             movieCell.movieTitleLbl.text = movieData.data[indexPath.row].title
             movieCell.movieDescriptionLbl.text = movieData.data[indexPath.row].date
-            movieCell.favoriteBtn.setTitle(movieData.data[indexPath.row].isFavorite ? "Remove" : "Add", for: .normal)
+            
+            let isFav = AppStore.shared.favMovies[movieData.data[indexPath.row].id] != nil
+            
+            movieCell.favoriteBtn.setTitle(isFav ? "Remove" : "Add", for: .normal)
+            movieCell.favoriteBtn.isFav = isFav
         }
         
         movieCell.favoriteBtn.indexPath = indexPath
         movieCell.favoriteBtn.collectionViewIndex = collectionView.tag
         
-        movieCell.favoriteBtn.addTarget(self, action: #selector(addMovieToFavorite(sender:)), for: .touchUpInside)
+        movieCell.favoriteBtn.addTarget(self, action: #selector(favBtnOnClick(sender:)), for: .touchUpInside)
         
         return movieCell
     }

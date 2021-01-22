@@ -9,6 +9,11 @@
 import UIKit
 
 final class EmptyView: UIView {
+    
+    enum EmptyViewMode {
+        case small, large
+    }
+    
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -26,16 +31,16 @@ final class EmptyView: UIView {
         return label
     }()
     
-    init() {
+    init(mode: EmptyViewMode = .small) {
         super.init(frame: .zero)
-        self.setUpViews()
+        self.setUpViews(mode: mode)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    fileprivate func setUpViews () {
+    fileprivate func setUpViews (mode: EmptyViewMode) {
         self.backgroundColor = .darkColor
         self.addSubview(imageView)
         self.addSubview(titleLabel)
@@ -47,9 +52,16 @@ final class EmptyView: UIView {
         
         imageView.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(20)
-            make.bottom.equalTo(titleLabel).inset(-16)
             make.centerX.equalToSuperview()
-            make.width.height.equalTo(128)
+            make.bottom.equalTo(titleLabel).inset(
+                mode ==  EmptyViewMode.small ? -16 : 40
+            )
+            
+            if (mode == EmptyViewMode.small) {
+                make.width.height.equalTo(128)
+            } else {
+                make.width.height.equalTo(256)
+            }
         }
     }
 }

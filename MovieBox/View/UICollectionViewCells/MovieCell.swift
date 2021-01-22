@@ -12,6 +12,7 @@ import SkeletonView
 class FavoriteButton: UIButton {
     var indexPath: IndexPath!
     var collectionViewIndex: Int!
+    var isFav: Bool!
 }
 
 
